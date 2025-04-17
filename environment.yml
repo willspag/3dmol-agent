@@ -1,0 +1,12 @@
+name: 3dmol-flask
+channels: [conda-forge, defaults]
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - flask
+      - flask-socketio
+      - selenium
+      - webdriver-manager     # NEW
+      - pytest
+      - requests              # tests import it indirectly
