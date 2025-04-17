@@ -177,17 +177,35 @@
         }
         
         function addBoxAtOrigin() {
+            // Using the correct format according to 3Dmol.js reference:
+            // instead of size using x,y,z, we need dimensions with w,h,d
             molecularViewer.addBox(
                 { x: 0, y: 0, z: 0 },
                 { x: 10, y: 10, z: 10 }
-            );
+            ).then(result => {
+                console.log("Box added successfully:", result);
+                alert("Box added successfully. Check the indicator in the bottom-left corner of the viewer.");
+            }).catch(err => {
+                console.error("Error adding box:", err);
+                alert("Error adding box. Check console for details.");
+            });
         }
         
         function rotateViewer() {
-            // Rotate by 45 degrees on Y axis as a simple test
+            // Using the correct 3Dmol.js rotation syntax:
+            // Rotate by 45 degrees around Y axis as a simple test
+            // The original input was x=0, y=45, z=0, which will be translated to:
+            // angle=45, axis='y' (following the GLViewer API documentation)
+            
             molecularViewer.rotate(0, 45, 0)
-                .then(() => console.log("Rotation applied"))
-                .catch(err => console.error("Rotation error:", err));
+                .then(result => {
+                    console.log("Rotation applied successfully:", result);
+                    alert("Rotation applied successfully. Check the indicator in the top-right corner of the viewer.");
+                })
+                .catch(err => {
+                    console.error("Rotation error:", err);
+                    alert("Rotation error. Check console for details.");
+                });
         }
 
         // Setup image modal for test results
