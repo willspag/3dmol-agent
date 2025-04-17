@@ -79,6 +79,10 @@
                                             onclick="addBoxAtOrigin()">
                                         Add Box
                                     </button>
+                                    <button class="btn btn-outline-info btn-sm"
+                                            onclick="rotateViewer()">
+                                        Rotate
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -177,6 +181,13 @@
                 { x: 0, y: 0, z: 0 },
                 { x: 10, y: 10, z: 10 }
             );
+        }
+        
+        function rotateViewer() {
+            // Rotate by 45 degrees on Y axis as a simple test
+            molecularViewer.rotate(0, 45, 0)
+                .then(() => console.log("Rotation applied"))
+                .catch(err => console.error("Rotation error:", err));
         }
 
         // Setup image modal for test results
