@@ -1,0 +1,223 @@
+ Environment updated. Reloading shell...
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Starting gunicorn 23.0.0
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Listening at: http://0.0.0.0:5000 (2477)
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Using worker: sync
+[2025-04-18 21:56:50 +0000] [2561] [INFO] Booting worker with pid: 2561
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:50 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:51 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:51 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:51 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:51 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:51 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:51 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:51 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:51 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:51 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:51 +0000] [2477] [INFO] Handling signal: winch
+[2025-04-18 21:56:51 +0000] [2477] [INFO] Handling signal: winch
+INFO:app:Client connected with SID: 1LTn4Ccyh_PYIkquAAAC
+WARNING:app:Connection refused: SID ZMlyOgam2S1WNUNbAAAD, already have 1LTn4Ccyh_PYIkquAAAC
+INFO:app:Secondary client disconnected: ZMlyOgam2S1WNUNbAAAD
+[2025-04-18 21:57:47 +0000] [2477] [CRITICAL] WORKER TIMEOUT (pid:2561)
+[2025-04-18 21:57:47 +0000] [2561] [ERROR] Error handling request /socket.io/?EIO=4&transport=websocket&sid=eVfZ0bdprwwoEA2rAAAB
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 92, in handle_get_request
+    return getattr(self, '_upgrade_' + transport)(environ,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 151, in _upgrade_websocket
+    return ws(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/async_drivers/_websocket_wsgi.py", line 15, in __call__
+    ret = self.app(self)
+          ^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 183, in _websocket_handler
+    pkt = websocket_wait()
+          ^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 156, in websocket_wait
+    data = ws.wait()
+           ^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/async_drivers/_websocket_wsgi.py", line 32, in wait
+    return self.ws.receive()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/simple_websocket/ws.py", line 96, in receive
+    if not self.event.wait(timeout=timeout):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 629, in wait
+    signaled = self._cond.wait(timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 327, in wait
+    waiter.acquire()
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 21:57:47 +0000] [2561] [INFO] Worker exiting (pid: 2561)
+[2025-04-18 21:57:47 +0000] [2639] [INFO] Booting worker with pid: 2639
+Invalid session WJx-mR4S-OwCDSihAAAA (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session WJx-mR4S-OwCDSihAAAA (further occurrences of this error will be logged with level INFO)
+INFO:app:Client connected with SID: OwEgZUbo9krQ70BfAAAM
+WARNING:app:Connection refused: SID r-uR9tgs0ne2-SOcAAAN, already have OwEgZUbo9krQ70BfAAAM
+WARNING:app:Connection refused: SID 3Et6PFdUW874bKr9AAAO, already have OwEgZUbo9krQ70BfAAAM
+INFO:app:Primary client disconnected: OwEgZUbo9krQ70BfAAAM
+INFO:app:Secondary client disconnected: r-uR9tgs0ne2-SOcAAAN
+[2025-04-18 21:58:44 +0000] [2477] [CRITICAL] WORKER TIMEOUT (pid:2639)
+[2025-04-18 21:58:44 +0000] [2639] [ERROR] Error handling request /socket.io/?EIO=4&transport=websocket&sid=W_CBVUva6JljxJx-AAAK
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 92, in handle_get_request
+    return getattr(self, '_upgrade_' + transport)(environ,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 151, in _upgrade_websocket
+    return ws(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/async_drivers/_websocket_wsgi.py", line 15, in __call__
+    ret = self.app(self)
+          ^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 183, in _websocket_handler
+    pkt = websocket_wait()
+          ^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 156, in websocket_wait
+    data = ws.wait()
+           ^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/async_drivers/_websocket_wsgi.py", line 32, in wait
+    return self.ws.receive()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/simple_websocket/ws.py", line 96, in receive
+    if not self.event.wait(timeout=timeout):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 629, in wait
+    signaled = self._cond.wait(timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 327, in wait
+    waiter.acquire()
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 21:58:44 +0000] [2639] [INFO] Worker exiting (pid: 2639)
+[2025-04-18 21:58:44 +0000] [2671] [INFO] Booting worker with pid: 2671
+Invalid session wYK_MqagbmGHxfJGAAAL (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session wYK_MqagbmGHxfJGAAAL (further occurrences of this error will be logged with level INFO)
+INFO:app:Client connected with SID: aZFc8z7930bGdtfqAAAE
+WARNING:app:Connection refused: SID 4H6LDrLtuRvG0b1PAAAG, already have aZFc8z7930bGdtfqAAAE
+WARNING:app:Connection refused: SID DZ5xIMPy6mR0H9x6AAAH, already have aZFc8z7930bGdtfqAAAE
+INFO:app:Primary client disconnected: aZFc8z7930bGdtfqAAAE
+INFO:app:Secondary client disconnected: 4H6LDrLtuRvG0b1PAAAG
+INFO:app:Secondary client disconnected: DZ5xIMPy6mR0H9x6AAAH
+[2025-04-18 21:59:41 +0000] [2477] [CRITICAL] WORKER TIMEOUT (pid:2671)
+[2025-04-18 21:59:41 +0000] [2671] [ERROR] Error handling request /socket.io/?EIO=4&transport=websocket&sid=Kn2AfbsI7LqVhjpKAAAC
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 92, in handle_get_request
+    return getattr(self, '_upgrade_' + transport)(environ,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 151, in _upgrade_websocket
+    return ws(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/async_drivers/_websocket_wsgi.py", line 15, in __call__
+    ret = self.app(self)
+          ^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 183, in _websocket_handler
+    pkt = websocket_wait()
+          ^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 156, in websocket_wait
+    data = ws.wait()
+           ^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/async_drivers/_websocket_wsgi.py", line 32, in wait
+    return self.ws.receive()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/simple_websocket/ws.py", line 96, in receive
+    if not self.event.wait(timeout=timeout):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 629, in wait
+    signaled = self._cond.wait(timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 327, in wait
+    waiter.acquire()
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 21:59:41 +0000] [2671] [INFO] Worker exiting (pid: 2671)
+[2025-04-18 21:59:42 +0000] [2682] [INFO] Booting worker with pid: 2682
+Invalid session Kn2AfbsI7LqVhjpKAAAC (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session Kn2AfbsI7LqVhjpKAAAC (further occurrences of this error will be logged with level INFO)

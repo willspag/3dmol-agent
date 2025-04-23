@@ -1,0 +1,264 @@
+[2025-04-18 23:41:43 +0000] [7374] [INFO] Starting gunicorn 23.0.0
+[2025-04-18 23:41:43 +0000] [7374] [INFO] Listening at: http://0.0.0.0:5000 (7374)
+[2025-04-18 23:41:43 +0000] [7374] [INFO] Using worker: sync
+[2025-04-18 23:41:43 +0000] [7385] [INFO] Booting worker with pid: 7385
+[2025-04-18 23:41:43 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:43 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+[2025-04-18 23:41:44 +0000] [7374] [INFO] Handling signal: winch
+INFO:app:Primary client connected with SID: SfBhmihq-tAf9D7aAAAB
+emitting event "status" to SfBhmihq-tAf9D7aAAAB [/]
+INFO:socketio.server:emitting event "status" to SfBhmihq-tAf9D7aAAAB [/]
+[2025-04-18 23:42:29 +0000] [7374] [CRITICAL] WORKER TIMEOUT (pid:7385)
+[2025-04-18 23:42:29 +0000] [7385] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBHy_r&sid=cC-kPg6W3b1RISJaAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:42:29 +0000] [7385] [INFO] Worker exiting (pid: 7385)
+[2025-04-18 23:42:29 +0000] [7485] [INFO] Booting worker with pid: 7485
+Invalid session 1xyHo083JcOsce_KAAAC (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session 1xyHo083JcOsce_KAAAC (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: UAHOSKg7CiOCyFQgAAAB
+emitting event "status" to UAHOSKg7CiOCyFQgAAAB [/]
+INFO:socketio.server:emitting event "status" to UAHOSKg7CiOCyFQgAAAB [/]
+INFO:app:Secondary client connected with SID: Qu-msq-bFeeHSfAhAAAG
+emitting event "status" to Qu-msq-bFeeHSfAhAAAG [/]
+INFO:socketio.server:emitting event "status" to Qu-msq-bFeeHSfAhAAAG [/]
+INFO:app:Secondary client connected with SID: hew6pdZXqWoVaAp5AAAH
+emitting event "status" to hew6pdZXqWoVaAp5AAAH [/]
+INFO:socketio.server:emitting event "status" to hew6pdZXqWoVaAp5AAAH [/]
+INFO:app:Secondary client connected with SID: qR9vRak0keo2gStjAAAI
+emitting event "status" to qR9vRak0keo2gStjAAAI [/]
+INFO:socketio.server:emitting event "status" to qR9vRak0keo2gStjAAAI [/]
+INFO:app:Secondary client connected with SID: Yn19pAsQJi0ImZP3AAAK
+emitting event "status" to Yn19pAsQJi0ImZP3AAAK [/]
+INFO:socketio.server:emitting event "status" to Yn19pAsQJi0ImZP3AAAK [/]
+[2025-04-18 23:44:00 +0000] [7374] [CRITICAL] WORKER TIMEOUT (pid:7485)
+[2025-04-18 23:44:00 +0000] [7485] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBIFat&sid=nupGkb8s6zj3o7vfAAAD
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:44:00 +0000] [7485] [INFO] Worker exiting (pid: 7485)
+[2025-04-18 23:44:01 +0000] [7588] [INFO] Booting worker with pid: 7588
+Invalid session nupGkb8s6zj3o7vfAAAD (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session nupGkb8s6zj3o7vfAAAD (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: -NZ5R9EFn7xiMNCzAAAB
+emitting event "status" to -NZ5R9EFn7xiMNCzAAAB [/]
+INFO:socketio.server:emitting event "status" to -NZ5R9EFn7xiMNCzAAAB [/]
+INFO:app:Secondary client connected with SID: rwu2EDA4P5fwPElmAAAD
+emitting event "status" to rwu2EDA4P5fwPElmAAAD [/]
+INFO:socketio.server:emitting event "status" to rwu2EDA4P5fwPElmAAAD [/]
+received event "chat_message" from -NZ5R9EFn7xiMNCzAAAB [/]
+INFO:socketio.server:received event "chat_message" from -NZ5R9EFn7xiMNCzAAAB [/]
+INFO:app:Received chat message: please load pdb 7lbr and highlight heteroatoms
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:openai._base_client:Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'json_data': {'messages': [{'role': 'system', 'content': 'You are a helpful molecular biology assistant specializing in protein structure visualization.\nYou have access to a 3D molecular viewer and can help users visualize and manipulate protein structures.\nYou can load PDB files, highlight specific parts of molecules, show surfaces, rotate the view, zoom, and more.\nAlways be helpful, concise, and provide scientific explanations when appropriate.'}, {'role': 'user', 'content': 'please load pdb 7lbr and highlight heteroatoms'}], 'model': 'gpt-4o', 'stream': True, 'tools': [{'type': 'function', 'function': {'name': 'load_pdb', 'description': 'Load a protein structure by PDB ID into the 3D viewer.', 'parameters': {'type': 'object', 'properties': {'pdb_id': {'type': 'string', 'description': "The 4-character PDB ID of the structure to load (e.g., '1HSG', '4FNT')."}}, 'required': ['pdb_id']}}}, {'type': 'function', 'function': {'name': 'highlight_hetero', 'description': 'Highlight hetero atoms (non-protein components like ligands, water, etc.) in the current structure.', 'parameters': {'type': 'object', 'properties': {}}}}, {'type': 'function', 'function': {'name': 'show_surface', 'description': 'Add a surface representation to the current structure.', 'parameters': {'type': 'object', 'properties': {'selection': {'type': 'object', 'description': 'Optional selection criteria to show surface only for specific parts of the structure.', 'properties': {'chain': {'type': 'string', 'description': "Chain identifier (e.g., 'A', 'B')."}, 'resi': {'type': 'string', 'description': "Residue number range (e.g., '1-100')."}}}}}}}, {'type': 'function', 'function': {'name': 'rotate', 'description': 'Rotate the molecule view around specified axes.', 'parameters': {'type': 'object', 'properties': {'x': {'type': 'number', 'description': 'Degrees to rotate around X-axis.'}, 'y': {'type': 'number', 'description': 'Degrees to rotate around Y-axis.'}, 'z': {'type': 'number', 'description': 'Degrees to rotate around Z-axis.'}}}}}, {'type': 'function', 'function': {'name': 'zoom', 'description': 'Zoom the view in or out.', 'parameters': {'type': 'object', 'properties': {'factor': {'type': 'number', 'description': 'Zoom factor. Values > 1 zoom in, values < 1 zoom out (e.g., 1.2 to zoom in 20%, 0.8 to zoom out 20%).'}}, 'required': ['factor']}}}, {'type': 'function', 'function': {'name': 'add_box', 'description': 'Add a box around a specific region of the structure.', 'parameters': {'type': 'object', 'properties': {'center': {'type': 'object', 'properties': {'x': {'type': 'number'}, 'y': {'type': 'number'}, 'z': {'type': 'number'}}, 'required': ['x', 'y', 'z'], 'description': 'Center coordinates of the box.'}, 'size': {'type': 'object', 'properties': {'x': {'type': 'number'}, 'y': {'type': 'number'}, 'z': {'type': 'number'}}, 'required': ['x', 'y', 'z'], 'description': 'Dimensions of the box.'}}, 'required': ['center', 'size']}}}, {'type': 'function', 'function': {'name': 'set_style', 'description': 'Set the visualization style for specific parts of the structure.', 'parameters': {'type': 'object', 'properties': {'selection': {'type': 'object', 'properties': {'chain': {'type': 'string', 'description': "Chain identifier (e.g., 'A', 'B')."}, 'resi': {'type': 'string', 'description': "Residue number range (e.g., '1-100')."}, 'elem': {'type': 'string', 'description': "Element symbol (e.g., 'C' for carbon, 'N' for nitrogen)."}}, 'description': 'Selection criteria to apply the style to.'}, 'style': {'type': 'object', 'properties': {'stick': {'type': 'object', 'description': 'Stick representation parameters.'}, 'cartoon': {'type': 'object', 'description': 'Cartoon representation parameters.'}, 'sphere': {'type': 'object', 'description': 'Sphere representation parameters.'}, 'line': {'type': 'object', 'description': 'Line representation parameters.'}}, 'description': 'Style configuration to apply.'}}, 'required': ['selection', 'style']}}}, {'type': 'function', 'function': {'name': 'reset_view', 'description': 'Reset the viewer to the default view.', 'parameters': {'type': 'object', 'properties': {}}}}]}}
+DEBUG:openai._base_client:Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+DEBUG:httpcore.connection:connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+DEBUG:httpcore.connection:connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7fc588de5290>
+DEBUG:httpcore.connection:start_tls.started ssl_context=<ssl.SSLContext object at 0x7fc588c450a0> server_hostname='api.openai.com' timeout=5.0
+DEBUG:httpcore.connection:start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7fc588cec390>
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Fri, 18 Apr 2025 23:44:19 GMT'), (b'Content-Type', b'text/event-stream; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'phronesis-ai'), (b'openai-processing-ms', b'839'), (b'openai-version', b'2020-10-01'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'30000000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'29999886'), (b'x-ratelimit-reset-requests', b'6ms'), (b'x-ratelimit-reset-tokens', b'0s'), (b'x-request-id', b'req_dbd697bf4986785fb00d14a26609485f'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'cf-cache-status', b'DYNAMIC'), (b'Set-Cookie', b'__cf_bm=yeumNzJwO9rsR8R.IrvwZJX3PjfFvRk8_Mo_6D_BUBo-1745019859-1.0.1.1-sAJIcQc64S09oq7NPiWwjYF5VgnyIrT_MfKKmvMJS4uV2aI9k9eGeE7g3zVu584EeJ7T7YdYkKRaElNT4hHbP1UlfH8guR8MyfTbw53XVUI; path=/; expires=Sat, 19-Apr-25 00:14:19 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'X-Content-Type-Options', b'nosniff'), (b'Set-Cookie', b'_cfuvid=uBZ1IXscQoeIXnmQFuqLWVmIf2R53DnvyDn3SvF2.fs-1745019859073-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9328077e9f2df852-ORD'), (b'alt-svc', b'h3=":443"; ma=86400')])
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+DEBUG:openai._base_client:HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers([('date', 'Fri, 18 Apr 2025 23:44:19 GMT'), ('content-type', 'text/event-stream; charset=utf-8'), ('transfer-encoding', 'chunked'), ('connection', 'keep-alive'), ('access-control-expose-headers', 'X-Request-ID'), ('openai-organization', 'phronesis-ai'), ('openai-processing-ms', '839'), ('openai-version', '2020-10-01'), ('x-ratelimit-limit-requests', '10000'), ('x-ratelimit-limit-tokens', '30000000'), ('x-ratelimit-remaining-requests', '9999'), ('x-ratelimit-remaining-tokens', '29999886'), ('x-ratelimit-reset-requests', '6ms'), ('x-ratelimit-reset-tokens', '0s'), ('x-request-id', 'req_dbd697bf4986785fb00d14a26609485f'), ('strict-transport-security', 'max-age=31536000; includeSubDomains; preload'), ('cf-cache-status', 'DYNAMIC'), ('set-cookie', '__cf_bm=yeumNzJwO9rsR8R.IrvwZJX3PjfFvRk8_Mo_6D_BUBo-1745019859-1.0.1.1-sAJIcQc64S09oq7NPiWwjYF5VgnyIrT_MfKKmvMJS4uV2aI9k9eGeE7g3zVu584EeJ7T7YdYkKRaElNT4hHbP1UlfH8guR8MyfTbw53XVUI; path=/; expires=Sat, 19-Apr-25 00:14:19 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('x-content-type-options', 'nosniff'), ('set-cookie', '_cfuvid=uBZ1IXscQoeIXnmQFuqLWVmIf2R53DnvyDn3SvF2.fs-1745019859073-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('server', 'cloudflare'), ('cf-ray', '9328077e9f2df852-ORD'), ('alt-svc', 'h3=":443"; ma=86400')])
+DEBUG:openai._base_client:request_id: req_dbd697bf4986785fb00d14a26609485f
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+INFO:ai_assistant:Function call: load_pdb with args: {'pdb_id': '7lbr'}
+DEBUG:app:Response chunk: {'type': 'function_call', 'call_id': 'call_O2L1Tk8hlMufURYkZFpyocv9', 'name': 'load_pdb', 'arguments': {'pdb_id': '7lbr'}}
+emitting event "ai_response" to all [/]
+INFO:socketio.server:emitting event "ai_response" to all [/]
+INFO:app:Executing function: load_pdb with arguments: {'pdb_id': '7lbr'}
+INFO:app:Calling command 'load_pdb' for primary SID: -NZ5R9EFn7xiMNCzAAAB
+emitting event "command" to -NZ5R9EFn7xiMNCzAAAB [/]
+INFO:socketio.server:emitting event "command" to -NZ5R9EFn7xiMNCzAAAB [/]
+INFO:app:Secondary client connected with SID: iN-1X5MNHAXm0BmtAAAG
+emitting event "status" to iN-1X5MNHAXm0BmtAAAG [/]
+INFO:socketio.server:emitting event "status" to iN-1X5MNHAXm0BmtAAAG [/]
+INFO:app:Secondary client connected with SID: 4oYizaL1tzz3uT46AAAH
+emitting event "status" to 4oYizaL1tzz3uT46AAAH [/]
+INFO:socketio.server:emitting event "status" to 4oYizaL1tzz3uT46AAAH [/]
+ERROR:app:Timeout waiting for response to load_pdb
+INFO:ai_assistant:Added function result for load_pdb to conversation history
+emitting event "ai_response" to all [/]
+INFO:socketio.server:emitting event "ai_response" to all [/]
+INFO:ai_assistant:Function call: highlight_hetero with args: {}
+DEBUG:app:Response chunk: {'type': 'function_call', 'call_id': 'call_JjnxOnKiwpsjsIVjtv5S2o2U', 'name': 'highlight_hetero', 'arguments': {}}
+emitting event "ai_response" to all [/]
+INFO:socketio.server:emitting event "ai_response" to all [/]
+INFO:app:Executing function: highlight_hetero with arguments: {}
+INFO:app:Calling command 'highlight_hetero' for primary SID: -NZ5R9EFn7xiMNCzAAAB
+emitting event "command" to -NZ5R9EFn7xiMNCzAAAB [/]
+INFO:socketio.server:emitting event "command" to -NZ5R9EFn7xiMNCzAAAB [/]
+ERROR:app:Timeout waiting for response to highlight_hetero
+INFO:ai_assistant:Added function result for highlight_hetero to conversation history
+emitting event "ai_response" to all [/]
+INFO:socketio.server:emitting event "ai_response" to all [/]
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+[2025-04-18 23:45:20 +0000] [7374] [CRITICAL] WORKER TIMEOUT (pid:7588)
+[2025-04-18 23:45:20 +0000] [7588] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBIcP0&sid=LfEN8zQfoYN_BAmsAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:45:20 +0000] [7588] [INFO] Worker exiting (pid: 7588)
+[2025-04-18 23:45:20 +0000] [7626] [INFO] Booting worker with pid: 7626
+Invalid session LfEN8zQfoYN_BAmsAAAA (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session LfEN8zQfoYN_BAmsAAAA (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: jtSBYPob0EH_YWFrAAAB
+emitting event "status" to jtSBYPob0EH_YWFrAAAB [/]
+INFO:socketio.server:emitting event "status" to jtSBYPob0EH_YWFrAAAB [/]
+INFO:app:Secondary client connected with SID: lSwxx3xSLXGuaOHgAAAD
+emitting event "status" to lSwxx3xSLXGuaOHgAAAD [/]
+INFO:socketio.server:emitting event "status" to lSwxx3xSLXGuaOHgAAAD [/]
+INFO:app:Secondary client connected with SID: X0McUNDJDg5a52p_AAAG
+emitting event "status" to X0McUNDJDg5a52p_AAAG [/]
+INFO:socketio.server:emitting event "status" to X0McUNDJDg5a52p_AAAG [/]

@@ -1,0 +1,316 @@
+‘’’
+# app.py
+"""
+Minimal Flask + 3Dmol.js micro-service
+Author: ChatGPT
+"""
+import base64
+import io
+import os
+from pathlib import Path
+from typing import Dict, Any
+
+from flask import Flask, render_template_string, request
+from flask_socketio import SocketIO, emit, call, ConnectionRefusedError
+
+# ────────────────────────────────  Flask + Socket.IO  ───────────────────────────
+app = Flask(__name__)
+app.config["SECRET_KEY"] = "change-me"
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading")
+
+# keep track of the **first** connected viewer (good enough for single-user demo)
+_connected_sid: str | None = None
+
+# ────────────────────────────────  HTML template  ───────────────────────────────
+INDEX_HTML = """
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf‑8"/>
+<title>3Dmol.js Flask Demo</title>
+<!-- socket.io v3 ↔ python-socketio 5.x -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.min.js"></script>
+<!-- stable 3Dmol from jsDelivr (much more reliable in CI) -->
+<script src="https://cdn.jsdelivr.net/npm/3dmol@2.0.3/build/3Dmol-min.js"></script>
+<style>
+ html,body{margin:0;height:100%;overflow:hidden}
+ #viewer{width:100%;height:100%}
+ #boxinfo{position:absolute;top:10px;left:10px;
+          background:rgba(255,255,255,.85);padding:6px 8px;
+          font:12px monospace;border-radius:4px;display:none}
+</style>
+</head>
+<body>
+<div id="viewer"></div>
+<div id="boxinfo" id="boxinfo"></div>
+
+<script>
+ // ────────────────────────  Socket.IO  ───────────────────────────
+ const socket = io("http://127.0.0.1:5000", {
+     transports: ["polling"],
+     upgrade: false,
+     reconnection: false        // ← keep the same SID for the whole test run
+ });
+ window.socket = socket;  // Make explicitly available to window
+ socket.on("connect", ()=>console.log("socket connected"));
+ socket.on("command", async (payload, cb)=>{
+     await exec(payload);                      // run the command
+     const png = viewer.pngURI();              // take screenshot
+     cb({img: png});                           // return to Python
+ });
+
+ // ────────────────────────  create viewer  ────────────────────────
+ const viewer = $3Dmol.createViewer("viewer",{backgroundColor:"white"});
+ viewer.setViewStyle({style:"outline"});
+ viewer.render();
+
+ /* ----------------- helper that maps commands → 3Dmol ---------------- */
+ async function exec(p){
+     switch(p.name){
+        case "load_pdb":
+            const url = `https://files.rcsb.org/download/${p.pdb_id}.pdb`;
+            const txt = await fetch(url).then(r=>r.text());
+            viewer.clear();
+            viewer.addModel(txt,"pdb");
+            viewer.setStyle({cartoon:{color:"spectrum"}});
+            viewer.zoomTo(); break;
+
+        case "highlight_hetero":
+            viewer.setStyle({hetflag:true},
+                            {stick:{colorscheme:"orangeCarbon"}});
+            break;
+
+        case "show_surface":
+            viewer.addSurface($3Dmol.SurfaceType.VDW,
+                              {opacity:0.8,color:"white"},
+                              p.selection||{}); break;
+
+        case "rotate":   viewer.rotate(p.x||0,p.y||0,p.z||0); break;
+        case "zoom":     viewer.zoom(p.factor||1.2,1000);     break;
+
+        case "add_box":
+            const shap = viewer.addBox({center:p.center,
+                                        dimensions:p.size,
+                                        wireframe:true,
+                                        color:"magenta"});
+            const el = document.getElementById("boxinfo");
+            el.style.display="block";
+            el.textContent = `box center (${p.center.x.toFixed(1)}, `
+                            +`${p.center.y.toFixed(1)}, ${p.center.z.toFixed(1)}) `
+                            +`size (${p.size.x},${p.size.y},${p.size.z})`;
+            break;
+
+        case "set_style":
+            viewer.setStyle(p.selection||{}, p.style||{}); break;
+
+        case "reset":    viewer.zoomTo(); break;
+     }
+     viewer.render();
+ }
+</script>
+</body>
+</html>
+"""
+
+# ────────────────────────────────  Routes  ──────────────────────────────────────
+@app.route("/")
+def index():
+    """Serve the single-page viewer."""
+    return render_template_string(INDEX_HTML)
+
+
+# ────────────────────────────────  Socket events  ───────────────────────────────
+@socketio.on("connect")
+def _on_connect(auth):
+    global _connected_sid
+    if _connected_sid is None:
+        _connected_sid = request.sid
+        emit("status", {"msg": "registered"})
+    else:
+        raise ConnectionRefusedError("Only one active viewer allowed.")
+
+
+@socketio.on("disconnect")
+def _on_disconnect(reason):
+    global _connected_sid
+    if request.sid == _connected_sid:
+        _connected_sid = None
+
+
+# ────────────────────────────────  Python API  ──────────────────────────────────
+def _call_viewer(command: str, **kwargs) -> bytes:
+    """Internal helper that asks the viewer to run *command* and returns a PNG."""
+    if _connected_sid is None:
+        raise RuntimeError("No browser viewer connected yet – open / in a tab.")
+    print(f"Calling command '{command}' for SID: {_connected_sid}")
+    payload: Dict[str, Any] = {"name": command, **kwargs}
+    # send RPC and wait (max 15 s)
+    res: Dict[str, str] = socketio.call("command", payload,
+                                        to=_connected_sid, timeout=15)  # 15 s
+    img64: str = res["img"].split(",", 1)[1]      # drop data:image/png;base64,
+    return base64.b64decode(img64)
+
+
+# public helper functions – the ones you'll import & test
+def load_pdb(pdb_id: str) -> bytes:              # e.g. "1crn"
+    return _call_viewer("load_pdb", pdb_id=pdb_id)
+
+def highlight_hetero() -> bytes:
+    return _call_viewer("highlight_hetero")
+
+def show_surface(selection: dict | None = None) -> bytes:
+    return _call_viewer("show_surface", selection=selection or {})
+
+def rotate(x=0, y=0, z=0) -> bytes:
+    return _call_viewer("rotate", x=x, y=y, z=z)
+
+def zoom(factor: float = 1.2) -> bytes:
+    return _call_viewer("zoom", factor=factor)
+
+def add_box(center: dict, size: dict) -> bytes:
+    """
+    center/size → {'x':…, 'y':…, 'z':…}
+    size        → {'x':dx,'y':dy,'z':dz}
+    """
+    return _call_viewer("add_box", center=center, size=size)
+
+def set_style(selection: dict, style: dict) -> bytes:
+    return _call_viewer("set_style", selection=selection, style=style)
+
+def reset_view() -> bytes:
+    return _call_viewer("reset")
+
+
+# ────────────────────────────────  Dev server  ──────────────────────────────────
+if __name__ == "__main__":
+    print("Open http://127.0.0.1:5000 in a browser, then run tests in another shell")
+    socketio.run(app, host="0.0.0.0", port=5000)
+‘’’
+
+‘’’
+# tests/test_app.py
+"""
+pytest – functional tests for every exposed viewer method.
+
+Prereqs:
+    chromedriver + Google Chrome (or change Remote webdriver options)
+"""
+import os, time, base64, io, pathlib, threading
+import pytest
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service      # NEW
+from webdriver_manager.chrome import ChromeDriverManager    # NEW
+
+import app   # the Flask module above
+
+TEST_DIR = pathlib.Path(__file__).parent
+IMG_DIR   = TEST_DIR / "test_images"
+IMG_DIR.mkdir(exist_ok=True)
+
+# ────────────────────────────────  Start server once  ───────────────────────────
+@pytest.fixture(scope="session", autouse=True)
+def _server():
+    th = threading.Thread(
+        target=app.socketio.run,
+        kwargs=dict(app=app.app,
+                    host="127.0.0.1",
+                    port=5000,
+                    allow_unsafe_werkzeug=True),   # dev server is fine for tests
+        daemon=True)
+    th.start()
+    time.sleep(3)  # Increased wait time
+    yield
+    # nothing to teardown – daemon thread exits with pytest
+
+
+# ────────────────────────────────  Selenium  ────────────────────────────────────
+@pytest.fixture(scope="session", autouse=True)
+def _driver():
+    opts = Options()
+    # opts.add_argument("--headless=new") # Removed headless option
+    opts.add_argument("--no-sandbox")
+    opts.add_argument("--disable-dev-shm-usage")
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=opts)
+    
+    driver.implicitly_wait(10)
+    driver.get("http://127.0.0.1:5000")
+    
+    print("\nPage errors:", driver.get_log('browser'))
+    
+    import time as _t
+    sid = None
+    print("Attempting to get Socket.IO SID from browser...")
+    for i in range(100): # Increased attempts
+        sid = driver.execute_script("""
+            console.log('Socket status:', window.socket);
+            return window.socket ? window.socket.id : null
+        """)
+        if sid:
+            print(f"Got SID from browser: {sid}")
+            app._connected_sid = sid
+            break
+        _t.sleep(0.3) # Increased sleep
+    else:
+        print("Failed to get SID from browser.")
+        pytest.fail("Browser created no Socket.IO client")
+    
+    yield driver
+    driver.quit()
+
+
+# ────────────────────────────────  helpers  ─────────────────────────────────────
+def save(name: str, png: bytes):
+    (IMG_DIR / f"{name}.png").write_bytes(png)
+
+
+# ────────────────────────────────  tests  ───────────────────────────────────────
+def test_load_pdb():
+    png = app.load_pdb("1CRN")
+    save("01_load_pdb", png)
+    assert len(png) > 1000
+
+def test_highlight_hetero():
+    app.load_pdb("1HSG")
+    png = app.highlight_hetero()
+    save("02_highlight_hetero", png)
+    assert len(png) > 1000
+
+def test_show_surface():
+    app.load_pdb("4FNT")
+    png = app.show_surface()
+    save("03_surface", png)
+    assert len(png) > 1000
+
+@pytest.mark.parametrize("axis,val", [("x",90), ("y",45), ("z",30)])
+def test_rotate(axis, val):
+    kw = {"x":val,"y":0,"z":0} if axis=="x" else \
+         {"x":0,"y":val,"z":0} if axis=="y" else \
+         {"x":0,"y":0,"z":val}
+    png = app.rotate(**kw)
+    save(f"04_rotate_{axis}", png)
+    assert len(png) > 1000
+
+def test_zoom():
+    png = app.zoom(1.4)
+    save("05_zoom", png)
+    assert len(png) > 1000
+
+def test_add_box():
+    png = app.add_box(center={"x":0,"y":0,"z":0},
+                      size={"x":10,"y":10,"z":10})
+    save("06_box", png)
+    assert len(png) > 1000
+
+def test_set_style():
+    png = app.set_style(selection={"chain":"A"},
+                        style={"stick":{}, "cartoon":{}})
+    save("07_custom_style", png)
+    assert len(png) > 1000
+
+def test_reset():
+    png = app.reset_view()
+    save("08_reset", png)
+    assert len(png) > 1000
+‘’’

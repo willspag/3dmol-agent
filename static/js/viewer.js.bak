@@ -1,0 +1,284 @@
+// 3D Molecular Viewer with Socket.IO communication
+class MolecularViewer {
+    constructor() {
+        this.socket = null;
+        this.viewer = null;
+        this.connected = false;
+        this.initSocketIO();
+        this.initViewer();
+    }
+
+    // Initialize Socket.IO connection
+    initSocketIO() {
+        // Use a relative path to avoid any SSL issues
+        this.socket = io("/", {
+            transports: ["polling"],
+            upgrade: false,
+            reconnection: true, // Allow reconnection
+            reconnectionAttempts: 5
+        });
+
+        this.socket.on("connect", () => {
+            console.log("Socket connected with ID:", this.socket.id);
+            this.connected = true;
+            document.getElementById('connection-status').innerText = 'Connected';
+            document.getElementById('connection-status').className = 'badge bg-success';
+        });
+
+        this.socket.on("disconnect", () => {
+            console.log("Socket disconnected");
+            this.connected = false;
+            document.getElementById('connection-status').innerText = 'Disconnected';
+            document.getElementById('connection-status').className = 'badge bg-danger';
+        });
+
+        this.socket.on("status", (data) => {
+            console.log("Status:", data);
+            if (data.msg === "registered") {
+                document.getElementById('viewer-role').innerText = 'Primary';
+                document.getElementById('viewer-role').className = 'badge bg-primary';
+            } else if (data.msg === "viewer_only") {
+                document.getElementById('viewer-role').innerText = 'Viewer Only';
+                document.getElementById('viewer-role').className = 'badge bg-warning';
+            }
+        });
+
+        // Handle RPC commands from the Python backend using our custom approach
+        this.socket.on("command", async (data) => {
+            try {
+                console.log("Received command from Python:", data);
+                
+                // Extract the payload and response event ID
+                const payload = data.payload;
+                const responseEvent = data.response_event;
+                
+                // Execute the command
+                await this.execCommand(payload);
+                
+                // Take a screenshot and send it back as the response
+                const png = this.viewer.pngURI();
+                
+                // Send the response to the specific event
+                this.socket.emit(responseEvent, { status: "success", img: png });
+            } catch (error) {
+                console.error("Error executing command:", error);
+                if (data.response_event) {
+                    this.socket.emit(data.response_event, { status: "error", error: error.message });
+                }
+            }
+        });
+    }
+
+    // Initialize 3Dmol.js viewer
+    initViewer() {
+        this.viewer = $3Dmol.createViewer("viewer", { backgroundColor: "black" });
+        this.viewer.setViewStyle({ style: "outline" });
+        this.viewer.render();
+        console.log("3Dmol viewer initialized");
+    }
+
+    // Execute a command on the 3D viewer
+    async execCommand(p) {
+        console.log("Executing command:", p.name, p);
+        
+        switch (p.name) {
+            case "load_pdb":
+                const url = `https://files.rcsb.org/download/${p.pdb_id}.pdb`;
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch PDB: ${response.statusText}`);
+                    }
+                    const txt = await response.text();
+                    this.viewer.clear();
+                    this.viewer.addModel(txt, "pdb");
+                    this.viewer.setStyle({}, { cartoon: { color: "spectrum" } });
+                    this.viewer.zoomTo();
+                } catch (error) {
+                    console.error("Error loading PDB:", error);
+                    throw error;
+                }
+                break;
+
+            case "highlight_hetero":
+                this.viewer.setStyle({ hetflag: true }, { stick: { colorscheme: "orangeCarbon" } });
+                break;
+
+            case "show_surface":
+                this.viewer.addSurface($3Dmol.SurfaceType.VDW, 
+                                       { opacity: 0.8, color: "white" }, 
+                                       p.selection || {});
+                break;
+
+            case "rotate":
+                // Ensure parameters are valid numbers
+                const angleX = typeof p.x === 'number' ? p.x : 0;
+                const angleY = typeof p.y === 'number' ? p.y : 0;
+                const angleZ = typeof p.z === 'number' ? p.z : 0;
+                
+                console.log(`Rotating molecule: X=${angleX}°, Y=${angleY}°, Z=${angleZ}°`);
+                
+                // Apply rotation with animation for better visualization
+                if (angleX !== 0) {
+                    this.viewer.rotate(angleX, 0, 0, 100);
+                }
+                if (angleY !== 0) {
+                    this.viewer.rotate(0, angleY, 0, 100);
+                }
+                if (angleZ !== 0) {
+                    this.viewer.rotate(0, 0, angleZ, 100);
+                }
+                
+                // Force render update
+                setTimeout(() => this.viewer.render(), 200);
+                break;
+
+            case "zoom":
+                this.viewer.zoom(p.factor || 1.2, 1000);
+                break;
+
+            case "add_box":
+                // Clear any existing shapes first
+                this.viewer.removeAllShapes();
+                
+                // Make sure center and size are properly formatted as objects
+                const center = {
+                    x: p.center && typeof p.center.x === 'number' ? p.center.x : 0,
+                    y: p.center && typeof p.center.y === 'number' ? p.center.y : 0,
+                    z: p.center && typeof p.center.z === 'number' ? p.center.z : 0
+                };
+                
+                const size = {
+                    x: p.size && typeof p.size.x === 'number' ? p.size.x : 10,
+                    y: p.size && typeof p.size.y === 'number' ? p.size.y : 10,
+                    z: p.size && typeof p.size.z === 'number' ? p.size.z : 10
+                };
+                
+                console.log("Adding box with center:", center, "and size:", size);
+                
+                // Add the box with proper dimensions
+                const shape = this.viewer.addBox({
+                    center: center,
+                    dimensions: size,
+                    wireframe: true,
+                    color: "magenta",
+                    wirewidth: 3
+                });
+                
+                // Create/update box information prominently on the screen
+                let boxInfoEl = document.getElementById("boxinfo");
+                if (!boxInfoEl) {
+                    boxInfoEl = document.createElement("div");
+                    boxInfoEl.id = "boxinfo";
+                    document.getElementById("viewer-container").appendChild(boxInfoEl);
+                }
+                
+                boxInfoEl.style.display = "block";
+                boxInfoEl.innerHTML = `
+                    <div class="box-info-content">
+                        <div><strong>Box Center:</strong> (${center.x.toFixed(1)}, ${center.y.toFixed(1)}, ${center.z.toFixed(1)})</div>
+                        <div><strong>Box Size:</strong> (${size.x.toFixed(1)}, ${size.y.toFixed(1)}, ${size.z.toFixed(1)})</div>
+                    </div>
+                `;
+                break;
+
+            case "set_style":
+                this.viewer.setStyle(p.selection || {}, p.style || {});
+                break;
+
+            case "reset":
+                console.log("Resetting view to default...");
+                
+                // Hide any visible box information
+                let boxInfoEl = document.getElementById("boxinfo");
+                if (boxInfoEl) {
+                    boxInfoEl.style.display = "none";
+                }
+                
+                // Remove all shapes such as boxes
+                this.viewer.removeAllShapes();
+                
+                // Reset the camera completely
+                this.viewer.setView(null, 300); // Reset to default orientation
+                this.viewer.zoomTo();          // Reset zoom level
+                this.viewer.center();          // Center on molecule
+                
+                // Force a complete render after reset
+                setTimeout(() => {
+                    this.viewer.render();
+                    console.log("View reset complete");
+                }, 350);
+                break;
+
+            default:
+                console.warn("Unknown command:", p.name);
+                break;
+        }
+        
+        this.viewer.render();
+    }
+
+    // Take a screenshot of the current view
+    takeScreenshot() {
+        return this.viewer.pngURI();
+    }
+
+    // Public methods for direct browser UI interaction
+    // These methods will execute commands locally and also return the resulting image
+    async loadPdb(pdbId) {
+        await this.execCommand({ name: "load_pdb", pdb_id: pdbId });
+        return this.takeScreenshot();
+    }
+
+    async highlightHetero() {
+        await this.execCommand({ name: "highlight_hetero" });
+        return this.takeScreenshot();
+    }
+
+    async showSurface(selection = {}) {
+        await this.execCommand({ name: "show_surface", selection });
+        return this.takeScreenshot();
+    }
+
+    async rotate(x = 0, y = 0, z = 0) {
+        await this.execCommand({ name: "rotate", x, y, z });
+        return this.takeScreenshot();
+    }
+
+    async zoom(factor = 1.2) {
+        await this.execCommand({ name: "zoom", factor });
+        return this.takeScreenshot();
+    }
+
+    async addBox(center, size) {
+        await this.execCommand({ name: "add_box", center, size });
+        return this.takeScreenshot();
+    }
+
+    async setStyle(selection, style) {
+        await this.execCommand({ name: "set_style", selection, style });
+        return this.takeScreenshot();
+    }
+
+    async resetView() {
+        await this.execCommand({ name: "reset" });
+        return this.takeScreenshot();
+    }
+}
+
+// Global instance of the viewer
+let molecularViewer;
+
+// Initialize the viewer when the DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+    molecularViewer = new MolecularViewer();
+    window.molecularViewer = molecularViewer; // Make available globally for both UI and Python backend
+    
+    // Load a default PDB structure when the page loads
+    setTimeout(() => {
+        console.log("Loading default PDB structure (1CRN)...");
+        molecularViewer.loadPdb("1CRN")
+            .then(() => console.log("Default PDB structure loaded successfully"))
+            .catch(err => console.error("Error loading default PDB:", err));
+    }, 1000); // Slight delay to ensure the viewer is fully initialized
+});

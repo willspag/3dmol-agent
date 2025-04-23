@@ -1,0 +1,1688 @@
+[2025-04-18 22:44:19 +0000] [6624] [INFO] Starting gunicorn 23.0.0
+[2025-04-18 22:44:19 +0000] [6624] [INFO] Listening at: http://0.0.0.0:5000 (6624)
+[2025-04-18 22:44:19 +0000] [6624] [INFO] Using worker: sync
+[2025-04-18 22:44:19 +0000] [6635] [INFO] Booting worker with pid: 6635
+[2025-04-18 22:44:19 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:19 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:19 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:19 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:19 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:19 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:19 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:19 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:19 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:19 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:19 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+[2025-04-18 22:44:20 +0000] [6624] [INFO] Handling signal: winch
+INFO:app:Primary client connected with SID: JES0BUCm_WL7GrqMAAAD
+INFO:app:Secondary client connected with SID: Cci5Qsb7NPFN_EfnAAAE
+INFO:app:Secondary client connected with SID: saqojoHJ7ImJ2_-hAAAF
+Invalid transport (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid transport (further occurrences of this error will be logged with level INFO)
+INFO:app:Secondary client disconnected: Cci5Qsb7NPFN_EfnAAAE
+INFO:app:Secondary client disconnected: saqojoHJ7ImJ2_-hAAAF
+INFO:app:Primary client disconnected: JES0BUCm_WL7GrqMAAAD
+INFO:app:Primary client connected with SID: cSX9MN0E_XHLkwm_AAAI
+INFO:app:Secondary client connected with SID: DhQkXTx-My4pKWoVAAAK
+INFO:app:Secondary client connected with SID: ozGYUU3i6BYVYJJSAAAP
+INFO:app:Secondary client connected with SID: v02qytDLsLTOWG3lAAAQ
+INFO:app:Secondary client connected with SID: 1p_6VbPRXhJzrsiyAAAV
+INFO:app:Secondary client connected with SID: kSx67mJDlprFPgGTAAAW
+INFO:app:Primary client disconnected: cSX9MN0E_XHLkwm_AAAI
+INFO:app:New primary client assigned: DhQkXTx-My4pKWoVAAAK
+INFO:app:Primary client disconnected: DhQkXTx-My4pKWoVAAAK
+INFO:app:New primary client assigned: ozGYUU3i6BYVYJJSAAAP
+INFO:app:Secondary client disconnected: kSx67mJDlprFPgGTAAAW
+Invalid session gCxHV4QkrtGRF--gAAAU (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session gCxHV4QkrtGRF--gAAAU (further occurrences of this error will be logged with level INFO)
+[2025-04-18 22:47:45 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6635)
+[2025-04-18 22:47:45 +0000] [6635] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB5F6w&sid=u0ilHMnWMSSawfqfAAAN
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 22:47:45 +0000] [6635] [INFO] Worker exiting (pid: 6635)
+[2025-04-18 22:47:45 +0000] [6809] [INFO] Booting worker with pid: 6809
+Invalid session u0ilHMnWMSSawfqfAAAN (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session u0ilHMnWMSSawfqfAAAN (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: dAQuX03g0HsORKxiAAAD
+INFO:app:Secondary client connected with SID: D1f3MpiYcdI6FfVIAAAE
+INFO:app:Secondary client connected with SID: mDT66S565AR74GaqAAAJ
+[2025-04-18 22:49:06 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6809)
+[2025-04-18 22:49:06 +0000] [6809] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB5ev9&sid=WuHpgpLE3BDaOMg6AAAC
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 22:49:06 +0000] [6809] [INFO] Worker exiting (pid: 6809)
+[2025-04-18 22:49:06 +0000] [6820] [INFO] Booting worker with pid: 6820
+Invalid session WuHpgpLE3BDaOMg6AAAC (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session WuHpgpLE3BDaOMg6AAAC (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: agx7Kw_GgoZkbM05AAAB
+INFO:app:Secondary client connected with SID: s81jUan6oUpiZlS0AAAI
+INFO:app:Secondary client connected with SID: PSxoTq5bom5w2PltAAAJ
+INFO:app:Secondary client connected with SID: PXUMtNJWAfimTdDyAAAK
+[2025-04-18 22:50:54 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6820)
+[2025-04-18 22:50:54 +0000] [6820] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB695i&sid=prXqgjdbSFMk-V6bAAAF
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 22:50:54 +0000] [6820] [INFO] Worker exiting (pid: 6820)
+[2025-04-18 22:50:54 +0000] [6831] [INFO] Booting worker with pid: 6831
+Invalid session pmMxYsRWP71__jWEAAAH (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session pmMxYsRWP71__jWEAAAH (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: eluk6yk3EMWQeKWpAAAB
+INFO:app:Secondary client connected with SID: FA7wDHtbIl9TzuTOAAAG
+INFO:app:Secondary client connected with SID: dwJWUagYJBGOQ1ThAAAJ
+INFO:app:Secondary client connected with SID: obABI9FRGAm-uLOWAAAK
+[2025-04-18 22:53:05 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6831)
+[2025-04-18 22:53:05 +0000] [6831] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB6ZEY&sid=MAGt4vWScIu9m6uOAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 22:53:05 +0000] [6831] [INFO] Worker exiting (pid: 6831)
+[2025-04-18 22:53:05 +0000] [6844] [INFO] Booting worker with pid: 6844
+Invalid session MAGt4vWScIu9m6uOAAAA (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session MAGt4vWScIu9m6uOAAAA (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: fxflCXpFj1ULKhKLAAAB
+INFO:app:Secondary client connected with SID: p5xzxk_alVdnkq0kAAAI
+[2025-04-18 22:54:01 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6844)
+[2025-04-18 22:54:01 +0000] [6844] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB6t0X&sid=Zt4xTIZ-tuSHc4DyAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 22:54:01 +0000] [6844] [INFO] Worker exiting (pid: 6844)
+[2025-04-18 22:54:02 +0000] [6854] [INFO] Booting worker with pid: 6854
+Invalid session MJCQreQ-IJsJHNWNAAAF (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session MJCQreQ-IJsJHNWNAAAF (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: Qjq6krVnxogzpbO2AAAB
+INFO:app:Secondary client connected with SID: 9u3vEop5jZYka0PJAAAI
+INFO:app:Secondary client connected with SID: OkpuJC1SKdpTDPZyAAAJ
+INFO:app:Secondary client connected with SID: RS35z7QDUpVR_IpJAAAK
+[2025-04-18 22:56:14 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6854)
+[2025-04-18 22:56:14 +0000] [6854] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB7H9o&sid=13SQclbNk5M56ip4AAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 22:56:14 +0000] [6854] [INFO] Worker exiting (pid: 6854)
+[2025-04-18 22:56:14 +0000] [6868] [INFO] Booting worker with pid: 6868
+Invalid session D9rUQA6LEyUISD2LAAAH (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session D9rUQA6LEyUISD2LAAAH (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: lECAP4MMXcpryhM2AAAB
+INFO:app:Secondary client connected with SID: 0am3OEA4tT8pwQ41AAAG
+[2025-04-18 22:57:36 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6868)
+[2025-04-18 22:57:36 +0000] [6868] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB7hHe&sid=wcMCxvo1RJU66wVnAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 22:57:36 +0000] [6868] [INFO] Worker exiting (pid: 6868)
+[2025-04-18 22:57:36 +0000] [6879] [INFO] Booting worker with pid: 6879
+Invalid session uggase7AGamBDn-sAAAF (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session uggase7AGamBDn-sAAAF (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: QvDEkH3YFV1eleIHAAAB
+[2025-04-18 22:58:33 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6879)
+[2025-04-18 22:58:33 +0000] [6879] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB7vH3&sid=gCnbhxC1OIYAACORAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 22:58:33 +0000] [6879] [INFO] Worker exiting (pid: 6879)
+[2025-04-18 22:58:33 +0000] [6888] [INFO] Booting worker with pid: 6888
+Invalid session gCnbhxC1OIYAACORAAAA (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session gCnbhxC1OIYAACORAAAA (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: LiBzoCN1Mz1-77y_AAAC
+INFO:app:Secondary client connected with SID: ETUTX2oGrAzWdp_PAAAI
+INFO:app:Secondary client connected with SID: IGjtwbIcqyODIMTaAAAJ
+INFO:app:Secondary client connected with SID: 9a-EcjlfzlxSwFoSAAAK
+[2025-04-18 22:59:56 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6888)
+[2025-04-18 22:59:56 +0000] [6888] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB8DP2&sid=KExKdZ49yeYbEcPYAAAG
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 22:59:56 +0000] [6888] [INFO] Worker exiting (pid: 6888)
+[2025-04-18 22:59:56 +0000] [6899] [INFO] Booting worker with pid: 6899
+Invalid session X3E9MMxClbd6cwygAAAF (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session X3E9MMxClbd6cwygAAAF (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: SdWuGO2_GhGo6Vi8AAAB
+INFO:app:Secondary client connected with SID: L_IAJGoXavpHJqkSAAAH
+INFO:app:Secondary client connected with SID: QzLyeVz1g3DS-kDxAAAI
+[2025-04-18 23:01:18 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6899)
+[2025-04-18 23:01:18 +0000] [6899] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB8XUh.0&sid=JslRj6g5u6PD_fqPAAAF
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:01:18 +0000] [6899] [INFO] Worker exiting (pid: 6899)
+[2025-04-18 23:01:18 +0000] [6911] [INFO] Booting worker with pid: 6911
+Invalid session EnM6LOiEbbxUCrTnAAAJ (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session EnM6LOiEbbxUCrTnAAAJ (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: cXVT9LWVkZM_tEOUAAAB
+INFO:app:Secondary client connected with SID: 0pElkJ5Wv9kgTGYNAAAH
+INFO:app:Secondary client connected with SID: JhKRgX4sZ_vaHhikAAAI
+[2025-04-18 23:02:39 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6911)
+[2025-04-18 23:02:39 +0000] [6911] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB8rRa.1&sid=KL2ozaWmw4QR-5XPAAAG
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:02:39 +0000] [6911] [INFO] Worker exiting (pid: 6911)
+[2025-04-18 23:02:39 +0000] [6922] [INFO] Booting worker with pid: 6922
+Invalid session y7cPD1Q3qoxpp4g0AAAJ (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session y7cPD1Q3qoxpp4g0AAAJ (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: XTSCbyEPhiASKODhAAAB
+INFO:app:Secondary client connected with SID: opHxzklH3k6LWIDJAAAI
+INFO:app:Secondary client connected with SID: tWDeyHsbjb22kxiTAAAJ
+[2025-04-18 23:04:01 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6922)
+[2025-04-18 23:04:01 +0000] [6922] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB99Ur&sid=limo2fV-OE-B9IQlAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:04:01 +0000] [6922] [INFO] Worker exiting (pid: 6922)
+[2025-04-18 23:04:01 +0000] [6934] [INFO] Booting worker with pid: 6934
+Invalid session qg3zZaHtEGpGNXnQAAAH (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session qg3zZaHtEGpGNXnQAAAH (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: X41tVnkBMu0GQIErAAAB
+INFO:app:Secondary client connected with SID: Z_J2BYNDD9zv2u1_AAAI
+INFO:app:Secondary client connected with SID: VWTP76bZzJFq5fd-AAAJ
+INFO:app:Secondary client connected with SID: SNbLv7VY-gLHYYkQAAAK
+[2025-04-18 23:05:24 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6934)
+[2025-04-18 23:05:24 +0000] [6934] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB9TWP&sid=XAmtVK2QMQINqgZRAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:05:24 +0000] [6934] [INFO] Worker exiting (pid: 6934)
+[2025-04-18 23:05:24 +0000] [6945] [INFO] Booting worker with pid: 6945
+Invalid session 9e3Xj3oRc3t5KUjXAAAH (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session 9e3Xj3oRc3t5KUjXAAAH (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: 6WU7e2VbSMbS-TlrAAAB
+[2025-04-18 23:06:21 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6945)
+[2025-04-18 23:06:21 +0000] [6945] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB9hPR&sid=Ag0UvyJm9KUCQ27MAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:06:21 +0000] [6945] [INFO] Worker exiting (pid: 6945)
+[2025-04-18 23:06:21 +0000] [6954] [INFO] Booting worker with pid: 6954
+Invalid session 7CEpGTqUk5g7sSfjAAAF (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session 7CEpGTqUk5g7sSfjAAAF (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: S9VYTdN43rApgRVfAAAB
+INFO:app:Secondary client connected with SID: O40U5uhbZGA6t7EuAAAI
+INFO:app:Secondary client connected with SID: iKGIFVAa7Qdc-AjMAAAJ
+INFO:app:Secondary client connected with SID: Ziokq3IBMDmluE_eAAAK
+[2025-04-18 23:07:43 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6954)
+[2025-04-18 23:07:43 +0000] [6954] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPB9_XA.0&sid=Htc27rGSwZx1k_caAAAH
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:07:43 +0000] [6954] [INFO] Worker exiting (pid: 6954)
+[2025-04-18 23:07:43 +0000] [6966] [INFO] Booting worker with pid: 6966
+Invalid session Lkaw8bxtZqVxb1zmAAAE (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session Lkaw8bxtZqVxb1zmAAAE (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: eCzOGhxE77FPmxVvAAAB
+INFO:app:Secondary client connected with SID: XS0pkPhKrR4ciSzlAAAH
+INFO:app:Secondary client connected with SID: RZpVjdzF4i4jk-LMAAAJ
+INFO:app:Secondary client connected with SID: j_IRo_5CKbJk9vLgAAAK
+[2025-04-18 23:09:05 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6966)
+[2025-04-18 23:09:05 +0000] [6966] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBAJdt&sid=WPHu9QuCJWWn6qrZAAAG
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:09:05 +0000] [6966] [INFO] Worker exiting (pid: 6966)
+[2025-04-18 23:09:05 +0000] [6977] [INFO] Booting worker with pid: 6977
+Invalid session NSIrJDyq7w1aElthAAAI (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session NSIrJDyq7w1aElthAAAI (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: ehnenuatzy9Z2TO8AAAB
+[2025-04-18 23:10:03 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6977)
+[2025-04-18 23:10:03 +0000] [6977] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBAXcA&sid=5z4c4e6TRgCgdzHlAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:10:03 +0000] [6977] [INFO] Worker exiting (pid: 6977)
+[2025-04-18 23:10:03 +0000] [6987] [INFO] Booting worker with pid: 6987
+Invalid session 5z4c4e6TRgCgdzHlAAAA (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session 5z4c4e6TRgCgdzHlAAAA (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: XtEFlAmlpVTu0xkMAAAB
+INFO:app:Secondary client connected with SID: GN248fzvYOu6BNopAAAH
+INFO:app:Secondary client connected with SID: tdYlM9MIIli1zJWpAAAJ
+[2025-04-18 23:11:25 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:6987)
+[2025-04-18 23:11:25 +0000] [6987] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBAreq&sid=rM5R-8VvRxfj2vwzAAAG
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:11:25 +0000] [6987] [INFO] Worker exiting (pid: 6987)
+[2025-04-18 23:11:25 +0000] [7000] [INFO] Booting worker with pid: 7000
+Invalid session rM5R-8VvRxfj2vwzAAAG (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session rM5R-8VvRxfj2vwzAAAG (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: HpQn8Eo1sBL9rnDZAAAB
+INFO:app:Secondary client connected with SID: 7uyCWkdKqKXyclC-AAAH
+INFO:app:Secondary client connected with SID: -gZh2Lf1ZVNpyjg-AAAI
+[2025-04-18 23:13:11 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7000)
+[2025-04-18 23:13:11 +0000] [7000] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBBFkV&sid=zIw0KLYXs8-gJlq1AAAF
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:13:11 +0000] [7000] [INFO] Worker exiting (pid: 7000)
+[2025-04-18 23:13:11 +0000] [7011] [INFO] Booting worker with pid: 7011
+Invalid session MkwhDFIi3utRLG0AAAAA (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session MkwhDFIi3utRLG0AAAAA (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: _w4gsTB-_yF2PPxzAAAB
+INFO:app:Secondary client connected with SID: s5YclPZHR32OWDPMAAAH
+[2025-04-18 23:14:08 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7011)
+[2025-04-18 23:14:08 +0000] [7011] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBBTeL&sid=1hfwjqEs3rtj6S_xAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:14:08 +0000] [7011] [INFO] Worker exiting (pid: 7011)
+[2025-04-18 23:14:08 +0000] [7021] [INFO] Booting worker with pid: 7021
+Invalid session DQ7g_LvYVDykyztGAAAG (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session DQ7g_LvYVDykyztGAAAG (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: moB-tACWHMgAUWDrAAAB
+INFO:app:Secondary client connected with SID: 6QFOmh9pDBzMjUvHAAAH
+INFO:app:Secondary client connected with SID: 7KcAGB6kraE5COX0AAAI
+[2025-04-18 23:15:30 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7021)
+[2025-04-18 23:15:30 +0000] [7021] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBBnZH&sid=O9eKBWanC5vNn3bAAAAF
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:15:30 +0000] [7021] [INFO] Worker exiting (pid: 7021)
+[2025-04-18 23:15:30 +0000] [7032] [INFO] Booting worker with pid: 7032
+Invalid session O9eKBWanC5vNn3bAAAAF (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session O9eKBWanC5vNn3bAAAAF (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: zm02EW6UXNRp_SupAAAC
+INFO:app:Secondary client connected with SID: biJSI3vbjoohNXU9AAAD
+INFO:app:Secondary client connected with SID: 7Udoax9Wgf03CXIEAAAG
+[2025-04-18 23:17:17 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7032)
+[2025-04-18 23:17:17 +0000] [7032] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBC5ag&sid=1WHScUZ8w5jHqQt7AAAB
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:17:17 +0000] [7032] [INFO] Worker exiting (pid: 7032)
+[2025-04-18 23:17:17 +0000] [7043] [INFO] Booting worker with pid: 7043
+Invalid session 6gYX2jsGkku2sB-rAAAH (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session 6gYX2jsGkku2sB-rAAAH (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: xn8VJYv3HYOx80kbAAAB
+INFO:app:Secondary client connected with SID: YpQVapIOWUVCSrmmAAAH
+INFO:app:Secondary client connected with SID: HsgrTR5-gVGgPDN1AAAJ
+[2025-04-18 23:18:38 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7043)
+[2025-04-18 23:18:38 +0000] [7043] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBCVdN&sid=X0H9XgO_B9Z1fWfsAAAF
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:18:38 +0000] [7043] [INFO] Worker exiting (pid: 7043)
+[2025-04-18 23:18:38 +0000] [7054] [INFO] Booting worker with pid: 7054
+Invalid session koez4TvMnKHL8YzwAAAA (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session koez4TvMnKHL8YzwAAAA (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: eVSuViyK3Tv7HZTXAAAB
+INFO:app:Secondary client connected with SID: CN-Zp3J6jPwEClZFAAAG
+INFO:app:Secondary client connected with SID: rouNRrzpHBZaLG6DAAAJ
+INFO:app:Secondary client connected with SID: JQCFAauIiQ_4xINwAAAK
+[2025-04-18 23:20:51 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7054)
+[2025-04-18 23:20:51 +0000] [7054] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBCvdy&sid=UDFnr_rMtU2oM-yWAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:20:51 +0000] [7054] [INFO] Worker exiting (pid: 7054)
+[2025-04-18 23:20:51 +0000] [7067] [INFO] Booting worker with pid: 7067
+Invalid session UDFnr_rMtU2oM-yWAAAA (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session UDFnr_rMtU2oM-yWAAAA (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: thR0Iib7QX23MY1nAAAB
+INFO:app:Secondary client connected with SID: UFF1C1gQU_74xpr0AAAI
+INFO:app:Secondary client connected with SID: KsRqEzuU8c6wlJMXAAAJ
+[2025-04-18 23:22:13 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7067)
+[2025-04-18 23:22:13 +0000] [7067] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBDDpL&sid=66mqgzq2ktJ12_6pAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:22:13 +0000] [7067] [INFO] Worker exiting (pid: 7067)
+[2025-04-18 23:22:13 +0000] [7077] [INFO] Booting worker with pid: 7077
+Invalid session 66mqgzq2ktJ12_6pAAAA (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session 66mqgzq2ktJ12_6pAAAA (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: YeF-nOF5F-gllgdJAAAB
+[2025-04-18 23:23:09 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7077)
+[2025-04-18 23:23:09 +0000] [7077] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBDXhH&sid=EoiFRz06gXxAAPK6AAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:23:09 +0000] [7077] [INFO] Worker exiting (pid: 7077)
+[2025-04-18 23:23:09 +0000] [7086] [INFO] Booting worker with pid: 7086
+Invalid session _KexcTydRQfA_ijAAAAG (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session _KexcTydRQfA_ijAAAAG (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: zMdAfZZgS2X0TrgMAAAC
+INFO:app:Secondary client connected with SID: idceXKe2n3w59PIFAAAH
+INFO:app:Secondary client connected with SID: ECb0l-z5jDhoC4WNAAAI
+[2025-04-18 23:24:55 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7086)
+[2025-04-18 23:24:55 +0000] [7086] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBDrXE&sid=zWz8AHTjSk1nrJmJAAAF
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:24:55 +0000] [7086] [INFO] Worker exiting (pid: 7086)
+[2025-04-18 23:24:55 +0000] [7097] [INFO] Booting worker with pid: 7097
+Invalid session zWz8AHTjSk1nrJmJAAAF (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session zWz8AHTjSk1nrJmJAAAF (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: pNq53Y4LsH2jtSpIAAAB
+INFO:app:Secondary client connected with SID: WxmYX-wgg-V2y32BAAAH
+INFO:app:Secondary client connected with SID: 5k_nzCgmaNBULo3qAAAI
+[2025-04-18 23:27:07 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7097)
+[2025-04-18 23:27:07 +0000] [7097] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBELbT&sid=YV57p4_diDPGUx9gAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:27:07 +0000] [7097] [INFO] Worker exiting (pid: 7097)
+[2025-04-18 23:27:07 +0000] [7110] [INFO] Booting worker with pid: 7110
+Invalid session YV57p4_diDPGUx9gAAAA (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session YV57p4_diDPGUx9gAAAA (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: -bPQa-OOgjONrkN0AAAB
+INFO:app:Secondary client connected with SID: -4PIwVX1q-wBkxFVAAAH
+INFO:app:Secondary client connected with SID: yiYGqTzBotu0V5MSAAAI
+[2025-04-18 23:28:28 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7110)
+[2025-04-18 23:28:28 +0000] [7110] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBElWr&sid=OcngtqNNZSLLfxa6AAAG
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:28:28 +0000] [7110] [INFO] Worker exiting (pid: 7110)
+[2025-04-18 23:28:28 +0000] [7121] [INFO] Booting worker with pid: 7121
+Invalid session 8F7Piz89Q84csqwNAAAA (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session 8F7Piz89Q84csqwNAAAA (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: eYdqxz5v_RAL-zoGAAAB
+INFO:app:Secondary client connected with SID: eiRalGqumjCmXGGzAAAH
+INFO:app:Secondary client connected with SID: c3-SRQRHvF0a9w8FAAAI
+[2025-04-18 23:29:50 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7121)
+[2025-04-18 23:29:50 +0000] [7121] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBF3Uy&sid=uF-SZNKM8EKfLUAmAAAF
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:29:50 +0000] [7121] [INFO] Worker exiting (pid: 7121)
+[2025-04-18 23:29:50 +0000] [7133] [INFO] Booting worker with pid: 7133
+Invalid session uF-SZNKM8EKfLUAmAAAF (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session uF-SZNKM8EKfLUAmAAAF (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: T-gnd9V4mfF8zUWtAAAC
+INFO:app:Secondary client connected with SID: i9kRaL85g_dTxrkCAAAD
+INFO:app:Secondary client connected with SID: qfGj2dAkdaSqWlZ8AAAH
+[2025-04-18 23:30:47 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7133)
+[2025-04-18 23:30:47 +0000] [7133] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBFHSX&sid=JifLzXernhYJb_bSAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:30:47 +0000] [7133] [INFO] Worker exiting (pid: 7133)
+[2025-04-18 23:30:47 +0000] [7141] [INFO] Booting worker with pid: 7141
+Invalid session JifLzXernhYJb_bSAAAA (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session JifLzXernhYJb_bSAAAA (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: fPG_IiI6cpm6RDN-AAAB
+[2025-04-18 23:31:43 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7141)
+[2025-04-18 23:31:43 +0000] [7141] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBFVIZ&sid=9kbo3cqu_W0wP6BCAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:31:43 +0000] [7141] [INFO] Worker exiting (pid: 7141)
+[2025-04-18 23:31:43 +0000] [7151] [INFO] Booting worker with pid: 7151
+Invalid session 7We5z85SAQpUhSwsAAAG (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session 7We5z85SAQpUhSwsAAAG (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: Vn0l19x5sSwq6yPuAAAB
+INFO:app:Secondary client connected with SID: LTBINLCr9IJGIz60AAAH
+[2025-04-18 23:32:41 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7151)
+[2025-04-18 23:32:41 +0000] [7151] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBFjDs&sid=o-3mBIGe3Y2FmsLZAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:32:41 +0000] [7151] [INFO] Worker exiting (pid: 7151)
+[2025-04-18 23:32:41 +0000] [7160] [INFO] Booting worker with pid: 7160
+Invalid session rzHxla_XFJXJAzKBAAAF (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session rzHxla_XFJXJAzKBAAAF (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: BmRkuig_-FoDCTsqAAAB
+INFO:app:Secondary client connected with SID: yEUP6ueBhSQl_KNEAAAH
+INFO:app:Secondary client connected with SID: PjJ_BdW4Gq530R4rAAAI
+INFO:app:Secondary client connected with SID: aIISGSlNLDcUv7n1AAAK
+[2025-04-18 23:36:32 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7160)
+[2025-04-18 23:36:32 +0000] [7160] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBGPVd&sid=wJKAlqYjRkvZfjs0AAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:36:32 +0000] [7160] [INFO] Worker exiting (pid: 7160)
+[2025-04-18 23:36:32 +0000] [7178] [INFO] Booting worker with pid: 7178
+Invalid session wJKAlqYjRkvZfjs0AAAA (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session wJKAlqYjRkvZfjs0AAAA (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: 02dxW3H3PQXXDpS_AAAB
+INFO:app:Secondary client connected with SID: le9GOQ6xV9lE6IyrAAAI
+INFO:app:Secondary client connected with SID: BbQgrCHrwf_27fZKAAAJ
+INFO:app:Secondary client connected with SID: iqxEaS0ogNPt5IICAAAK
+[2025-04-18 23:37:54 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7178)
+[2025-04-18 23:37:54 +0000] [7178] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBGvq6&sid=v0DiD_TTeYqriKn3AAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:37:54 +0000] [7178] [INFO] Worker exiting (pid: 7178)
+[2025-04-18 23:37:54 +0000] [7190] [INFO] Booting worker with pid: 7190
+Invalid session FFV-vyqe1MPLWSAPAAAH (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session FFV-vyqe1MPLWSAPAAAH (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: lsSSDH_qHKNcDSWOAAAB
+[2025-04-18 23:38:52 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7190)
+[2025-04-18 23:38:52 +0000] [7190] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBH7j4&sid=_fHiVLADaMlQ0bGkAAAA
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:38:52 +0000] [7190] [INFO] Worker exiting (pid: 7190)
+[2025-04-18 23:38:52 +0000] [7199] [INFO] Booting worker with pid: 7199
+Invalid session S0HudEEW8CtSXKTcAAAF (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session S0HudEEW8CtSXKTcAAAF (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: p4UMVJiy6u6bN6HnAAAC
+INFO:app:Secondary client connected with SID: c7wi2JkjOJ9OMYRhAAAI
+INFO:app:Secondary client connected with SID: fMVS9yGd_VL9-MmEAAAJ
+[2025-04-18 23:40:14 +0000] [6624] [CRITICAL] WORKER TIMEOUT (pid:7199)
+[2025-04-18 23:40:14 +0000] [7199] [ERROR] Error handling request /socket.io/?EIO=4&transport=polling&t=PPBHRtu&sid=pYnLcz1acyaZ_74LAAAB
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 134, in handle
+    self.handle_request(listener, req, client, addr)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/sync.py", line 177, in handle_request
+    respiter = self.wsgi(environ, resp.start_response)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask/app.py", line 1536, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/flask_socketio/__init__.py", line 42, in __call__
+    return super().__call__(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/middleware.py", line 63, in __call__
+    return self.engineio_app.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/socketio/server.py", line 434, in handle_request
+    return self.eio.handle_request(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/server.py", line 286, in handle_request
+    packets = socket.handle_get_request(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 99, in handle_get_request
+    packets = self.poll()
+              ^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/engineio/socket.py", line 16, in poll
+    packets = [self.queue.get(
+               ^^^^^^^^^^^^^^^
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/nix/store/clx0mcir7qw8zk36zbr4jra789g3knf6-python3-3.11.10/lib/python3.11/threading.py", line 331, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/gunicorn/workers/base.py", line 204, in handle_abort
+    sys.exit(1)
+SystemExit: 1
+[2025-04-18 23:40:14 +0000] [7199] [INFO] Worker exiting (pid: 7199)
+[2025-04-18 23:40:14 +0000] [7235] [INFO] Booting worker with pid: 7235
+Invalid session pYnLcz1acyaZ_74LAAAB (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid session pYnLcz1acyaZ_74LAAAB (further occurrences of this error will be logged with level INFO)
+INFO:app:Primary client connected with SID: lAKsvGiLgwecZat3AAAC

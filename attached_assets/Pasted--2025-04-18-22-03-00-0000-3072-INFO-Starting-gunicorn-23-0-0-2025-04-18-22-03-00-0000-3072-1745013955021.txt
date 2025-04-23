@@ -1,0 +1,103 @@
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Starting gunicorn 23.0.0
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Listening at: http://0.0.0.0:5000 (3072)
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Using worker: sync
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winchd: 3083
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:00 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+[2025-04-18 22:03:01 +0000] [3072] [INFO] Handling signal: winch
+INFO:app:Client connected with SID: gTycGomGZYPnB5sjAAAC
+WARNING:app:Connection refused: SID shWZwqwqoJeMZ5PiAAAD, already have gTycGomGZYPnB5sjAAAC
+Invalid transport (further occurrences of this error will be logged with level INFO)
+ERROR:engineio.server:Invalid transport (further occurrences of this error will be logged with level INFO)
+[2025-04-18 22:03:14 +0000] [3072] [INFO] Handling signal: winch
+WARNING:app:Connection refused: SID rQ_DTQ0CM-b7Z4GsAAAH, already have gTycGomGZYPnB5sjAAAC
+WARNING:app:Connection refused: SID YM21fdibOrACnP-oAAAL, already have gTycGomGZYPnB5sjAAAC
+WARNING:app:Connection refused: SID P_V0Q8A8UeraMZCaAAAM, already have gTycGomGZYPnB5sjAAAC
+WARNING:app:Connection refused: SID Faze8Kr8LofzufdoAAAP, already have gTycGomGZYPnB5sjAAAC
+INFO:app:Secondary client disconnected: rQ_DTQ0CM-b7Z4GsAAAH
+INFO:app:Secondary client disconnected: P_V0Q8A8UeraMZCaAAAM
+WARNING:app:Connection refused: SID OJG2g9d79oqG_MPmAAAW, already have gTycGomGZYPnB5sjAAAC
+WARNING:app:Connection refused: SID GC01dmnPy_ONnIF1AAAX, already have gTycGomGZYPnB5sjAAAC
+WARNING:app:Connection refused: SID 8MqDlV_owpIWSc0AAAAb, already have gTycGomGZYPnB5sjAAAC
+INFO:app:Received chat message: Please load PDB 1HSG and highlight hetero atoms
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:openai._base_client:Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'json_data': {'messages': [{'role': 'system', 'content': 'You are a helpful molecular biology assistant specializing in protein structure visualization.\nYou have access to a 3D molecular viewer and can help users visualize and manipulate protein structures.\nYou can load PDB files, highlight specific parts of molecules, show surfaces, rotate the view, zoom, and more.\nAlways be helpful, concise, and provide scientific explanations when appropriate.'}, {'role': 'user', 'content': 'Please load PDB 1HSG and highlight hetero atoms'}], 'model': 'gpt-4o', 'stream': True, 'tools': [{'type': 'function', 'name': 'load_pdb', 'description': 'Load a protein structure by PDB ID into the 3D viewer.', 'parameters': {'type': 'object', 'properties': {'pdb_id': {'type': 'string', 'description': "The 4-character PDB ID of the structure to load (e.g., '1HSG', '4FNT')."}}, 'required': ['pdb_id'], 'additionalProperties': False}}, {'type': 'function', 'name': 'highlight_hetero', 'description': 'Highlight hetero atoms (non-protein components like ligands, water, etc.) in the current structure.', 'parameters': {'type': 'object', 'properties': {}, 'additionalProperties': False}}, {'type': 'function', 'name': 'show_surface', 'description': 'Add a surface representation to the current structure.', 'parameters': {'type': 'object', 'properties': {'selection': {'type': 'object', 'description': 'Optional selection criteria to show surface only for specific parts of the structure.', 'properties': {'chain': {'type': 'string', 'description': "Chain identifier (e.g., 'A', 'B')."}, 'resi': {'type': 'string', 'description': "Residue number range (e.g., '1-100')."}}}}, 'additionalProperties': False}}, {'type': 'function', 'name': 'rotate', 'description': 'Rotate the molecule view around specified axes.', 'parameters': {'type': 'object', 'properties': {'x': {'type': 'number', 'description': 'Degrees to rotate around X-axis.'}, 'y': {'type': 'number', 'description': 'Degrees to rotate around Y-axis.'}, 'z': {'type': 'number', 'description': 'Degrees to rotate around Z-axis.'}}, 'additionalProperties': False}}, {'type': 'function', 'name': 'zoom', 'description': 'Zoom the view in or out.', 'parameters': {'type': 'object', 'properties': {'factor': {'type': 'number', 'description': 'Zoom factor. Values > 1 zoom in, values < 1 zoom out (e.g., 1.2 to zoom in 20%, 0.8 to zoom out 20%).'}}, 'required': ['factor'], 'additionalProperties': False}}, {'type': 'function', 'name': 'add_box', 'description': 'Add a box around a specific region of the structure.', 'parameters': {'type': 'object', 'properties': {'center': {'type': 'object', 'properties': {'x': {'type': 'number'}, 'y': {'type': 'number'}, 'z': {'type': 'number'}}, 'required': ['x', 'y', 'z'], 'description': 'Center coordinates of the box.'}, 'size': {'type': 'object', 'properties': {'x': {'type': 'number'}, 'y': {'type': 'number'}, 'z': {'type': 'number'}}, 'required': ['x', 'y', 'z'], 'description': 'Dimensions of the box.'}}, 'required': ['center', 'size'], 'additionalProperties': False}}, {'type': 'function', 'name': 'set_style', 'description': 'Set the visualization style for specific parts of the structure.', 'parameters': {'type': 'object', 'properties': {'selection': {'type': 'object', 'properties': {'chain': {'type': 'string', 'description': "Chain identifier (e.g., 'A', 'B')."}, 'resi': {'type': 'string', 'description': "Residue number range (e.g., '1-100')."}, 'elem': {'type': 'string', 'description': "Element symbol (e.g., 'C' for carbon, 'N' for nitrogen)."}}, 'description': 'Selection criteria to apply the style to.'}, 'style': {'type': 'object', 'properties': {'stick': {'type': 'object', 'description': 'Stick representation parameters.'}, 'cartoon': {'type': 'object', 'description': 'Cartoon representation parameters.'}, 'sphere': {'type': 'object', 'description': 'Sphere representation parameters.'}, 'line': {'type': 'object', 'description': 'Line representation parameters.'}}, 'description': 'Style configuration to apply.'}}, 'required': ['selection', 'style'], 'additionalProperties': False}}, {'type': 'function', 'name': 'reset_view', 'description': 'Reset the viewer to the default view.', 'parameters': {'type': 'object', 'properties': {}, 'additionalProperties': False}}]}}
+DEBUG:openai._base_client:Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+DEBUG:httpcore.connection:connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+DEBUG:httpcore.connection:connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7fb220592bd0>
+DEBUG:httpcore.connection:start_tls.started ssl_context=<ssl.SSLContext object at 0x7fb222e9d130> server_hostname='api.openai.com' timeout=5.0
+DEBUG:httpcore.connection:start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x7fb220593950>
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 400, b'Bad Request', [(b'Date', b'Fri, 18 Apr 2025 22:04:45 GMT'), (b'Content-Type', b'application/json'), (b'Content-Length', b'199'), (b'Connection', b'keep-alive'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'phronesis-ai'), (b'openai-processing-ms', b'10'), (b'openai-version', b'2020-10-01'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'30000000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'29999886'), (b'x-ratelimit-reset-requests', b'6ms'), (b'x-ratelimit-reset-tokens', b'0s'), (b'x-request-id', b'req_a58b7750edcc4cadf344bab9e1300e56'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'cf-cache-status', b'DYNAMIC'), (b'Set-Cookie', b'__cf_bm=3DtyvKCGb4KoAJWCwAleIXQ7GDyJfL9e9WCIpkKZ2bI-1745013885-1.0.1.1-CvuvEXlJhLeYz4faaQYQjMOLtXAsRMzPtNuVjkoNUJ5EYRCgS.YeZvvtGhSqm4AnCgKTVVYCKF0pGI.2f9ClheL4kJf7kwE5LvCIJ0AcyZI; path=/; expires=Fri, 18-Apr-25 22:34:45 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'X-Content-Type-Options', b'nosniff'), (b'Set-Cookie', b'_cfuvid=RzpgsG_rI2a__i6SzPiWMNhQmo1XbxQrQ7LvmJXAk8o-1745013885113-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Server', b'cloudflare'), (b'CF-RAY', b'932775aa2efa50d9-ORD'), (b'alt-svc', b'h3=":443"; ma=86400')])
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+DEBUG:openai._base_client:HTTP Response: POST https://api.openai.com/v1/chat/completions "400 Bad Request" Headers([('date', 'Fri, 18 Apr 2025 22:04:45 GMT'), ('content-type', 'application/json'), ('content-length', '199'), ('connection', 'keep-alive'), ('access-control-expose-headers', 'X-Request-ID'), ('openai-organization', 'phronesis-ai'), ('openai-processing-ms', '10'), ('openai-version', '2020-10-01'), ('x-ratelimit-limit-requests', '10000'), ('x-ratelimit-limit-tokens', '30000000'), ('x-ratelimit-remaining-requests', '9999'), ('x-ratelimit-remaining-tokens', '29999886'), ('x-ratelimit-reset-requests', '6ms'), ('x-ratelimit-reset-tokens', '0s'), ('x-request-id', 'req_a58b7750edcc4cadf344bab9e1300e56'), ('strict-transport-security', 'max-age=31536000; includeSubDomains; preload'), ('cf-cache-status', 'DYNAMIC'), ('set-cookie', '__cf_bm=3DtyvKCGb4KoAJWCwAleIXQ7GDyJfL9e9WCIpkKZ2bI-1745013885-1.0.1.1-CvuvEXlJhLeYz4faaQYQjMOLtXAsRMzPtNuVjkoNUJ5EYRCgS.YeZvvtGhSqm4AnCgKTVVYCKF0pGI.2f9ClheL4kJf7kwE5LvCIJ0AcyZI; path=/; expires=Fri, 18-Apr-25 22:34:45 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('x-content-type-options', 'nosniff'), ('set-cookie', '_cfuvid=RzpgsG_rI2a__i6SzPiWMNhQmo1XbxQrQ7LvmJXAk8o-1745013885113-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('server', 'cloudflare'), ('cf-ray', '932775aa2efa50d9-ORD'), ('alt-svc', 'h3=":443"; ma=86400')])
+DEBUG:openai._base_client:request_id: req_a58b7750edcc4cadf344bab9e1300e56
+DEBUG:openai._base_client:Encountered httpx.HTTPStatusError
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/openai/_base_client.py", line 1036, in _request
+    response.raise_for_status()
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '400 Bad Request' for url 'https://api.openai.com/v1/chat/completions'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+DEBUG:openai._base_client:Not retrying
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+DEBUG:openai._base_client:Re-raising status error
+ERROR:ai_assistant:Error in AI processing: Error code: 400 - {'error': {'message': "Missing required parameter: 'tools[0].function'.", 'type': 'invalid_request_error', 'param': 'tools[0].function', 'code': 'missing_required_parameter'}}
+DEBUG:app:Response chunk: {'type': 'text', 'content': 'I encountered an error: Error code: 400 - {\'error\': {\'message\': "Missing required parameter: \'tools[0].function\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function\', \'code\': \'missing_required_parameter\'}}'}
+INFO:app:Primary client disconnected: gTycGomGZYPnB5sjAAAC
+INFO:app:Secondary client disconnected: shWZwqwqoJeMZ5PiAAAD
+INFO:app:Client connected with SID: Xbez6Ov1BRooVKyIAAAg
+WARNING:app:Connection refused: SID d2xNpt_OP3fZm3e-AAAh, already have Xbez6Ov1BRooVKyIAAAg
+WARNING:app:Connection refused: SID 4X7sckClBWYjsqgHAAAi, already have Xbez6Ov1BRooVKyIAAAg
+INFO:app:Secondary client disconnected: YM21fdibOrACnP-oAAAL
+INFO:app:Secondary client disconnected: Faze8Kr8LofzufdoAAAP

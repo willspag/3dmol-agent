@@ -1,0 +1,1962 @@
+/**
+ * Running a local relay server will allow you to hide your API key
+ * and run custom logic on the server
+ *
+ * Set the local relay server address to:
+ * REACT_APP_LOCAL_RELAY_SERVER_URL=http://localhost:8081
+ *
+ * This will also require you to set OPENAI_API_KEY= in a `.env` file
+ * You can run it with `npm run relay`, in parallel with `npm start`
+ */
+
+import { useEffect, useRef, useCallback, useState } from 'react';
+import axios from 'axios';
+import React from 'react';
+
+import { RealtimeClient } from '@openai/realtime-api-beta';
+import { ItemType } from '@openai/realtime-api-beta/dist/lib/client.js';
+import { WavRecorder, WavStreamPlayer } from '../lib/wavtools/index.js';
+import { instructions } from '../utils/conversation_config.js';
+import { WavRenderer } from '../utils/wav_renderer';
+
+import { X, Zap } from 'react-feather';
+import { Button } from '../components/button/Button';
+import { Toggle } from '../components/toggle/Toggle';
+import CircleBarVisualization from '../components/CircleBarVisualization';
+import ThreeDmolViewer, { ThreeDmolViewerRef } from '../components/ThreeDmolViewer'; // Import the updated component
+import SearchResults from '../components/SearchResults'; // Import the new component
+import UploadCustomPDB from '../components/UploadCustomPDB'; // Import the new component
+import FinalResultsThreeDmolViewer from '../components/FinalResultsThreeDmolViewer';
+
+
+import './LimePage.scss';
+import { isJsxOpeningLikeElement } from 'typescript';
+import { Projection } from 'leaflet';
+import { classicNameResolver } from 'typescript';
+
+const LOCAL_RELAY_SERVER_URL: string =
+  process.env.REACT_APP_LOCAL_RELAY_SERVER_URL || '';
+
+/**
+ * Type for result from setPdbVisualization() function call
+ */
+interface PdbVisualization {
+  pdbId?: string;
+  pdbContent?: string;
+  style?: string;
+  surface?: string;
+  backgroundColor?: string;
+  spin?: string;
+}
+/**
+ * Type for custom PDB data
+ */
+interface CustomPdb {
+  content: string;
+  style?: string;
+  surface?: string;
+  backgroundColor?: string;
+  spin?: string;
+}
+
+/**
+ * Type for all event logs
+ */
+interface RealtimeEvent {
+  time: string;
+  source: 'client' | 'server';
+  count?: number;
+  event: { [key: string]: any };
+}
+
+/**
+ * Type for search results
+ */
+interface SearchResult {
+  title: string;
+  description: string;
+  link: string;
+  relevant_snippet: string;
+}
+
+interface AddSearchBoxParams {
+  x_center?: number;
+  y_center?: number;
+  z_center?: number;
+  width?: number;
+  height?: number;
+  depth?: number;
+  select_object?: {
+    chain?: string | string[];
+    resi?: number | number[];
+    resn?: string | string[];
+    elem?: string | string[];
+  };
+}
+
+export function LimePage() {
+
+  
+  /**
+   * Instantiate:
+   * - WavRecorder (speech input)
+   * - WavStreamPlayer (speech output)
+   * - RealtimeClient (API client)
+   */
+  const wavRecorderRef = useRef<WavRecorder>(
+    new WavRecorder({ sampleRate: 24000 })
+  );
+  const wavStreamPlayerRef = useRef<WavStreamPlayer>(
+    new WavStreamPlayer({ sampleRate: 24000 })
+  );
+  const clientRef = useRef<RealtimeClient>(
+    new RealtimeClient(
+      { url: LOCAL_RELAY_SERVER_URL }
+    )
+  );
+
+  /**
+   * References for
+   * - Rendering audio visualization (canvas)
+   * - Autoscrolling event logs
+   * - Timing delta for event log displays
+   */
+  const clientCanvasRef = useRef<HTMLCanvasElement>(null);
+  const serverCanvasRef = useRef<HTMLCanvasElement>(null);
+  const contentDisplay = useRef<HTMLDivElement>(null);
+  const startTimeRef = useRef<string>(new Date().toISOString());
+
+  /**
+   * All of our variables for displaying application state
+   * - items are all conversation items (dialog)
+   * - realtimeEvents are event logs, which can be expanded
+   * - memoryKv is for set_memory() function
+   * - coords, marker are for get_weather() function
+   */
+  const [items, setItems] = useState<ItemType[]>([]);
+  const [realtimeEvents, setRealtimeEvents] = useState<RealtimeEvent[]>([]);
+  const [expandedEvents, setExpandedEvents] = useState<{
+    [key: string]: boolean;
+  }>({});
+  const [isConnected, setIsConnected] = useState(false);
+  const [canPushToTalk, setCanPushToTalk] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  
+  // Add a new state to track connection attempts
+  const [isConnecting, setIsConnecting] = useState(false);
+  
+  const [memoryKv, setMemoryKv] = useState<{ [key: string]: any }>({});
+  const [pdbVisualization, setPdbVisualization] = useState<PdbVisualization | null>(null);
+  const [searchResults, setSearchResults] = useState<SearchResult[] | string | null>(null);
+  const [displayedContent, setDisplayedContent] = useState<'none' | 'pdb' | 'search' | 'upload' | 'customPdb' | 'finalResults'>('none');
+  const [customPdb, setCustomPdb] = useState<CustomPdb | null>(null);
+
+  // Reference to access ThreeDmolViewer methods
+  const threeDmolViewerRef = useRef<ThreeDmolViewerRef>(null);
+
+  // Add state to hold metadata
+  const [pdbMetadata, setPdbMetadata] = useState<any>(null);
+
+  
+  const [finalResultsVisualization, setFinalResultsVisualization] = useState<{
+    receptorPdbContent: string;
+    selectedDrugCandidates: {
+      [drug_candidate_id: string]: {
+        ligandPdbContent: string; // Ensure this is required
+        metrics: { [metricName: string]: any };
+      };
+    };
+    referenceLigands?: {
+      [resname: string]: {
+        ligandPdbContent: string;
+        resname: string;
+        chain: string;
+        resi: number;
+      };
+    };
+  } | null>(null);
+
+
+  /**
+   * Utility for formatting the timing of logs
+   */
+  const formatTime = useCallback((timestamp: string) => {
+    const startTime = startTimeRef.current;
+    const t0 = new Date(startTime).valueOf();
+    const t1 = new Date(timestamp).valueOf();
+    const delta = t1 - t0;
+    const hs = Math.floor(delta / 10) % 100;
+    const s = Math.floor(delta / 1000) % 60;
+    const m = Math.floor(delta / 60_000) % 60;
+    const pad = (n: number) => {
+      let s = n + '';
+      while (s.length < 2) {
+        s = '0' + s;
+      }
+      return s;
+    };
+    return `${pad(m)}:${pad(s)}.${pad(hs)}`;
+  }, []);
+
+
+  // Modify the connectConversation function
+  const connectConversation = useCallback(async () => {
+    const client = clientRef.current;
+    const wavRecorder = wavRecorderRef.current;
+    const wavStreamPlayer = wavStreamPlayerRef.current;
+
+    // Set state variables
+    setIsConnecting(true);
+    startTimeRef.current = new Date().toISOString();
+    setRealtimeEvents([]);
+    setItems([]);
+
+    try {
+      // Connect to microphone
+      await wavRecorder.begin();
+
+      // Connect to audio output
+      await wavStreamPlayer.connect();
+
+      // Connect to realtime API
+      await client.connect();
+
+      setIsConnected(true);
+      setItems(client.conversation.getItems());
+
+      client.sendUserMessageContent([
+        {
+          type: `input_text`,
+          text: `Hello!`,
+        },
+      ]);
+
+      if (client.getTurnDetectionType() === 'server_vad') {
+        await wavRecorder.record((data: any) => client.appendInputAudio(data.mono));
+      }
+    } catch (error) {
+      console.error('Error connecting:', error);
+      await disconnectConversation();
+    } finally {
+      setIsConnecting(false);
+    }
+  }, []);
+
+  // Modify the disconnectConversation function
+  const disconnectConversation = useCallback(async () => {
+    setIsConnected(false);
+    setRealtimeEvents([]);
+    setItems([]);
+    setMemoryKv({});
+
+    const client = clientRef.current;
+    await client.disconnect();
+
+    const wavRecorder = wavRecorderRef.current;
+    await wavRecorder.end();
+
+    const wavStreamPlayer = wavStreamPlayerRef.current;
+    await wavStreamPlayer.interrupt();
+    
+    // Reload the page
+    window.location.reload();
+  }, []);
+
+  
+
+  const deleteConversationItem = useCallback(async (id: string) => {
+    const client = clientRef.current;
+    client.deleteItem(id);
+  }, []);
+
+  /**
+   * In push-to-talk mode, start recording
+   * .appendInputAudio() for each sample
+   */
+  const startRecording = async () => {
+    setIsRecording(true);
+    const client = clientRef.current;
+    const wavRecorder = wavRecorderRef.current;
+    const wavStreamPlayer = wavStreamPlayerRef.current;
+    const trackSampleOffset = await wavStreamPlayer.interrupt();
+    if (trackSampleOffset?.trackId) {
+      const { trackId, offset } = trackSampleOffset;
+      await client.cancelResponse(trackId, offset);
+    }
+    await wavRecorder.record((data: any) => client.appendInputAudio(data.mono));
+  };
+
+  /**
+   * In push-to-talk mode, stop recording
+   */
+  const stopRecording = async () => {
+    setIsRecording(false);
+    const client = clientRef.current;
+    const wavRecorder = wavRecorderRef.current;
+    await wavRecorder.pause();
+    client.createResponse();
+  };
+
+  /**
+   * Switch between Manual <> VAD mode for communication
+   */
+  // Modify the changeTurnEndType function
+  const changeTurnEndType = async (value: string) => {
+    const client = clientRef.current;
+    const wavRecorder = wavRecorderRef.current;
+    
+    if (value === 'none' && wavRecorder.getStatus() === 'recording') {
+      await wavRecorder.pause();
+    }
+    
+    await client.updateSession({
+      turn_detection: value === 'none' ? null : { type: 'server_vad' },
+    });
+    
+    if (value === 'server_vad' && client.isConnected()) {
+      await wavRecorder.record((data: any) => client.appendInputAudio(data.mono));
+    }
+    
+    setCanPushToTalk(value === 'none');
+  };
+
+  // Fetch PDB data
+const fetchPDBData = async (pdbId?: string): Promise<string> => {
+  try {
+    const response = await fetch(`https://files.rcsb.org/download/${pdbId}.pdb`);
+    if (response.ok) {
+      const pdbData = await response.text();
+      return pdbData;
+    } else {
+      console.error('Error fetching PDB data');
+      return '';
+    }
+  } catch (error) {
+    console.error('Error fetching PDB data:', error);
+    return '';
+  }
+};
+// Extract sequence from PDB data
+const extractSequenceFromPDBData = (pdbData: string): string => {
+  const lines = pdbData.split('\n');
+  const sequences: { [chain: string]: string } = {};
+  const seqresLines = lines.filter(line => line.startsWith('SEQRES'));
+
+  for (const line of seqresLines) {
+    const chain = line.substring(11, 12).trim();
+    const residues = line.substring(19).trim().split(/\s+/);
+    
+    if (!sequences[chain]) {
+      sequences[chain] = '';
+    }
+    
+    sequences[chain] += residues.map(res => {
+      // Convert three-letter amino acid codes to one-letter codes
+      const aaMap: { [key: string]: string } = {
+        'ALA': 'A', 'ARG': 'R', 'ASN': 'N', 'ASP': 'D', 'CYS': 'C',
+        'GLN': 'Q', 'GLU': 'E', 'GLY': 'G', 'HIS': 'H', 'ILE': 'I',
+        'LEU': 'L', 'LYS': 'K', 'MET': 'M', 'PHE': 'F', 'PRO': 'P',
+        'SER': 'S', 'THR': 'T', 'TRP': 'W', 'TYR': 'Y', 'VAL': 'V'
+      };
+      return aaMap[res] || 'X'; // Use 'X' for unknown residues
+    }).join('');
+  }
+
+  // Combine all chain sequences into a single string
+  return Object.values(sequences).join('');
+};
+
+const createNewProject = async (project_name: string, project_description: string, boxParams: any) => {
+// Reload the metadata from the PDB data directly
+
+
+    const formData = new FormData();
+    formData.append('project_name', project_name);
+    formData.append('project_description', project_description);
+    
+    formData.append('x_center', boxParams.center.x.toString());
+    formData.append('y_center', boxParams.center.y.toString());
+    formData.append('z_center', boxParams.center.z.toString());
+    formData.append('x_size', boxParams.dimensions.w.toString());
+    formData.append('y_size', boxParams.dimensions.h.toString());
+    formData.append('z_size', boxParams.dimensions.d.toString());
+    if (!threeDmolViewerRef.current) {
+      return {
+        success: false,
+        message: "No threeDmolViewer available. Please visualize a PDB structure before creating a project."
+      }
+    }
+    const currentPDBData = threeDmolViewerRef.current.getCurrentPDBData()
+    if (currentPDBData) {
+      
+      formData.append('pdb_file', new Blob([currentPDBData], { type: 'text/plain' }), 'pdb_file.pdb');
+      const proteinSequence = extractSequenceFromPDBData(currentPDBData);
+      if (proteinSequence) {
+        formData.append('protein_sequence', proteinSequence);
+      }
+      
+      const currentPDBMetadata = extractPDBMetadata(currentPDBData);
+      if (currentPDBMetadata.pdbId) {
+        formData.append('pdb_id', currentPDBMetadata.pdbId);
+      }
+    } else {
+      return { success: false, message: 'No PDB content available.' };
+    }
+    const response = await axios.post('/voice/create-project', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    if (response.status === 200) {
+      return {
+        success: true,
+        message: `Project "${project_name}" created successfully. Server response: ${response.data.message}`,
+      };
+    } else {
+      return {
+        success: false,
+        message: `Failed to create project "${project_name}". Server response: ${response.data.message}`,
+      };
+    }
+};
+
+// Extract metadata from PDB data
+const extractPDBMetadata = (pdbData: string) => {
+  const lines = pdbData.split('\n');
+  const metadata: any = {};
+  for (const line of lines) {
+    if (line.startsWith('HEADER')) {
+      metadata.header = line.substring(10).trim();
+      // Extract PDB ID from the HEADER line
+      const pdbIdMatch = line.match(/\d\w{3}$/);
+      if (pdbIdMatch) {
+        metadata.pdbId = pdbIdMatch[0];
+      }
+    } else if (line.startsWith('TITLE')) {
+      metadata.title = (metadata.title || '') + line.substring(10).trim() + ' ';
+    } else if (line.startsWith('EXPDTA')) {
+      metadata.experimentalData = line.substring(10).trim();
+    } else if (line.startsWith('JRNL')) {
+      metadata.journal = (metadata.journal || '') + line.substring(10).trim() + ' ';
+    } else if (line.startsWith('AUTHOR')) {
+      metadata.author = (metadata.author || '') + line.substring(10).trim() + ' ';
+    } else if (line.startsWith('REMARK 2')) {
+      metadata.resolution = line.substring(10).trim();
+    } else if (line.startsWith('SEQRES')) {
+      // Process sequence if needed
+    } else if (line.startsWith('HET ')) {
+      const ligand = line.substring(7, 10).trim();
+      metadata.ligands = metadata.ligands || new Set();
+      metadata.ligands.add(ligand);
+    } else if (line.startsWith('FORMUL')) {
+      const formulaEntry = line.substring(12).trim();
+      metadata.formulas = metadata.formulas || [];
+      metadata.formulas.push(formulaEntry);
+    } else if (line.startsWith('HETNAM')) {
+      const hetnamEntry = line.substring(11).trim();
+      metadata.hetnames = metadata.hetnames || [];
+      metadata.hetnames.push(hetnamEntry);
+    }
+  }
+  if (metadata.ligands) {
+    metadata.ligands = Array.from(metadata.ligands);
+  }
+  return metadata;
+};
+
+
+  /**
+   * Auto-scroll the conversation logs
+   */
+  useEffect(() => {
+    const conversationEls = [].slice.call(
+      document.body.querySelectorAll('[data-conversation-content]')
+    );
+    for (const el of conversationEls) {
+      const conversationEl = el as HTMLDivElement;
+      conversationEl.scrollTop = conversationEl.scrollHeight;
+    }
+  }, [items]);
+
+  /**
+   * Set up render loops for the visualization canvas
+   */
+  useEffect(() => {
+    let isLoaded = true;
+
+    const wavRecorder = wavRecorderRef.current;
+    const clientCanvas = clientCanvasRef.current;
+    let clientCtx: CanvasRenderingContext2D | null = null;
+
+    const wavStreamPlayer = wavStreamPlayerRef.current;
+    const serverCanvas = serverCanvasRef.current;
+    let serverCtx: CanvasRenderingContext2D | null = null;
+
+    const render = () => {
+      if (isLoaded) {
+        if (clientCanvas) {
+          if (!clientCanvas.width || !clientCanvas.height) {
+            clientCanvas.width = clientCanvas.offsetWidth;
+            clientCanvas.height = clientCanvas.offsetHeight;
+          }
+          clientCtx = clientCtx || clientCanvas.getContext('2d');
+          if (clientCtx) {
+            clientCtx.clearRect(0, 0, clientCanvas.width, clientCanvas.height);
+            const result = wavRecorder.recording
+              ? wavRecorder.getFrequencies('voice')
+              : { values: new Float32Array([0]) };
+            WavRenderer.drawBars(
+              clientCanvas,
+              clientCtx,
+              result.values,
+              '#0099ff',
+              10,
+              0,
+              8
+            );
+          }
+        }
+        if (serverCanvas) {
+          if (!serverCanvas.width || !serverCanvas.height) {
+            serverCanvas.width = serverCanvas.offsetWidth;
+            serverCanvas.height = serverCanvas.offsetHeight;
+          }
+          serverCtx = serverCtx || serverCanvas.getContext('2d');
+          if (serverCtx) {
+            serverCtx.clearRect(0, 0, serverCanvas.width, serverCanvas.height);
+            const result = wavStreamPlayer.analyser
+              ? wavStreamPlayer.getFrequencies('voice')
+              : { values: new Float32Array([0]) };
+            WavRenderer.drawBars(
+              serverCanvas,
+              serverCtx,
+              result.values,
+              '#009900',
+              10,
+              0,
+              8
+            );
+          }
+        }
+        window.requestAnimationFrame(render);
+      }
+    };
+    render();
+
+    return () => {
+      isLoaded = false;
+    };
+  }, []);
+
+  /**
+   * Function to handle the uploaded PDB file
+   */
+  const handleCustomPDBUploaded = (pdbContent: string) => {
+    setCustomPdb({ content: pdbContent });
+    setDisplayedContent('customPdb'); // Update displayed content
+    
+    const client = clientRef.current;
+    
+    // Extract metadata
+    const metadata = extractPDBMetadata(pdbContent);
+
+    // Provide the metadata to the Realtime AI Voice Client
+    client.sendUserMessageContent([
+      {
+        type: `input_text`,
+        text: `Custom PDB file uploaded. Metadata: ${JSON.stringify(metadata, null, 2)}`,
+      },
+    ]);
+  };
+
+  /**
+   * Core RealtimeClient and audio capture setup
+   * Set all of our instructions, tools, events and more
+   */
+  useEffect(() => {
+    // Get refs
+    const wavStreamPlayer = wavStreamPlayerRef.current;
+    const client = clientRef.current;
+
+    // Get System Prompt & Context
+    const getStartingPrompt = async () => {
+      try {
+        const response = await axios.post('/voice/get-starting-prompt');
+        return response.data.message;
+      } catch (error) {
+        console.error('Error fetching starting prompt:', error);
+        return '';
+      }
+    };
+
+    // Fetch and set the starting prompt
+    getStartingPrompt().then(startingPrompt => {
+      // console.log("startingPrompt retrieved: " + startingPrompt);
+      // Set instructions
+      client.updateSession({ instructions: startingPrompt });
+    });
+
+    // Set turn detection to server_vad
+    client.updateSession({ turn_detection: null });
+    setCanPushToTalk(true);
+    // Set transcription, otherwise we don't get user transcriptions back
+    client.updateSession({ input_audio_transcription: { model: 'whisper-1' } });
+
+    // Add tools
+    client.addTool(
+      {
+        name: 'set_memory',
+        description: 'Saves important data about the user into memory.',
+        parameters: {
+          type: 'object',
+          properties: {
+            key: {
+              type: 'string',
+              description:
+                'The key of the memory value. Always use lowercase and underscores, no other characters.',
+            },
+            value: {
+              type: 'string',
+              description: 'Value can be anything represented as a string',
+            },
+          },
+          required: ['key', 'value'],
+        },
+      },
+      async ({ key, value }: { [key: string]: any }) => {
+        try{
+        setMemoryKv((memoryKv) => {
+          const newKv = { ...memoryKv };
+          newKv[key] = value;
+          return newKv;
+        });
+        return { ok: true };
+      } catch (error) {
+        console.error('Error performing action:', error);
+        return { success: false, message: `An error occurred while performing the action. Error: ${error}` };
+      }
+      }
+    );
+
+    // PDB Visualization
+    client.addTool(
+  {
+    name: 'visualize_pdb',
+    description: 'Visualizes a protein structure given a PDB ID and optional visualization parameters.',
+    parameters: {
+      type: 'object',
+      properties: {
+        pdbId: {
+          type: 'string',
+          description: 'The PDB ID of the protein structure to visualize',
+        },
+        style: {
+          type: 'string',
+          description: 'The visualization style (e.g., "cartoon", "stick", "sphere")',
+        },
+        surface: {
+          type: 'string',
+          description: 'The surface style specification',
+        },
+        backgroundColor: {
+          type: 'string',
+          description: 'The background color of the viewer',
+        },
+        spin: {
+          type: 'string',
+          description: 'Spin settings (e.g., "axis:y;speed:1")',
+        },
+      },
+      required: ['pdbId'],
+    },
+  },
+  async (params: PdbVisualization) => {
+    try{
+        setPdbVisualization(params);
+        setDisplayedContent('pdb'); // Update displayed content
+        const pdbId = params.pdbId
+        const pdbData = await fetchPDBData(pdbId);
+        const metadata = extractPDBMetadata(pdbData);
+
+        return {
+          success: true,
+          message: `Visualizing PDB ID: ${params.pdbId}`,
+          metadata: metadata, // Include metadata in the output
+        };
+      
+  } catch (error) {
+    console.error('Error performing action:', error);
+    return { success: false, message: `An error occurred while performing the action. Error: ${error}` };
+  }
+  }
+);
+
+
+    // Visualize current Project PDB Structure
+    // PDB Visualization
+    client.addTool(
+      {
+        name: 'visualize_current_project_pdb',
+        description: `Visualizes the protein structure of for the user's currently selected project.`,
+        parameters: {
+          type: 'object',
+          properties: {
+            confirm_current_project_id: {
+              type: 'integer',
+              description: `The integer Project ID of the user's current project for which you intent to visualize the protein structure of.
+                This is used to verify that you have the correct project currently selected for the protein structure which you are displaying.`
+            },
+            style: {
+              type: 'string',
+              description: 'The visualization style (e.g., "cartoon", "stick", "sphere")',
+            },
+            surface: {
+              type: 'string',
+              description: 'The surface style specification',
+            },
+            backgroundColor: {
+              type: 'string',
+              description: 'The background color of the viewer',
+            },
+            spin: {
+              type: 'string',
+              description: 'Spin settings (e.g., "axis:y;speed:1")',
+            },
+          },
+        },
+      },
+      async (params: any) => {
+        try{
+          const confirm_current_project_id = params.confirm_current_project_id
+          const currentProteinResponse = await axios.post('/voice/get-og-receptor-pdb', 
+            { confirm_current_project_id },
+            { responseType: 'text' }  // Set responseType to 'text' to get the raw PDB content
+          );
+          if (currentProteinResponse.status !== 200) {
+            return {
+              success: false,
+              message: `Failed to fetch the original receptor PDB.`,
+            };
+          }
+          console.log(`\n\n\ncurrentProteinResponse.data: ${JSON.stringify(currentProteinResponse.data)}\n\n\n`)
+          const currentProjectProteinContent = currentProteinResponse.data;
+    
+          // Extract PDB metadata
+          const pdbMetadata = extractPDBMetadata(currentProjectProteinContent);
+          console.log(`\n\n\npdbMetadata: ${JSON.stringify(pdbMetadata, null, 2)}\n\n\n`)
+          setPdbMetadata(pdbMetadata);
+
+          handleCustomPDBUploaded(currentProjectProteinContent)
+
+          return {
+            success: true,
+            message: `Visualizing Original Project PDB File! PDBMetadata ${pdbMetadata}`
+          };
+
+      } catch (error) {
+        console.error('Error performing action:', error);
+        return { success: false, message: `An error occurred while performing the action. Error: ${error}` };
+      }
+      }
+    );
+
+    // Add the search_google_scholar tool
+    client.addTool(
+      {
+        name: 'search_google_scholar',
+        description: 'Searches Google Scholar with a query and returns search results.',
+        parameters: {
+          type: 'object',
+          properties: {
+            search_query: {
+              type: 'string',
+              description: 'The search query',
+            },
+          },
+          required: ['search_query'],
+        },
+      },
+      async ({ search_query }: { search_query: string }) => {
+        try {
+          const response = await axios.post('/voice/google-scholar-search', { search_query });
+          if (response.status === 200) {
+            // Check if the response is HTML or a dictionary
+            if (typeof response.data.results === 'string') {
+              setSearchResults(response.data.results); // Set as HTML string
+            } else {
+              setSearchResults(response.data.results); // Set as dictionary array
+            }
+            setDisplayedContent('search'); // Update displayed content
+          
+            return {
+              success: true,
+              message: `Successfully searched Google Scholar for ${search_query}. Search Results:\n${JSON.stringify(response.data.results, null, 2)}`
+            }
+          } else {
+            return {
+              success: false,
+              message: `Failed to search Google Scholar for ${search_query}. Server Response: ${response.data.message}`
+            }
+          }
+        } catch (error) {
+          console.error('Error performing action:', error);
+          return { success: false, message: `An error occurred while performing the action. Error: ${error}` };
+        }
+      }
+    );
+
+    // Add the close_displayed_content tool
+    client.addTool(
+      {
+        name: 'close_displayed_content',
+        description: 'Closes the currently displayed content and returns to the full-sized visualization.',
+        parameters: {
+          type: 'object',
+          properties: {},
+        },
+      },
+      async () => {
+        try{
+        setDisplayedContent('none');
+        setPdbVisualization(null);
+        setSearchResults(null);
+        return { success: true, message: 'Displayed content closed.' };
+        
+      } catch (error) {
+        console.error('Error performing action:', error);
+        return { success: false, message: `An error occurred while performing the action. Error: ${error}` };
+      }
+      }
+    );
+
+    // Add the upload_custom_pdb tool
+    client.addTool(
+      {
+        name: 'upload_custom_pdb',
+        description: 'Allows user to upload their own PDB file for visualization.',
+        parameters: {
+          type: 'object',
+          properties: {},
+        },
+      },
+      async () => {
+        try{
+        // Display the upload component
+        setDisplayedContent('upload');
+    
+        // Since the PDB content comes from the user's upload, we'll handle the metadata extraction after upload
+        // Modify the `handleCustomPDBUploaded` function to include metadata extraction
+    
+        return {
+          success: true,
+          message: 'Ready to upload custom PDB file.',
+        };
+        
+      } catch (error) {
+        console.error('Error performing action:', error);
+        return { success: false, message: `An error occurred while performing the action. Error: ${error}` };
+      }
+      }
+    );
+    
+    // Add the edit_existing_threedmol_viewer tool
+    client.addTool(
+      {
+        name: 'edit_existing_threedmol_viewer',
+        description: `Edits the existing 3Dmol viewer visualization. Actions include highlighting, zooming, changing representations, and adding/manipulating boxes.
+                      The required parameters are dependent on which action was selected. Specify one action per call with required parameters. Use multiple calls for complex changes (e.g., highlight ligand, then zoom to it). Use
+                      this tool frequently, both when requested and proactively, to enhance discussions and user engagement. Automatically apply relevant
+                      visualizations to add context during conversations about the structure. Aim to consistently improve the depth and interactivity of your
+                      explanations whenever a PDB is displayed.`,
+          parameters: {
+          type: 'object',
+          properties: {
+            action: {
+              type: 'string',
+              description:`The action to perform. An action must be provided, and the additional parameters required are dependent on the action chosen.
+                Available actions are:
+                
+                - "highlight": Highlight specific parts of the structure based on the selection object provided. Optional "color" parameter may be
+                provided (defaults to "yellow"), Required Arguments: "selection"
+                - "zoom": Zooms in the 3Dmol viewer to a specific selection. In addition to when users request for you to zoom to 
+                something, use this frequently at your own discretion whenever discussing a specific part of the structure with the user to 
+                enhance their experience. Required parameters: "selection".
+                - "changeStyle": Change the style of a selecteion object. You may make any style change to any object using this action. Styles
+                follow 3Dmol.js style conventions. Required parameters: "selection", "style"
+                - "resetStyles": Reset all objects to default style. This will remove all shapes and surfaces as well as reset everything to a default
+                style with stick representation. No additional parameters are required
+                - "addSurface": Adds a Van der Waals surface respresentation to all objects in the scene. Required parameters: "opacity"
+                - "removeSurfaces": Removes all surface representations from the scene. No parameters required.
+                - "showSequence": Displays the amino acid sequence of the protein above the 3d viewer with clickable residues which will highlight/unhighlight the
+                corresponding residues in the 3d viewer. No parameters required
+                - "hideSequence": Hides the amino acid sequence display
+                - "spinStructure": Spins the structure at a designated axis and speed. Required parameters: "spinParams"
+                - "stopSpin": Stops the structure's spin across every axis. No parameters required.
+                - "adjustZoom": Adjusts the Zoom of the 3Dmol Viewer based on the "zoomFactor". If the "zoomFactor" is greater than 1, it will zoom in,
+                less than one will zoom out. Required parameters: "zoomFactor"
+                - "addBox": Add a box to the visualization. The X/Y/Z coordinates and dimensions are required to create a new project, so you must
+                always display the box to the user to provide the user with a visualization for approval of the box coordinates which you intend to
+                use for the target site before you proceed with creating the project. Actively reccommend useful box placements with therapeutic relevance
+                to the user's project, such as automatically displaying a box around a bound ligand within the visualized PDB. The box parameters variable
+                used for binding pocket definition when creating a new project will be set to the box parameters of the visualized box. To create a box around
+                something, such as a bound ligand or key binding residue, you must call this addBox action with a "selection" parameter to select the object
+                which the box will surround. Once the box is created, you will receive the boxParams used to create the box around the object of interest.
+                Then, if you need to further refine the box, you may use these provided boxParams to make subsequent calls to the addBox action with an updated
+                "boxParams" object provided instead of the "selection parameter. Do not use the "boxParams" parameter unless you have already created a box using
+                the "selection" parameter and received the resulting "boxParams", or the user provides you with explicit box coordinates/dimensions because
+                many PDBs are not centered around the origin, so if you try to guess the boxParams, it will likely not even be in contact with the structure.
+                All shapes are automatically removed before box creation to avoid box parameter overlap. Required parameters: "selection" OR "boxParams" (boxParams
+                is an object containing the required keys "center", "dimensions", and "color", where "center" is an object containing the 
+                required keys "x", "y", and "z", and "dimensions" is an object containing the required keys "w", "h", and "d").`
+            },
+            selection: {
+              type: 'object',
+              description:`Selection object that specifies the atoms to target. It follows the 3Dmol.js selection conventions.
+                Must be a dictionary containing one or more selection types and their corresponding selection values. If selection
+                is only set to the value, it will not work. The selection type is always required for every selection object,such that
+                selection: {selection_type: selection_value}
+                Available selection types include:
+                - "chain": String or array of strings indicating chain IDs. - {chain: String}
+                - "resi": Number or array of numbers indicating residue numbers. - {resi: Number}
+                - "resn": String or array of strings indicating residue names. - {resn: String}
+                - "elem": String or array of strings indicating element symbols. - {elem: String}
+                - "bonds": Array of atom ids this atom is bonded to. - {bonds:[Numbers]}
+                - "color": String of atom's color, as hex code or built-in color string. {color:String}
+                - "style": Style object (same syntax as the style parameter below) to select all atoms containing the style(s). - { "stick": { "colorscheme": "greenCarbon" }
+                - "hetflag": Boolean which is true for atoms which are heteroatom and false if not. {heteroatom: true}
+                \nExample: { "chain": "A", "resi": [45, 46, 47], "style": {"stick: {color: "red"}}
+                \nExample 2: {chain: "A", hetflag: true} (selects all heteroatoms on chain A)
+                \nNote: for actions that require the "selection" parameter, the selection is allowed to be null, but the parameter still 
+                must be defined in the parameters object to avoid index errors. If "selection" is null, the entire structure will be affected by the action.`
+            },
+            style: {
+              type: 'object',
+              description: `Style object specifying how to represent the selection. It follows the 3Dmol.js style conventions, meaning it is an object with
+              keys for each type of style, such as "cartoon", "stick", "sphere", "cross", "line", etc. Each style type is itself an object with properties
+              that specify the details of the style. For example, the "cartoon" style has a "color" property that specifies the color of the cartoon representation, and a "radius" property that specifies the radius of the cartoon representation. The "stick" style has a "colorscheme" property that specifies the color scheme of the stick representation, and a "radius" property that specifies the radius of the stick representation.
+              \nExample: {style:{cartoon:{color:"spectrum",thickness:1.0}}}
+              \nExample 2: {style: {stick: {colorscheme: 'spectrum}}}`
+            },
+            boxParams: {
+              type: 'object',
+              description: `Explicit box parameters for adding or manipulating a box. Only has an effect if a selection object is not provided.
+                You should always use the selection parameter instead of the boxParams if you are attempting to create a box around an object. You
+                should not guess the boxParams. Use this tool when you have explicit box coordinates/dimesnsions for the box creation such as if
+                the user provides specific coordinates/dimensions, or if you already added a box around a selected object and received the correct
+                boxParams from the box creation response, and you now wish to adjust the boxParams (to shift the box or change its dimensions).
+                exact to define the active sites of the ligand. 
+                \n\nProperties include:\n
+                - "center": { "x": number, "y": number, "z": number } specifying the center coordinates.\n
+                - "dimensions": { "w": number, "h": number, "d": number } specifying the width, height, and depth.\n
+                - "color": String specifying the color of the box.\n
+                \nExample: {"boxParams": {"center": { "x": 0, "y": 0, "z": 0 }, "dimensions": { "w": 20, "h": 20, "d": 20 }, "color": "blue" }}
+                \n\nNote: "center" is required (and must include the "x", "y", and "z" keys) when adding a 
+                box, and "dimensions" (must include "w", "h", and "d" keys) and "color" are both optional but highly recommended. Choose 
+                a color to make the box stand out for clear visibility. If "dimensions" is not provided, all dimensions will default to 20.`
+                },
+            surfaceOpacity: {
+              type: 'number',
+              description: 'A number between 0-1 representing the opacity of the Van Der Waals surface opacity when the "addSurface" action is performed. Defaults to 0.85'
+            },
+            color: {
+              type: 'string',
+              description: `String of color, as hex code or built-in color string.`
+            },
+            spinParams: {
+              type: 'object',
+              description: `An object containing two spin parameters: "axis" which is the axis that the structure will spin around, and a "speed" parameter.
+                \n\nProperties include:\n
+                - "axis": String or array of strings specifying one or more axes on which to spin the structure. available options are "x", "y", "z", "vx", "vy", or "vz" where
+                view relative (rather than model relative) axes are prefixed with v. This parameter is required.\n
+                - "speed": Number representing the speed of the spin. Negative numbers reverse the direction of the spin. This parameter is optional and defaults to 1, but it is highly recommended. as the default speed of 1 is often too fast for many visualizations.\n
+                \nExample: {"spinParams": {"axis": "x", "speed": 0.7}}
+                \nExample 2: {"spinParams": {"axis": ["vx", "vy"], "speed": 1.3}}`
+            },
+            zoomFactor: {
+              type: 'number',
+              description: `Magnification factor for "adjustZoom" action. Values greater than 1 will zoom in, less than one will zoom out. Default zoomFactor is 1.3.`
+            }
+          },
+          required: ['action'],
+        },
+      },
+      async (params: any) => {
+        try {
+          if (threeDmolViewerRef.current) {
+            switch (params.action) {
+              case 'highlight':
+
+                if (!params.selection || typeof params.selection !== 'object' || Array.isArray(params.selection)) {
+                  return { success: false, message: '"highlight" action requires a selection parameter. Selection must be a dictionary containing at least one of these keys (or other 3dmol.js selection convention keys): "chain", "resi", "resn", "elem", "atom", "hetflag", "bonds", "ss", "b", "clickable", "invert", "byres", "and", "or", "not", "model", "serial", "index", "predicate".' }
+                } else if (!Object.keys(params.selection).some(key => ['chain', 'resi', 'resn', 'elem', 'atom', 'hetflag', 'bonds', 'ss', 'b', 'clickable', 'invert', 'byres', 'and', 'or', 'not', 'model', 'serial', 'index', 'predicate'].includes(key))) {
+                  return { success: false, message: 'Invalid selection format. Selection must include at least one valid 3dmol.js selection key: "chain", "resi", "resn", "elem", "atom", "hetflag", "bonds", "ss", "b", "clickable", "invert", "byres", "and", "or", "not", "model", "serial", "index", "predicate"' }
+                } else {
+                  if (params.style && params.style.color && typeof params.style.color === 'string') {
+                    console.log('Calling highlightSelection with:', 'selection:', params.selection, 'color:', params.style.color);
+                    threeDmolViewerRef.current.highlightSelection(params.selection, params.style.color);
+                  } else if (params.color && typeof params.color === 'string') {
+                    console.log('Calling highlightSelection with:', 'selection:', params.selection, 'color:', params.color);
+                    threeDmolViewerRef.current.highlightSelection(params.selection, params.color);
+                  } else {
+                    console.log('Calling highlightSelection with:', 'selection:', params.selection, 'color: yellow');
+                    threeDmolViewerRef.current.highlightSelection(params.selection, 'yellow');
+                  }
+                }
+                break;
+              case 'zoom':
+                if (!params.selection || typeof params.selection !== 'object' || Array.isArray(params.selection)) {
+                  
+                  return { success: false, message: '"zoom" action required a selection parameter. Selection must be a dictionary containing at least one of these keys (or other 3dmol.js selection convention keys): "chain", "resi", "resn", "elem", "atom", "hetflag", "bonds", "ss", "b", "clickable", "invert", "byres", "and", "or", "not", "model", "serial", "index", "predicate".' }
+                } else if (!Object.keys(params.selection).some(key => ['chain', 'resi', 'resn', 'elem', 'atom', 'hetflag', 'bonds', 'ss', 'b', 'clickable', 'invert', 'byres', 'and', 'or', 'not', 'model', 'serial', 'index', 'predicate'].includes(key))) {
+                  return { success: false, message: 'Invalid selection format. Selection must include at least one valid 3dmol.js selection key: "chain", "resi", "resn", "elem", "atom", "hetflag", "bonds", "ss", "b", "clickable", "invert", "byres", "and", "or", "not", "model", "serial", "index", "predicate"' }
+                } else {
+                  threeDmolViewerRef.current.zoomToSelection(params.selection);
+                }
+                break;
+              case 'changeStyle':
+                if (!params.selection || typeof params.selection !== 'object' || Array.isArray(params.selection)) {
+                  return { success: false, message: '"changeStyle" action required a selection parameter. Selection must be a dictionary containing at least one of these keys (or other 3dmol.js selection convention keys): "chain", "resi", "resn", "elem", "atom", "hetflag", "bonds", "ss", "b", "clickable", "invert", "byres", "and", "or", "not", "model", "serial", "index", "predicate".' }
+                } else if (!Object.keys(params.selection).some(key => ['chain', 'resi', 'resn', 'elem', 'atom', 'hetflag', 'bonds', 'ss', 'b', 'clickable', 'invert', 'byres', 'and', 'or', 'not', 'model', 'serial', 'index', 'predicate'].includes(key))) {
+                  return { success: false, message: 'Invalid selection format. Selection must include at least one valid 3dmol.js selection key: "chain", "resi", "resn", "elem", "atom", "hetflag", "bonds", "ss", "b", "clickable", "invert", "byres", "and", "or", "not", "model", "serial", "index", "predicate"' }
+                } else {
+                  threeDmolViewerRef.current.changeStyle(params.selection, params.style);
+                }
+                break;
+              case 'resetStyles':
+                threeDmolViewerRef.current.resetStyles();
+                break;
+              case 'addSurface':
+                threeDmolViewerRef.current.addSurface(params.opacity);
+                break;
+              case 'removeSurfaces':
+                threeDmolViewerRef.current.removeSurfaces();
+                break;
+              case 'showSequence':
+                threeDmolViewerRef.current.showSequence();
+                break;
+              case 'hideSequence':
+                threeDmolViewerRef.current.hideSequence();
+                break;
+              case 'spinStructure':
+                // Call function regardless of if params.spinParams is provided because axis actually has a default value too
+                threeDmolViewerRef.current.spinStructure(params.spinParams);
+                break;
+              case 'stopSpin':
+                threeDmolViewerRef.current.stopSpin();
+                break;
+              case 'adjustZoom':
+                threeDmolViewerRef.current.adjustZoom(params.zoomFactor);
+                break
+              case 'addBox':
+                // if select object is provided, use that, otherwise, use the boxParams
+                if (params.selection) {
+                  if (typeof params.selection === 'object' && Object.keys(params.selection).some(key => ["chain", "resi", "resn", "elem", "atom", "hetflag", "bonds", "ss", "b", "clickable", "invert", "byres", "and", "or", "not", "model", "serial", "index", "predicate"].includes(key))) {
+                  const box_params = threeDmolViewerRef.current.getBoxAroundSelection(params.selection);
+                  threeDmolViewerRef.current.addBox(box_params);
+                  } else {
+                    return { success: false, message: 'Invalid selection format. Selection must be a dictionary containing at least one of these keys: "chain", "resi", "resn", "elem", "atom", "hetflag", "bonds", "ss", "b", "clickable", "invert", "byres", "and", "or", "not", "model", "serial", "index", "predicate".' };
+                  }
+                } else {
+                  if (!params.boxParams.dimensions) {
+                    params.boxParams.dimensions = {w: 20, h: 20, d: 20}
+                  }
+                  threeDmolViewerRef.current.addBox(params.boxParams);
+                }
+                break;
+              default:
+                console.log('Invalid action specified.')
+                return { success: false, message: 'Invalid action specified.' };
+            }
+            console.log(`Action "${params.action}" performed successfully.` )
+            return { success: true, message: `Action "${params.action}" performed successfully.` };
+          } else {
+            console.log('No existing visualization to edit.')
+            return { success: false, message: 'No existing visualization to edit.' };
+          }
+        } catch (error) {
+          console.error('Error performing action:', error);
+          return { success: false, message: `An error occurred while performing the action. Error: ${error}` };
+        }
+      }
+    );
+    
+    // Create a new project
+    client.addTool({
+      name: 'create_new_project',
+      description: `Creates a new LIME Drug Design Project. A PDB structure must be currently displayed in the 3Dmol visualization, and a search box must
+      also be displayed to designate the binding site which LIME Drug Design will create novel small molecule inhibitor drug candidates to target. Both will
+      be extracted automatically for project creation, so must only create a new project AFTER you have visualized the PDB structure, added the target site
+      search box, and received explicit confirmation from the user that the currently displayed search box is the target site they wish to use for their
+      LIME drug discovery project. All three of the boxParams dimension parameters ("w", "h", "d") must be between 10.0 - 30.0, and the search box must contain a minimum
+      of 10 atoms. If these criteria are not met, you will need to discuss with the user to adjust the search box accordingly, and get their approval on the updated
+      search box before creating the project.`,
+      parameters: {
+        type: 'object',
+        properties: {
+          project_name: {
+            type: 'string',
+            description: `A name for the new LIME Drug Design project. This should be unique and intuitive so that the user is able to identify
+             which will be used to identify the project in the future.`
+          },
+          project_description: {
+            type: 'string',
+            description: `A description of the drug design project. This should include more thorough details of the project such as the disease/indication,
+            the therapeutic target, the binding pocket or residues being targetted, and/or any other relevant project details/notes.`
+          }
+        },
+        required: ['project_name', "project_description"],
+      }}, async (params: any) => {
+          try {
+            if (!threeDmolViewerRef.current) {
+              return { success: false, message: 'No PDB Visualization available. Please visualize a PDB structure and search box first before creating a new project.' };
+            }
+            const boxParams = threeDmolViewerRef.current.getCurrentBoxParams();
+
+            if (!boxParams) {
+              return { success: false, message: 'No search box parameters available. Please add a search box to the visualization first before creating a new project.' };
+            }
+            if (!boxParams.center || !boxParams.center.x || !boxParams.center.y || !boxParams.center.z) {
+              return { success: false, message: 'Invalid search box parameters. The box x/y/z center coordinates are missing or incomplete. Please add a valid search box to the visualization before creating a new project.' };
+            }
+            
+            if (!boxParams.dimensions || !boxParams.dimensions.w || !boxParams.dimensions.h || !boxParams.dimensions.d) {
+              return { success: false, message: 'Invalid search box parameters. The box w/h/d dimension sizes are missing or incomplete. Please add a valid search box to the visualization before creating a new project.' };
+            }
+
+            // Check if box dimensions are within the required range
+            const { w, h, d } = boxParams.dimensions;
+            if (w < 10 || w > 30 || h < 10 || h > 30 || d < 10 || d > 30) {
+              return { success: false, message: 'Box dimensions must be between 10.0 and 30.0 Angstroms. Please discuss with the user and add a new search box before creating a new project.' };
+            }
+
+            const num_atoms_in_box = threeDmolViewerRef.current.getNumAtomsInBox(boxParams)
+
+            if (num_atoms_in_box < 10) {
+              return {
+                success: false,
+                message: `Search box must contain at least 10 atoms to create a new project. Your current search box only contains ${num_atoms_in_box} atoms. Please discuss with the user and add a new search box before creating a new project.`
+              }
+            }
+          return await createNewProject(params.project_name, params.project_description, boxParams);
+          /*
+          return {
+            success: true,
+            message: `Test Project Created. Please tell the user that this function worked successfully.`
+          }
+            */
+          
+
+          } catch (error) {
+            console.error('Error performing action:', error);
+            return { success: false, message: `An error occurred while performing the action. Error: ${error}` };
+          }
+        }
+            
+    );
+    
+    // Add the get_current_pdb_metadata tool
+    client.addTool(
+      {
+        name: 'get_current_pdb_metadata',
+        description: 'Retrieves the metadata of the currently visualized PDB structure.',
+        parameters: {
+          type: 'object',
+          properties: {},
+        },
+      },
+      async () => {
+        try{
+        if (pdbMetadata) {
+          // Convert metadata object to a string
+          const metadataString = JSON.stringify(pdbMetadata, null, 2);
+          return {
+            success: true,
+            message: `Current PDB metadata retrieved. Metadata: ${metadataString}`,
+          };
+        } else {
+          // Reload the metadata from the PDB data directly
+          if (pdbVisualization?.pdbId) {
+            const pdbData = await fetchPDBData(pdbVisualization.pdbId);
+            const reloadedMetadata = extractPDBMetadata(pdbData);
+            setPdbMetadata(reloadedMetadata);
+            return {
+              success: true,
+              message: `PDB metadata reloaded. Metadata: ${JSON.stringify(reloadedMetadata, null, 2)}`,
+            };
+          } else if (customPdb?.content) {
+            const reloadedMetadata = extractPDBMetadata(customPdb.content);
+            setPdbMetadata(reloadedMetadata);
+            return {
+              success: true,
+              message: `Custom PDB metadata reloaded. Metadata: ${JSON.stringify(reloadedMetadata, null, 2)}`,
+            };
+          } else
+          return { success: false, message: 'No PDB metadata available.' };
+        }
+      } catch (error) {
+        console.error('Error performing action:', error);
+        return { success: false, message: `An error occurred while performing the action. Error: ${error}` };
+      }
+      }
+    );
+
+    // Start Drug Design Run
+    client.addTool(
+      {
+        name: 'start_drug_design_run',
+        description: `Submits a LIME Drug Design Run to begin designing novel small molecule drug candidates
+        for the user's current project.`,
+        parameters: {
+          type: 'object',
+          properties: {
+            confirm_current_project_id: {
+              type: 'integer',
+              description: `The integer Project ID of the project you wish to begin a LIME Drug Design run for. Drug Design runs
+              can only be started on your currently selected project, so this parameter is used to verify that your
+              current project is the project which you intend to begin a design run for.`
+            }
+          },
+          required: ['confirm_current_project_id']
+        },
+      },
+      async (params: any) => {
+        try{
+        const confirm_current_project_id = params.confirm_current_project_id
+        // Send post request with no arguments to /submit-autonomous-design-run
+        const response = await axios.post('/voice/submit-autonomous-design-run', {confirm_current_project_id});
+        
+        if (response.status === 200) {
+          return {
+            success: true,
+            message: `Drug design run submitted successfully. Your new drug candidates should be ready in a few days. Server response: ${response.data.message}`
+          };
+        } else {
+          return {
+            success: false,
+            message: `Failed to submit drug design run. Server response: ${response.data.message}`
+          };
+        }
+      } catch (error) {
+        console.error('Error performing action:', error);
+        return { success: false, message: `An error occurred while performing the action. Error: ${error}` };
+      }
+      }
+    );
+
+    // Change Projects
+    client.addTool(
+      {
+        name: 'change_current_project',
+        description: `Changes the user's current project to the project with the project id of switch_to_project_id.
+        Use this tool before actions such as starting a drug design run, anaalyzing results, etc to ensure
+        that your actions are applied to the intended project.`,
+        parameters: {
+          type: 'object',
+          properties: {
+            change_to_project_id: {
+              type: 'integer',
+              description: `The integer Project ID of the project you wish to change to as your new current project.`
+            }
+          },
+          required: ['change_to_project_id']
+        },
+      },
+      async (params: any) => {
+        try{
+          const change_to_project_id = params.change_to_project_id
+        // Send post request with change_to_project_id to /voice/switch-project
+        const response = await axios.post('/voice/change-current-project', { change_to_project_id });
+        
+        if (response.status === 200) {
+          return {
+            success: true,
+            message: `Successfully changed current project to project ID ${change_to_project_id}. Server response: ${response.data.message}`
+          };
+        } else {
+          return {
+            success: false,
+            message: `Failed to change current project to project ID ${change_to_project_id}. Server response: ${response.data.message}`
+          };
+        }
+      } catch (error) {
+        console.error('Error performing action:', error);
+        return { success: false, message: `An error occurred while performing the action. Error: ${error}` };
+      }
+      }
+    );
+
+    // List Projects
+    client.addTool(
+      {
+        name: 'list_projects',
+        description: `Lists the Project Name, Project Description, and Project ID of all of the user's projects,
+        and shows which is your current project. Call this tool to find available Project IDs options to be
+        usedas the change_current_project for the change_project tool or other tools requiring project IDs
+        .`,
+        parameters: {
+          type: 'object',
+          properties: {}
+        },
+      },
+      async () => {
+        try{
+        const response = await axios.post('/voice/list-projects');
+        
+        if (response.status === 200) {
+          return {
+            success: true,
+            message: `Successfully received projects list. Server response: ${response.data.message}`
+          };
+        } else {
+          return {
+            success: false,
+            message: `Failed to receive projects list. Server response: ${response.data.message}`
+          };
+        }
+      } catch (error) {
+        console.error('Error performing action:', error);
+        return { success: false, message: `An error occurred while performing the action. Error: ${error}` };
+      }
+      }
+    );
+
+    // Add plugin to project
+    client.addTool(
+      {
+        name: 'add_plugin_to_project',
+        description: `Adds an plugin to the user's current project. All drug candidates created during
+        the LIME Drug Design run for this project will be screened for all metrics provided by this
+        plugin, and the user will have the ability to use these metrics when creating custom design
+        objectives in LIME.
+        .`,
+        parameters: {
+          type: 'object',
+          properties: {
+            plugin_id: {
+              type: 'integer',
+              description: 'Integer Plugin ID for the plugin which you wish to add to the current project'
+            },
+            confirm_current_project_id: {
+              type: 'integer',
+              description: `Enter the integer Project ID of the project you wish to add the plugin too. Plugins can only
+              be added on your currently selected project, so this parameter is used to verify that your
+              current project is the project which you intend to add the plugin to.`
+            }
+          },
+          require: ['plugin_id', 'confirm_current_project_id']
+        },
+      },
+      async (params: any) => {
+        try{
+          const plugin_id = params.plugin_id
+          const confirm_current_project_id = params.confirm_current_project_id
+        const response = await axios.post('/voice/add-plugin', {plugin_id, confirm_current_project_id});
+        
+        if (response.status === 200) {
+          return {
+            success: true,
+            message: `Successfully added plugin ${plugin_id} to project ${confirm_current_project_id}. Server response: ${response.data.message}`
+          };
+        } else {
+          return {
+            success: false,
+            message: `Failed to receive projects list. Server response: ${response.data.message}`
+          };
+        }
+      } catch (error) {
+        console.error('Error performing action:', error);
+        return { success: false, message: `An error occurred while performing the action. Error: ${error}` };
+      }
+      }
+    );
+
+    // List Metrics
+    client.addTool(
+      {
+        name: 'list_metrics',
+        description: `Provides a dictionary of all metrics available in the Design Results Table with the metric names as keys
+        and the values as dictionaries containing the "description", "units", and "datatype" of the metric. Call this function
+        before calling the custom_query_drug_design_results_table tool to ensure your query is compatible with the results table's
+        metric names and datatypes.`,
+        parameters: {
+          type: 'object',
+          properties: {
+            confirm_current_project_id: {
+              type: 'integer',
+              description: `Enter the integer Project ID of the project you wish to list the metrics of. The available metrics are
+              project-dependent, so this parameter is used to verify that the current project is the project which you
+              intend to list the metrics of.`
+            }
+          },
+          required: ['confirm_current_project_id']
+
+          }
+        }, async (params: any) => {
+          try{
+            const confirm_current_project_id = params.confirm_current_project_id
+            const response = await axios.post('/voice/list-metrics', {confirm_current_project_id});
+            const metrics_json_string = JSON.stringify(response.data);
+            if (response.status === 200) {
+              return {
+                success: true,
+                message: `Successfully received metrics list. Server response: ${response.data.message}\n\nRemember, metric_names must be spelled exactly as listed in this schema in order to be used for querying the results table. Here are the available metrics on this project:\n\n${metrics_json_string}`
+              };
+            } else {
+              return {
+                success: false,
+                message: `Failed to receive metrics list. Server response: ${response.data.message}`
+              };
+            }
+          } catch (error) {
+            console.error('Error performing action:', error);
+            return { success: false, message: `An error occurred while performing the action. Error: ${error}` };
+          }
+
+        }
+    );
+
+    // Query Drug Design Results Table for top candidates
+    client.addTool(
+      {
+        name: 'custom_query_drug_design_results_table',
+        description: `Queries and filters the Design Run Results drug candidates table based on specified criteria defined in the "query" object.
+        This table contains all of the drug candidates designed during the current project's Drug Design run along with their respective
+        screening scores on all project metrics. Make sure to call the list_metrics before calling this tool to ensure your query is compatible
+        with the results table schema. This tool will return a dictionary with each compound's drug_candidate_id as the keys, and the values
+        are dictionaries with metric_name: metric_value for each metric name from the "select" section of your query for the respective
+        drug candidate. You must intelligently determine the most useful query for to identify the best possible drug candidates,
+        review the top 10 drug candidates resulting from your query, and then choose your final top 3 candidates to display to the user.`,
+        parameters: {
+          type: 'object',
+          properties: {
+            query: {
+              type: 'object',
+              description: `Query object specifying filter, sort, and select operations. It should contain the following properties:
+                - filter: (Optional) An array of objects, each with a 'condition' string using pandas query syntax.
+                - sort: (Required) An array of objects, each with a 'column' string and an 'ascending' boolean.
+                - select: (Required) An array of strings representing the columns to select.
+                Example: query: {
+                  filter: [{ condition: "efficacy > 0.7" }],
+                  sort: [{ column: "safety_score", ascending: false }, { column: "efficacy", ascending: true }],
+                  select: ["drug_name", "efficacy", "safety_score"]
+                Example2: query: {
+                  filter: [{ condition: "rdkit_lipinski_ro5_violations <= 2" }],
+                  sort: [{ column: "AutoDockVina Average Top 9 Poses Binding Energy", ascending: true }],
+                  select: ["functional_group", "AutoDockVina Average Top 9 Poses Binding Energy", "rdkit_logp", "rdkit_lipinski_ro5_violations"]
+                
+                }`
+            },
+            confirm_current_project_id: {
+              type: 'integer',
+              description: `Enter the integer Project ID of the project you wish to query the results of. Drug Design run
+              results are automatically queried from your current project, so this parameter is used to verify that 
+              the current project is the project which you intend to query results from.`
+            }
+          },
+          required: ['query', 'confirm_current_project_id'],
+        },
+      },
+      async (params: any) => {
+        if (!params.query || !Object.keys(params.query).some(key => ['filter', 'sort', 'select'].includes(key))) {
+          return {
+            success: false,
+            message: `"query" parameter is required but was not provided. "query" must be an object containing keys for "sort", "select", and (optional) "filter" and values corresponding to the query operation.`
+        } 
+        }
+        try {
+          const response = await axios.post('/voice/query-results-table', params);
+          
+          if (response.status === 200) {
+            console.log(`\n\n\nSuccessfully received Query Results:\n${JSON.stringify(response.data, null, 2)}\n\n\n`)
+            return {
+              success: true,
+              message: `Query executed successfully. Select the best drug candidates from this list and use the display_top_drug_candidates to present them to the user. Results: ${JSON.stringify(response.data, null, 2)}`,
+            };
+          } else {
+            return {
+              success: false,
+              message: `Failed to execute query. Server response: ${response.data.message}`,
+            };
+          }
+        } catch (error: any) {
+          console.error('Error performing query:', error);
+          if (axios.isAxiosError(error) && error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            return { 
+              success: false, 
+              message: `Failed to execute query. Server response: ${error.response.data.message || error.response.data}` 
+            };
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            return { 
+              success: false, 
+              message: `An error occurred while performing the query. Error: ${error}` 
+            };
+          }
+        }
+      }
+    );
+
+    // Display Top Drug Candidates
+    client.addTool(
+      {
+        name: 'display_top_drug_candidates',
+        description: `Displays the top drug candidates for the current project. This tool creates a robust display of the top drug candidates for
+        the current project to highlight the best results of the Drug Design run. It will display a 3dmol visualization of the original PDB structure
+        used for the project, the search box targeted by the project, and display the top predicted poses for your top 3 selected drug candudates.
+        Each compound is uniquely color-coded, has an on-hover effect which displays a popup of their metric scores. There is also an accordian color-key that
+        users may click on the color-coded id to view the metric scores there. When analyzing results, you must first call the list_metrics tool to get the proper
+        project results table schema, then you call the query_drug_design_results_table to get the top candidates, and only then you should call this tool
+        third to display them. `,
+        parameters: {
+          type: 'object',
+          properties: {
+            display_selected_metrics: {
+              type: 'string',
+              description: `A comma-separated list of Metric Names to display for the drug candidates in their color-key accordian popups and on-hover popups.
+              These must be valid Metric Names for the current project. You must include at least 3 metric names, but no more than 5. Choose the most relevant
+              and useful metrics to provide the most informative view of the top drug candidates for their drug discovery project.`,
+            },
+            top_drug_candidate_ids_to_display: {
+              type: 'string',
+              description: `A comma-separated list of the drug candidate IDs for the 3 drug candidates returned from your previous query_drug_design_results_table
+              tool call which you deem to be the best drug candidates for the user's drug discovery project goals. The drug candidate IDs are the key values of the
+              top candidates results dictionary returned by the custom_query_drug_design_results_table tool, so you must call the custom_query_drug_design_results_table
+              tool first before calling this tool in order to determine the top drug candidates and their respective drug candidate IDs.`
+            },
+            confirm_current_project_id: {
+              type: 'integer',
+              description: `Enter the integer Project ID of the project you wish to query the results of. Drug Design run
+              results are automatically queried from your current project, so this parameter is used to verify that 
+              the current project is the project which you intend to query results from.`
+            }
+          },
+          required: ['display_selected_metrics', 'top_drug_candidate_ids_to_display', 'confirm_current_project_id'],
+        },
+      }, async (params:any ) => {
+
+        try {
+          if (!params.display_selected_metrics) {
+            return {
+              success: false,
+              message: "The 'display_selected_metrics' parameter is required but was not provided."
+            };
+          }
+          if (!params.top_drug_candidate_ids_to_display) {
+            return {
+              success: false,
+              message: "The 'top_drug_candidate_ids_to_display' parameter is required but was not provided."
+            };
+          }
+          if (!params.confirm_current_project_id) {
+            return {
+              success: false,
+              message: "The 'confirm_current_project_id' parameter is required but was not provided."
+            };
+          }
+
+          const display_selected_metrics = params.display_selected_metrics
+          const top_drug_candidate_ids_to_display = params.top_drug_candidate_ids_to_display
+          const confirm_current_project_id = params.confirm_current_project_id
+
+          // Convert strings to arrays
+          const metricNames = display_selected_metrics.split(',').map((s: any) => s.trim());
+          const candidateIds = top_drug_candidate_ids_to_display.split(',').map((s: any) => s.trim());
+    
+          // Fetch the original receptor PDB
+
+          const receptorResponse = await axios.post('/voice/get-og-receptor-pdb', 
+            { confirm_current_project_id },
+            { responseType: 'text' }  // Set responseType to 'text' to get the raw PDB content
+          );
+          if (receptorResponse.status !== 200) {
+            return {
+              success: false,
+              message: `Failed to fetch the original receptor PDB.`,
+            };
+          }
+          const receptorPdbContent = receptorResponse.data;
+    
+          // Extract PDB metadata
+          const pdbMetadata = extractPDBMetadata(receptorPdbContent);
+          setPdbMetadata(pdbMetadata);
+
+          //handleCustomPDBUploaded(receptorPdbContent)
+    
+          // Fetch selected drug candidates' metrics
+          const metricsResponse = await axios.post('/voice/get-top-ligand-dicts', {
+            display_selected_metrics: metricNames.join(','),
+            top_drug_candidate_ids_to_display: top_drug_candidate_ids_to_display,
+            confirm_current_project_id,
+          });
+          if (metricsResponse.status !== 200) {
+            return {
+              success: false,
+              message: `Failed to fetch metrics for selected drug candidates.`,
+            };
+          }
+          const metricResponseData = typeof metricsResponse.data === 'string'
+            ? JSON.parse(metricsResponse.data.replace(/NaN/g, "null"))
+            : metricsResponse.data;
+
+
+          const sanitizedData = typeof metricResponseData.data === 'string'
+            ? JSON.parse(metricResponseData.data.replace(/NaN/g, "null"))
+            : metricResponseData.data;
+
+
+
+
+          // The metricsResponse.data contains metrics
+          const fetchedMetricsData: {
+            [drug_candidate_id: string]: {
+              metrics: { [metricName: string]: any };
+            };
+          } = sanitizedData;
+    
+          // Now, we need to fetch ligandPdbContent for each drug candidate, and build the selectedDrugCandidates object
+          const selectedDrugCandidates: {
+            [drug_candidate_id: string]: {
+              ligandPdbContent: string;
+              metrics: { [metricName: string]: any };
+            };
+          } = {};
+    
+          const ligandPromises = candidateIds.map(async (drug_candidate_id: any) => {
+            const ligandResponse = await axios.post('/voice/get-docked-ligand', 
+              {
+                drug_candidate_id,
+                pose: 1,
+                confirm_current_project_id,
+              },
+              { responseType: 'text' }  // Set responseType to 'text' to get the raw PDB content
+            );
+          
+            if (ligandResponse.status !== 200) {
+              throw new Error(
+                `Failed to fetch docked ligand for drug candidate ${drug_candidate_id}.`
+              );
+            }
+          
+            const ligandPdbContent = ligandResponse.data;  // Use the response data directly as PDB content
+          
+            selectedDrugCandidates[drug_candidate_id] = {
+              ligandPdbContent,
+              metrics: fetchedMetricsData[drug_candidate_id].metrics,
+            };
+          });
+    
+          await Promise.all(ligandPromises);
+    
+          // Determine if there are reference ligands in the same pocket
+          const referenceLigands = {}; // Implement logic to find reference ligands
+    
+          // Update state to display FinalResultsThreeDmolViewer
+          setFinalResultsVisualization({
+            receptorPdbContent,
+            selectedDrugCandidates,
+            referenceLigands,
+          });
+    
+          // Update displayedContent to 'finalResults'
+          setDisplayedContent('finalResults');
+    
+          return {
+            success: true,
+            message: `The top drug candidates were successfully displayed. Original Project Receptor PDBMetadata: ${JSON.stringify(pdbMetadata, null, 2)}`,
+          };
+        } catch (error: any) {
+          console.error('Error in display_top_drug_candidates:', error);
+          if (axios.isAxiosError(error) && error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            return { 
+              success: false, 
+              message: `Error in display_top_drug_candidates. Server response: ${error.response.data.message || error.response.data}` 
+            };
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            return { 
+              success: false, 
+              message: `An error occurred for display_top_drug_candidates. Error: ${error}` 
+            };
+          }
+        }
+      }
+    );
+
+    // Download project results CSV
+    client.addTool(
+      {
+        name: 'download_full_drug_design_results_csv',
+        description: `Downloads a CSV file of the entire Drug Design run results table for the current project containing all of
+        the drug candidates which were designed and their respective screening scores on all project metrics.`,
+        parameters: {
+          type: 'object',
+          properties: {
+            confirm_current_project_id: {
+              type: 'integer',
+              description: `Enter the integer Project ID of the project you wish to query the results of. Drug Design run
+              results are automatically queried from your current project, so this parameter is used to verify that 
+              the current project is the project which you intend to query results from.`
+            }
+          },
+        },
+      },
+      async (params: any) => {
+        try {
+          const confirm_current_project_id = params.confirm_current_project_id
+          const response = await axios.post('/voice/download-results-csv', { confirm_current_project_id }, { responseType: 'blob' });
+          
+          if (response.status === 200) {
+            // Create a Blob from the response data
+            const blob = new Blob([response.data.data], { type: 'text/csv' });
+            
+            // Create a link element and trigger the download
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `LIME Drug Design Project ${confirm_current_project_id} Results.csv`);
+            document.body.appendChild(link);
+            link.click();
+            if (link.parentNode){
+              link.parentNode.removeChild(link);
+            }
+
+            return {
+              success: true,
+              message: `Drug Design Results CSV file downloaded successfully. ${response.data.message}`,
+            };
+          } else {
+            return {
+              success: false,
+              message: `Failed to download Drug Design Results CSV file. ${response.data.message}`,
+            };
+          }
+        } catch (error) {
+          console.error('Error performing query:', error);
+          return { success: false, message: `An error occurred while performing the query. Error: ${error}` };
+        }
+      }
+    );
+
+    // handle realtime events from client + server for event logging
+    client.on('realtime.event', (realtimeEvent: RealtimeEvent) => {
+      setRealtimeEvents((realtimeEvents) => {
+        const lastEvent = realtimeEvents[realtimeEvents.length - 1];
+        if (lastEvent?.event.type === realtimeEvent.event.type) {
+          // if we receive multiple events in a row, aggregate them for display purposes
+          lastEvent.count = (lastEvent.count || 0) + 1;
+          return realtimeEvents.slice(0, -1).concat(lastEvent);
+        } else {
+          return realtimeEvents.concat(realtimeEvent);
+        }
+      });
+    });
+    client.on('error', (event: any) => console.error(event));
+    client.on('conversation.interrupted', async () => {
+      const trackSampleOffset = await wavStreamPlayer.interrupt();
+      if (trackSampleOffset?.trackId) {
+        const { trackId, offset } = trackSampleOffset;
+        await client.cancelResponse(trackId, offset);
+      }
+    });
+    client.on('conversation.updated', async ({ item, delta }: any) => {
+      const items = client.conversation.getItems();
+      if (delta?.audio) {
+        wavStreamPlayer.add16BitPCM(delta.audio, item.id);
+      }
+      if (item.status === 'completed' && item.formatted.audio?.length) {
+        const wavFile = await WavRecorder.decode(
+          item.formatted.audio,
+          24000,
+          24000
+        );
+        item.formatted.file = wavFile;
+      }
+      setItems(items);
+    });
+
+    setItems(client.conversation.getItems());
+
+    return () => {
+      // cleanup; resets to defaults
+      client.reset();
+    };
+  }, []);
+
+  /**
+   * Render the application
+   */
+  return (
+    <div data-component="LimePage">
+      <div className="content-top">
+        <div className="content-title">
+          <img src="AIVoiceMode/limefavicon.png" alt="LIME Logo" />
+          <span id="titlediv">LIME Drug Design</span>
+        </div>
+      </div>
+      <div className="content-main">
+        <div className="content-logs">
+          <div className="content-block events">
+            <div className="content-block-body" ref={contentDisplay}>
+              {displayedContent === 'upload' && (
+                <div className="content-display">
+                  <UploadCustomPDB onUpload={handleCustomPDBUploaded} />
+                  
+                </div>
+              )}
+              {displayedContent === 'customPdb' && customPdb && (
+                <div className="content-display">
+                  <ThreeDmolViewer
+                    pdbContent={customPdb.content}
+                    style={customPdb.style}
+                    surface={customPdb.surface}
+                    backgroundColor={customPdb.backgroundColor}
+                    spin={customPdb.spin}
+                    ref={threeDmolViewerRef} // Reference to the viewer
+                    onMetadataExtracted={(metadata) => {
+                      setPdbMetadata(metadata);
+                      // Use the metadata as needed
+                      console.log('Extracted PDB Metadata:', metadata);
+                    }}
+                  />
+                  
+                </div>
+              )}
+              {displayedContent === 'pdb' && pdbVisualization && (
+                <div className="content-display">
+                  <ThreeDmolViewer {...pdbVisualization} ref={threeDmolViewerRef} />
+                  
+                </div>
+              )}
+              {displayedContent === 'search' && searchResults && (
+                <div className="content-display">
+                  <SearchResults results={searchResults} />
+                </div>
+              )}
+              {displayedContent === 'none' && (
+                <CircleBarVisualization
+                  wavInput={wavStreamPlayerRef.current}
+                  wavRecorderInput={wavRecorderRef.current}
+                  detail={128}
+                  startHue={150}
+                  endHue={220}
+                  varyBrightness
+                />
+              )}
+              {displayedContent !== 'none' && (
+                <div className="mini-visualization">
+                  <CircleBarVisualization
+                    wavInput={wavStreamPlayerRef.current}
+                    wavRecorderInput={wavRecorderRef.current}
+                    detail={64}
+                    startHue={150}
+                    endHue={220}
+                    varyBrightness
+                  />
+                </div>
+              )}
+              {displayedContent === 'finalResults' && finalResultsVisualization && (
+              <div className="content-display">
+                <FinalResultsThreeDmolViewer
+                  receptorPdbContent={finalResultsVisualization.receptorPdbContent}
+                  selectedDrugCandidates={finalResultsVisualization.selectedDrugCandidates}
+                  referenceLigands={finalResultsVisualization.referenceLigands}
+                />
+              </div>
+            )}
+            </div>
+          </div>
+          <div className="content-block conversation">
+            <div className="content-block-title">Conversation Transcript</div>
+            <div className="content-block-body" data-conversation-content>
+              {!items.length && `awaiting connection...`}
+              {items.map((conversationItem, i) => {
+                return (
+                  <div className="conversation-item" key={conversationItem.id}>
+                    <div className={`speaker ${conversationItem.role || ''}`}>
+                      <div>
+                        {(
+                          conversationItem.role || conversationItem.type
+                        ).replaceAll('_', ' ')}
+                      </div>
+                      <div
+                        className="close"
+                        onClick={() =>
+                          deleteConversationItem(conversationItem.id)
+                        }
+                      >
+                        <X />
+                      </div>
+                    </div>
+                    <div className={`speaker-content`}>
+                      {/* tool response */}
+                      {conversationItem.type === 'function_call_output' && (
+                        <div>{conversationItem.formatted.output}</div>
+                      )}
+                      {/* tool call */}
+                      {!!conversationItem.formatted.tool && (
+                        <div>
+                          {conversationItem.formatted.tool.name}(
+                          {conversationItem.formatted.tool.arguments})
+                        </div>
+                      )}
+                      {!conversationItem.formatted.tool &&
+                        conversationItem.role === 'user' && (
+                          <div>
+                            {conversationItem.formatted.transcript ||
+                              (conversationItem.formatted.audio?.length
+                                ? '(awaiting transcript)'
+                                : conversationItem.formatted.text ||
+                                  '(item sent)')}
+                          </div>
+                        )}
+                      {!conversationItem.formatted.tool &&
+                        conversationItem.role === 'assistant' && (
+                          <div>
+                            {conversationItem.formatted.transcript ||
+                              conversationItem.formatted.text ||
+                              '(truncated)'}
+                          </div>
+                        )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="content-actions">
+            <Toggle
+              defaultValue={false}
+              labels={['manual', 'vad']}
+              values={['none', 'server_vad']}
+              onChange={(_, value) => changeTurnEndType(value)}
+            />
+            <div className="spacer" />
+            {isConnected && canPushToTalk && (
+              <Button
+                label={isRecording ? 'release to send' : 'push to talk'}
+                buttonStyle={isRecording ? 'alert' : 'regular'}
+                disabled={!isConnected || !canPushToTalk}
+                onMouseDown={startRecording}
+                onMouseUp={stopRecording}
+              />
+            )}
+            <div className="spacer" />
+            <Button
+              label={isConnected ? 'disconnect' : 'connect'}
+              iconPosition={isConnected ? 'end' : 'start'}
+              icon={isConnected ? X : Zap}
+              buttonStyle={isConnected ? 'regular' : 'action'}
+              disabled={isConnecting}
+              onClick={isConnected ? disconnectConversation : connectConversation}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
