@@ -4,4 +4,5 @@ openai_agents_examples/
 
 openai_responses_docs/
 
+__pycache__/
 
