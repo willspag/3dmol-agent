@@ -229,7 +229,10 @@ def _call_viewer(command: str, **kwargs) -> bytes:
                   to=_primary_sid)
 
     # Wait for response with timeout
-    timeout = 10  # seconds
+    try:
+        timeout = int(os.environ.get("VIEWER_COMMAND_TIMEOUT", "30"))  # seconds
+    except ValueError:
+        timeout = 30  # Default to 20 seconds if conversion fails
     response_event = viewer_command_responses[request_id]['event']
     if not response_event.wait(timeout=timeout):
         logger.error(f"Timeout waiting for response to {command}")
@@ -527,8 +530,7 @@ def execute_function_call(function_name, arguments):
         # Return the result
         return {
             'success': image_base64 is not None,
-            'message': success_messages[function_name] if image_base64 else
-            "Operation completed but no image was returned",
+            'message': success_messages[function_name] if image_base64 else "Operation completed but no image was returned",
             'image': image_base64
         }
 
