@@ -52,7 +52,7 @@ Message = Union[SystemMessage, UserMessage, AssistantMessage,
                 ToolResultMessage]
 
 
-OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "o4-mini")
+MODEL = os.environ.get("OPENAI_MODEL", "o4-mini")
 
 logger = logging.getLogger(__name__)
 
