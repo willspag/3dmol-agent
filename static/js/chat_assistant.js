@@ -12,6 +12,7 @@ class ChatAssistant {
         this.chatForm = document.getElementById('chat-form');
         this.chatInput = document.getElementById('chat-input');
         this.clearChatBtn = document.getElementById('clear-chat-btn');
+        this.downloadChatBtn = document.getElementById('download-chat-btn');
         this.assistantStatus = document.getElementById('assistant-status');
         
         this.isProcessing = false;
@@ -35,6 +36,11 @@ class ChatAssistant {
         // Handle clearing chat
         this.clearChatBtn.addEventListener('click', () => {
             this.clearChat();
+        });
+        
+        // Handle downloading chat
+        this.downloadChatBtn.addEventListener('click', () => {
+            this.downloadChatAsPdf();
         });
         
         // Add auto-expanding textarea logic
@@ -553,15 +559,16 @@ class ChatAssistant {
         this.isProcessing = isProcessing;
         this.chatInput.disabled = isProcessing;
         
-        // Update status badge
-        const statusBadge = this.assistantStatus.querySelector('.badge');
-        
-        if (isProcessing) {
-            statusBadge.textContent = 'Processing';
-            statusBadge.className = 'badge bg-warning';
-        } else {
-            statusBadge.textContent = 'Idle';
-            statusBadge.className = 'badge bg-secondary';
+        // Update status badge only if not currently generating PDF
+        if (!this.downloadChatBtn.disabled) { // Check if PDF generation is NOT active
+            const statusBadge = this.assistantStatus.querySelector('.badge');
+            if (isProcessing) {
+                statusBadge.textContent = 'Processing';
+                statusBadge.className = 'badge bg-warning';
+            } else {
+                statusBadge.textContent = 'Idle';
+                statusBadge.className = 'badge bg-secondary';
+            }
         }
     }
     
@@ -628,6 +635,87 @@ class ChatAssistant {
 
         // Reset current assistant message if needed, similar to tool calls
         this.currentAssistantMessage = null;
+    }
+    async downloadChatAsPdf() {
+        const chatMessagesElement = document.getElementById('chat-messages');
+        const downloadButton = this.downloadChatBtn; // Reference to the button
+
+        if (!chatMessagesElement || chatMessagesElement.children.length <= 1) { // Check if only system message exists
+            alert("Chat is empty or only contains the initial message, nothing to download.");
+            return;
+        }
+
+        // Disable button and show processing state
+        downloadButton.disabled = true;
+        downloadButton.textContent = 'Generating PDF...';
+        const originalStatusText = this.assistantStatus.querySelector('.badge').textContent;
+        const originalStatusClass = this.assistantStatus.querySelector('.badge').className;
+        this.updateAssistantStatus('Generating PDF', 'bg-info'); // Custom status
+
+
+        console.log("Starting PDF generation...");
+
+        try {
+            // Use html2canvas to capture the chat content
+            const canvas = await html2canvas(chatMessagesElement, {
+                scale: 2, // Improve resolution
+                useCORS: true, // Important if any external resources are ever used
+                logging: false, // Set to true for debugging canvas issues
+                // Ensure background color is captured if needed (might be needed if container has specific bg)
+                backgroundColor: window.getComputedStyle(document.body).getPropertyValue('background-color') // Use body bg as default
+            });
+
+            const imgData = canvas.toDataURL('image/png');
+            const { jsPDF } = window.jspdf; // Get jsPDF constructor
+
+            // PDF Setup (A4 size: 210mm x 297mm)
+            const pdfWidth = 210;
+            const pdfMargin = 10; // mm margin on each side
+            const imgContainerWidth = pdfWidth - (pdfMargin * 2);
+            const pageHeight = 297;
+            const usablePageHeight = pageHeight - (pdfMargin * 2);
+
+            // Calculate image height maintaining aspect ratio
+            const imgHeight = canvas.height * imgContainerWidth / canvas.width;
+            let heightLeft = imgHeight;
+            let position = pdfMargin; // Initial top margin
+
+            // Create PDF ('p' = portrait, 'mm' = millimeters, 'a4' = size)
+            const pdf = new jsPDF('p', 'mm', 'a4');
+
+            // Add the first chunk of the image
+            // Parameters: imageData, format, x, y, width, height
+            pdf.addImage(imgData, 'PNG', pdfMargin, position, imgContainerWidth, imgHeight);
+            heightLeft -= usablePageHeight;
+
+            // Add new pages if the image is taller than one page
+            while (heightLeft > 0) {
+                position = heightLeft - imgHeight + pdfMargin; // Calculate the negative offset for the next page
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', pdfMargin, position, imgContainerWidth, imgHeight);
+                heightLeft -= usablePageHeight;
+            }
+
+            // Save the PDF
+            pdf.save('chat-history.pdf');
+            console.log("PDF generation complete.");
+
+        } catch (error) {
+            console.error("Error generating PDF:", error);
+            alert(`Failed to generate PDF. Check the console for details.\nError: ${error.message}`);
+        } finally {
+            // Re-enable button and restore original status
+            downloadButton.disabled = false;
+            downloadButton.textContent = 'Download Chat';
+            this.updateAssistantStatus(originalStatusText, originalStatusClass.split(' ').pop()); // Restore previous status/color
+        }
+    }
+
+    // Helper to update status badge (Optional Refactor)
+    updateAssistantStatus(text, badgeClass) {
+         const statusBadge = this.assistantStatus.querySelector('.badge');
+         statusBadge.textContent = text;
+         statusBadge.className = `badge ${badgeClass}`;
     }
 }
 
