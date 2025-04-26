@@ -97,7 +97,8 @@ class ChatAssistant {
     
     handleAIResponse(data) {
         if (data.type === 'text') {
-            this.handleTextResponse(data.content);
+            // Send full data object, not just dataa.content in order to also handle annotations (if any)
+            this.handleTextResponse(data);
         } else if (data.type === 'tool_start') {
             this.handleToolStart(data.name, data.arguments);
         } else if (data.type === 'tool_result') {
@@ -114,22 +115,78 @@ class ChatAssistant {
         this.scrollToBottom();
     }
     
-    handleTextResponse(content) {
-        // If this is the first text chunk, create a new message
+    handleTextResponse(data) {
+        const content = data.content;
+        const annotations = data.annotations;
+
+        // Ensure the main message container exists
         if (!this.currentAssistantMessage) {
             this.currentAssistantMessage = this.createMessageElement('assistant');
             this.chatMessages.appendChild(this.currentAssistantMessage);
-            
+
+            // Add the primary content container
             const messageContent = document.createElement('div');
             messageContent.className = 'message-content';
-            messageContent.innerHTML = this.formatMarkdown(content);
             this.currentAssistantMessage.appendChild(messageContent);
-        } else {
-            // Otherwise, append to existing message
-            const messageContent = this.currentAssistantMessage.querySelector('.message-content');
-            messageContent.innerHTML = this.formatMarkdown(messageContent.textContent + content);
         }
-        
+
+        // Append new content to the message content container
+        const messageContent = this.currentAssistantMessage.querySelector('.message-content');
+        // Append formatted new content - handles streaming better than re-formatting all text
+        messageContent.innerHTML += this.formatMarkdown(content);
+
+        // Handle annotations if they exist
+        if (annotations && annotations.length > 0) {
+            // Find or create the annotations container
+            let annotationsContainer = this.currentAssistantMessage.querySelector('.annotations-container');
+            if (!annotationsContainer) {
+                annotationsContainer = document.createElement('div');
+                annotationsContainer.className = 'annotations-container';
+                // Insert after the message content
+                messageContent.insertAdjacentElement('afterend', annotationsContainer);
+            }
+
+            // Clear previous annotations from this specific container (if any)
+            // This assumes annotations might be sent incrementally or updated
+            // annotationsContainer.innerHTML = ''; // Let's append for now, might need clearing logic if backend sends duplicates
+
+            const annotationsList = document.createElement('ul');
+            annotationsList.className = 'annotations-list';
+
+            annotations.forEach((annotation, index) => {
+                if (annotation.type === 'url_citation' && annotation.url && annotation.title) {
+                    const listItem = document.createElement('li');
+
+                    const link = document.createElement('a');
+                    link.href = annotation.url;
+                    link.textContent = annotation.title;
+                    link.target = '_blank'; // Open in new tab
+                    link.rel = 'noopener noreferrer'; // Security best practice
+                    link.className = 'annotation-link';
+
+                    // Add a small citation number/marker
+                    const citationMarker = document.createElement('span');
+                    citationMarker.className = 'citation-marker';
+                    // You might want a more robust way to number citations if they relate to specific text parts
+                    citationMarker.textContent = `[${index + 1}]`; 
+
+                    listItem.appendChild(citationMarker);
+                    listItem.appendChild(link);
+                    annotationsList.appendChild(listItem);
+                }
+            });
+            
+            // Only append the list if it contains items
+            if (annotationsList.hasChildNodes()) {
+                 // Clear existing list before appending new one to prevent duplicates if function is called multiple times with same annotations
+                 const existingList = annotationsContainer.querySelector('.annotations-list');
+                 if (existingList) {
+                     existingList.remove();
+                 }
+                annotationsContainer.appendChild(annotationsList);
+            }
+        }
+
         // Set status to normal after receiving text
         this.setProcessingState(false);
     }

@@ -393,7 +393,18 @@ def handle_chat_message_api():
                     # Add text chunk to response
                     chat_payload.append({
                         'type': 'text',
-                        'content': response_item['content']
+                        'content': response_item['content'],
+                        #'annotations': response_item['annotations']
+                        'annotations': [
+                                        {
+                                            "type": "url_citation",
+                                            "start_index": 2606,
+                                            "end_index": 2758,
+                                            "url": "limedrugdesign.com",
+                                            "title": "Title..."
+                                        }
+                                        ]
+                        
                     })
                     
                     # Add response_item to ai_assistant chat history
@@ -497,7 +508,9 @@ def handle_chat_message(message_text):
                         # Send text response_item to the client
                         socketio.emit('ai_response', {
                             'type': 'text',
-                            'content': response_item['content']
+                            'content': response_item['content'],
+                            'annotations': response_item['annotations']
+                            
                         })
                         
                         # Add text response_item to ai_assistant chat history

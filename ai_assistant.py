@@ -353,11 +353,17 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
                                 if hasattr(response_message_content_object, "annotations"):
                                     annotations = response_message_content_object.annotations
                                 else:
-                                    annotations = None
+                                    annotations = []
                             
                             # Yield the text_content
-                            yield {"type": "text", "content": text_content, 'raw_response_item': response_item}
-            
+                            yield {
+                                "type": "text",
+                                "content": text_content,
+                                "annotations": annotations,
+                                'raw_response_item': response_item
+                            }
+                    
+                        
         except Exception as e:
             logger.error(f"Error in AI processing: {str(e)}")
             error_response = {

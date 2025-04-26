@@ -278,3 +278,42 @@
     padding: 6px 10px;
     font-size: 0.9rem;
 }
+
+/* Annotations Styling */
+.annotations-container {
+    margin-top: 0.75rem; /* Space between message content and annotations */
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--bs-gray-300); /* Subtle separator */
+    margin-left: 1rem; /* Indent slightly */
+    margin-right: 1rem;
+}
+
+.annotations-list {
+    list-style: none; /* Remove default bullet points */
+    padding-left: 0;
+    margin-bottom: 0; /* Remove default bottom margin */
+}
+
+.annotations-list li {
+    margin-bottom: 0.3rem; /* Space between annotation links */
+    font-size: 0.85em; /* Slightly smaller font */
+    color: var(--bs-gray-600); /* Subdued color */
+}
+
+.citation-marker {
+    display: inline-block;
+    min-width: 1.5em; /* Ensure markers align nicely */
+    margin-right: 0.3em;
+    font-weight: bold;
+    color: var(--bs-secondary); /* Use secondary color for marker */
+}
+
+.annotation-link {
+    color: var(--bs-info); /* Use info color for links */
+    text-decoration: none; /* Remove underline */
+}
+
+.annotation-link:hover {
+    text-decoration: underline; /* Underline on hover */
+    color: var(--bs-primary);
+}
