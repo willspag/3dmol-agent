@@ -59,7 +59,7 @@ logger = logging.getLogger(__name__)
 
 class MolecularAIAssistant:
 
-    def __init__(self, api_key=None):
+    def __init__(self, api_key=None, use_web_search_tool = True):
         if api_key:
             self.api_key = api_key
         else:
@@ -81,10 +81,12 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
             "content": self.system_message
         }
         self.conversation_history: List[Message] = [system_msg]
+        self.use_web_search_tool = use_web_search_tool
+        
 
     def _get_tools_definition(self):
         """Define the tools that the model can use to control the 3D viewer."""
-        return [{
+        tools = [{
             "type": "function",
             "name": "load_pdb",
             "description": "Load a protein structure by PDB ID into the 3D viewer. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
@@ -298,6 +300,15 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
             }
         }]
 
+        # Add web search tool if self.use_web_search_tool is set to True
+        if self.use_web_search_tool:
+            tools.append({
+                "type": "web_search_preview",
+                "search_context_size": str(os.environ.get("WEB_SEARCH_CONTEXT_SIZE", 'medium')).lower()
+                })
+        
+        return tools
+
     async def get_model_response(
             self) -> AsyncGenerator[Dict[str, Any], None]:
         """
@@ -310,22 +321,37 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
 
         try:
             # Create the API request
-            response = self.client.responses.create(
-                model=MODEL,
-                input=self.conversation_history,
-                tools=self._get_tools_definition(),
-                reasoning={"effort": "medium", "summary": "auto"}
-            )
+            if MODEL.lower().startswith('o'):
+                response = self.client.responses.create(
+                    model=MODEL,
+                    input=self.conversation_history,
+                    tools=self._get_tools_definition(),
+                    reasoning={"effort": "medium", "summary": "auto"}
+                )
+            else:
+                response = self.client.responses.create(
+                    model=MODEL,
+                    input=self.conversation_history,
+                    tools=self._get_tools_definition()
+                )
 
             if response.output:
                 print(f"\n\n\nresponse.output exists! len(response.output) - {len(response.output)}\n\n\n")
                 
                 for response_item in response.output:
                     print(f"\n\nProcessing response_item of type {response_item.type}!\n\n")
+                    print(f"response_item: {response_item}\n\n\n")
                     if response_item.type == "reasoning":
-                        reasoning_summary = response_item.summary
                         print(f"\n\n\nresponse_item: {response_item}\n\n\n")
-                        yield {'type': 'reasoning', 'content': reasoning_summary, 'raw_response_item': response_item}
+                        
+                        # Loop through response_item.summary and yield the text for each one (in case there are mutiple)
+                        for reasoning_summary in response_item.summary:
+                            
+                            yield {
+                                'type': 'reasoning',
+                                'content': reasoning_summary.text,
+                                'raw_response_item': response_item
+                            }
                         
                         
                     elif response_item.type == 'function_call':
@@ -350,8 +376,18 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
                                 annotations = None
                             elif response_message_content_object.type == "output_text":
                                 text_content = response_message_content_object.text
-                                if hasattr(response_message_content_object, "annotations"):
-                                    annotations = response_message_content_object.annotations
+                                if hasattr(response_message_content_object, "annotations") and len(response_message_content_object.annotations) > 0:
+                                    # Loop through and add attributes to ensure it's json serializable
+                                    annotations = []
+                                    for annotation in response_message_content_object.annotations:
+                                        annotation_dict = {
+                                            "type": annotation.type,
+                                            "start_index": annotation.start_index,
+                                            "end_index": annotation.end_index,
+                                            "url": annotation.url,
+                                            "title": annotation.title
+                                        }
+                                        annotations.append(annotation_dict)
                                 else:
                                     annotations = []
                             
@@ -363,6 +399,13 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
                                 'raw_response_item': response_item
                             }
                     
+                    elif response_item.type == 'web_search_call':
+                        
+                        yield {
+                                'type': 'web_search_call',
+                                'status': response_item.status,
+                                'raw_response_item': response_item
+                            }
                         
         except Exception as e:
             logger.error(f"Error in AI processing: {str(e)}")

@@ -107,6 +107,8 @@ class ChatAssistant {
             this.handleToolError(data.name, data.error);
         } else if (data.type === 'reasoning') {
             this.addReasoningSummary(data.content);
+        } else if (data.type === 'web_search_call') {
+            this.handleWebSearchCall(data.status);
         } else if (data.type === 'error') {
             this.handleError(data.content);
         }
@@ -561,6 +563,20 @@ class ChatAssistant {
             summaryEl.textContent = summaryText;
             this.chatMessages.appendChild(summaryEl);
         }
+    }
+    handleWebSearchCall(status) {
+        // Create a message element for the web search status
+        const webSearchMessage = document.createElement('div');
+        webSearchMessage.className = 'web-search-message'; // Use a specific class for styling
+
+        // Use an icon (e.g., magnifying glass or globe) and the status text
+        webSearchMessage.innerHTML = `<i class="fas fa-search"></i> ${this.escapeHTML('Searching the web...')}`; // Example using Font Awesome icon
+
+        this.chatMessages.appendChild(webSearchMessage);
+        this.scrollToBottom();
+
+        // Reset current assistant message if needed, similar to tool calls
+        this.currentAssistantMessage = null;
     }
 }
 

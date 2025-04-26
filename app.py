@@ -40,7 +40,10 @@ socketio = SocketIO(app,
 
 # Get AI Assistant using conversation_history from flask session if it exists
 def get_ai_assistant():
-    assistant = MolecularAIAssistant()
+    
+    use_web_search = os.environ.get('USE_WEB_SEARCH_TOOL', 'TRUE').upper() == 'TRUE'
+    assistant = MolecularAIAssistant(use_web_search_tool=use_web_search)
+    
     if 'conversation_history' in session:
         try:
             assistant.conversation_history = pickle.loads(session['conversation_history'])
@@ -71,6 +74,10 @@ test_results: List[Dict[str, Any]] = []
 @app.route("/")
 def index():
     """Serve the main page with 3D molecular viewer and test runner."""
+    
+    # Clear chat history from session
+    clear_conversation_history()
+    
     return render_template("index.html")
 
 
@@ -394,16 +401,7 @@ def handle_chat_message_api():
                     chat_payload.append({
                         'type': 'text',
                         'content': response_item['content'],
-                        #'annotations': response_item['annotations']
-                        'annotations': [
-                                        {
-                                            "type": "url_citation",
-                                            "start_index": 2606,
-                                            "end_index": 2758,
-                                            "url": "limedrugdesign.com",
-                                            "title": "Title..."
-                                        }
-                                        ]
+                        'annotations': response_item['annotations']
                         
                     })
                     
@@ -411,10 +409,21 @@ def handle_chat_message_api():
                     ai_assistant.conversation_history.append(response_item['raw_response_item'])
                     
                 elif response_item['type'] == 'reasoning':
-                    # Add text chunk to response
+                    # Add reasoning summary to response
                     chat_payload.append({
                         'type': 'reasoning',
                         'content': response_item['content']
+                    })
+                    
+                    # Add response_item to ai_assistant chat history
+                    ai_assistant.conversation_history.append(response_item['raw_response_item'])
+                
+                
+                elif response_item['type'] == 'web_search_call':
+                    
+                    chat_payload.append({
+                        'type': 'web_search_call',
+                        'status': response_item['status']
                     })
                     
                     # Add response_item to ai_assistant chat history

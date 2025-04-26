@@ -192,6 +192,22 @@
     background-color: rgba(var(--bs-danger-rgb), 0.1);
 }
 
+/* Web search message styling */
+.web-search-message {
+    font-size: 0.85em;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    border-left: 3px solid var(--bs-purple); /* Using a different color */
+    background-color: rgba(111, 66, 193, 0.1); /* --bs-purple with alpha */
+    color: var(--bs-gray-700);
+}
+
+.web-search-message .fa-search {
+    margin-right: 0.4em;
+    color: var(--bs-purple);
+}
+
 .tool-image-container {
     margin-top: 0.75rem;
     text-align: center;
