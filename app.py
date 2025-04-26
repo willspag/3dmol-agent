@@ -10,7 +10,8 @@ from pathlib import Path
 from typing import Dict, Any, Optional, List
 from functools import partial
 
-from flask import Flask, render_template, request, jsonify, Response
+import pickle
+from flask import Flask, render_template, request, jsonify, session
 from flask_socketio import SocketIO, emit
 
 from ai_assistant import MolecularAIAssistant
@@ -37,8 +38,26 @@ socketio = SocketIO(app,
                     transports=['polling'],
                     logger=False)
 
-# Initialize the AI assistant
-ai_assistant = MolecularAIAssistant()
+# Get AI Assistant using conversation_history from flask session if it exists
+def get_ai_assistant():
+    assistant = MolecularAIAssistant()
+    if 'conversation_history' in session:
+        try:
+            assistant.conversation_history = pickle.loads(session['conversation_history'])
+        except Exception:
+            assistant.conversation_history = assistant.conversation_history[:1]  # just system message
+    return assistant
+
+# Save AI Assistant conversation_history to flask session
+def save_ai_assistant(assistant):
+    session['conversation_history'] = pickle.dumps(assistant.conversation_history)
+
+# Clear AI Assistant conversation history from flask session
+def clear_conversation_history():
+    """Clear the conversation history from the flask session."""
+    if 'conversation_history' in session:
+        del session['conversation_history']
+        logger.info("Cleared conversation history from session")
 
 # Keep track of connections
 _connected_sids = []
@@ -53,6 +72,17 @@ test_results: List[Dict[str, Any]] = []
 def index():
     """Serve the main page with 3D molecular viewer and test runner."""
     return render_template("index.html")
+
+
+@app.route("/api/clear_chat_history", methods=["POST"])
+def api_clear_chat_history():
+    """Clear the AI assistant's conversation history."""
+    try:
+        clear_conversation_history()
+        return jsonify({"status": "success", "message": "Chat history cleared."})
+    except Exception as e:
+        logger.error(f"Error clearing chat history: {str(e)}")
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 
 @app.route("/api/clear_test_results", methods=["POST"])
@@ -197,10 +227,17 @@ def handle_viewer_command_api():
 @socketio.on('viewer_command_response')
 def handle_viewer_command_response(data):
     """Handle the response from a viewer command request."""
+    logger.info(f"Received viewer_command_response for request_id: {data.get('request_id')}")
+
     request_id = data.get('request_id')
-    if request_id in viewer_command_responses:
+    if request_id and request_id in viewer_command_responses:
+        logger.info(f"Found matching request_id: {request_id}. Setting event.")
         viewer_command_responses[request_id]['result'] = data
         viewer_command_responses[request_id]['event'].set()
+    elif request_id:
+        logger.warning(f"Received response for unknown/expired request_id: {request_id}")
+    else:
+        logger.warning(f"Received viewer_command_response with missing request_id: {data}")
 
 
 # Modified implementation of Socket.IO RPC call with REST API fallback
@@ -232,10 +269,15 @@ def _call_viewer(command: str, **kwargs) -> bytes:
                   to=_primary_sid)
 
     # Wait for response with timeout
-    timeout = 10  # seconds
+    try:
+        timeout = int(os.environ.get("VIEWER_COMMAND_TIMEOUT", "30"))  # seconds
+    except ValueError:
+        timeout = 30  # Default to 30 seconds if conversion fails
+
+    logger.info(f"Waiting for response_event for request_id: {request_id} with timeout: {timeout} seconds")
     response_event = viewer_command_responses[request_id]['event']
     if not response_event.wait(timeout=timeout):
-        logger.error(f"Timeout waiting for response to {command}")
+        logger.error(f"Timeout waiting for response to {command} (request_id: {request_id})")
         del viewer_command_responses[request_id]
         return b""
 
@@ -326,6 +368,13 @@ def handle_chat_message_api():
     message_text = request.json.get('message', '')
     logger.info(f"Received chat message via API: {message_text}")
     
+    
+    ai_assistant = get_ai_assistant()
+    
+    # Add user message to conversation history
+    user_msg = {"role": "user", "content": message_text}
+    ai_assistant.conversation_history.append(user_msg)
+    
 
     # We'll use a synchronous approach for simplicity to avoid the Socket.IO issues
     try:
@@ -338,9 +387,8 @@ def handle_chat_message_api():
 
         # Process the message with the AI assistant
         async def collect_ai_responses():
-            async for response_item in ai_assistant.process_user_message(message_text):
+            async for response_item in ai_assistant.get_model_response():
                 #logger.debug(f"Response chunk: {response_chunk}")
-
                 if response_item['type'] == 'text':
                     # Add text chunk to response
                     chat_payload.append({
@@ -406,6 +454,9 @@ def handle_chat_message_api():
         loop.run_until_complete(collect_ai_responses())
         loop.close()
 
+        # Save the updated AI Assistant
+        save_ai_assistant(ai_assistant)
+    
         # Return the full response as JSON
         return jsonify({'responses': chat_payload})
 
@@ -426,18 +477,21 @@ def handle_chat_message_api():
 def handle_chat_message(message_text):
     """Handle user chat messages via Socket.IO and process AI responses."""
     logger.info(f"Received chat message via Socket.IO: {message_text}")
+    
+    ai_assistant = get_ai_assistant()
 
     # Create a thread to process the message to avoid blocking
     def process_message_thread():
         # Create an event loop for the async function
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
+        
 
         try:
             # Process the message with the AI assistant
             async def process_chunks():
-                async for response_item in ai_assistant.process_user_message( message_text):
-                    logger.debug(f"Processing response_item.type: {response_chunk.type}")
+                async for response_item in ai_assistant.get_model_response( message_text):
+                    logger.debug(f"Processing response_item.type: {response_item.type}")
 
                     if response_item['type'] == 'text':
                         # Send text response_item to the client
@@ -510,7 +564,11 @@ def handle_chat_message(message_text):
 
         finally:
             loop.close()
+            
+            # Save the updated AI Assistant
+            save_ai_assistant(ai_assistant)
 
+    
     # Start the thread
     threading.Thread(target=process_message_thread).start()
     return {'status': 'processing'}

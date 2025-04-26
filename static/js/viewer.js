@@ -64,7 +64,7 @@ class MolecularViewer {
                 
                 // Take a screenshot and send it back as the response
                 const png = this.takeScreenshot();
-                console.log(`Command ${payload.name} executed successfully, sending response`);
+                console.log(`Command ${payload.name} executed successfully, sending response for request_id: ${requestId}`);
                 
                 // Send the result back using the new viewer_command_response event
                 if (data.request_id) {
@@ -84,8 +84,15 @@ class MolecularViewer {
             } catch (error) {
                 console.error("Error executing command:", error);
                 
+                // <<< ADD THIS LOGGING (optional but helpful) >>>
+                console.error(`Error processing command ${payload?.name}. Request ID: ${requestId}`, error);
+                // <<< END ADDED LOGGING >>>
+                
                 // Handle errors for both new and legacy formats
                 if (data.request_id) {
+                    // <<< ADD THIS LOGGING >>>
+                    console.log(`Sending ERROR viewer_command_response for request_id: ${data.request_id}`);
+                    // <<< END ADDED LOGGING >>>
                     this.socket.emit('viewer_command_response', { 
                         request_id: data.request_id,
                         error: error.message, 

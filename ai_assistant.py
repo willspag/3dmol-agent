@@ -298,18 +298,15 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
             }
         }]
 
-    async def process_user_message(
-            self, user_message) -> AsyncGenerator[Dict[str, Any], None]:
+    async def get_model_response(
+            self) -> AsyncGenerator[Dict[str, Any], None]:
         """
-        Process a user message and yield streaming responses.
+        Query the AI model using OpenAI's responses API
         
         This method is a generator that yields:
         - text chunks for normal AI responses
         - function call objects when the AI wants to execute a function
         """
-        # Add user message to conversation history
-        user_msg: UserMessage = {"role": "user", "content": user_message}
-        self.conversation_history.append(user_msg)
 
         try:
             # Create the API request

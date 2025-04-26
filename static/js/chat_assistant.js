@@ -22,8 +22,6 @@ class ChatAssistant {
         
         this.initEvents();
         
-        // Show welcome message
-        this.addSystemMessage('Welcome! You can now chat with the AI assistant to control the 3D viewer.');
     }
     
     initEvents() {
@@ -394,7 +392,7 @@ class ChatAssistant {
         // Preserve the welcome message
         const welcomeContent = `<p>Hello! I'm your molecular biology assistant. I can help you visualize and manipulate protein structures. Ask me to load a PDB structure, rotate the view, highlight specific parts, or anything else related to 3D molecular visualization.</p>`;
         
-        // Clear all messages
+        // Clear all messages on the frontend
         this.chatMessages.innerHTML = '';
         
         // Add a new welcome message
@@ -407,6 +405,29 @@ class ChatAssistant {
         
         welcomeMessage.appendChild(messageContent);
         this.chatMessages.appendChild(welcomeMessage);
+
+        // Call the backend to clear the conversation history
+        fetch('/api/clear_chat_history', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                console.log('Chat history cleared on the server.');
+            } else {
+                console.error('Error clearing chat history on the server:', data.message);
+                // Optionally display an error to the user
+                this.addMessage('system', `Error clearing server history: ${data.message}`);
+            }
+        })
+        .catch(error => {
+            console.error('Failed to call clear chat history API:', error);
+            // Optionally display an error to the user
+            this.addMessage('system', `Failed to contact server to clear history: ${error}`);
+        });
         
         // Reset state
         this.currentAssistantMessage = null;
