@@ -108,3 +108,8 @@ If selectivity over human ThDP enzymes is a concern, a second, shallower pocket 
 * Because the catalytic site spans both monomers, docking against the biological dimer (assembly 1) is essential; the provided box center is defined in the asymmetric unit but is symmetric under the crystallographic 2-fold.  
 
 Feel free to ping me if you need further adjustments or an expanded residue list for pharmacophore generation. Good luck docking!
+
+
+
+**IMPORTANT**
+Do not rely solely on this report or assume any coordinate recommendations or other information is perfectly accurate, you must verify yourself. Your mission is to deeply understand the content of this research report, understand the concepts and reasoning behind their recommendations, and then conduct your own iterative analysis and review of the box positioning. This will require iteratively updating the viewer using your custom tools and analyzing the results to gain numerous insights by viewing the protein structure and box from many different angles, applying different semantically relevant styles, and other analysis to asses whether the box is properly surrounding your intended region of the protein target. You should itteratively perform additional analysis using the viewer tools, revise the box if needed, and repeat until you are fully confident that your box is placed perfectly. Then, conclude by providing the use with a thorough, detailed analysis of your approaches used, your findings, what you discovered based on the images returned from various viewer manipulations, and your reasoning for why you are confident in your final box selection.

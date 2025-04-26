@@ -3,6 +3,7 @@ import os
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, AsyncGenerator, Union, TypedDict, Literal
+import threading
 
 # Load environment variables
 from dotenv import load_dotenv
@@ -72,8 +73,8 @@ Always be helpful, concise, and provide scientific explanations when appropriate
 
 IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
 1. You will first receive a `function_call_output` item indicating whether the action succeeded or failed (e.g., `{"status": "success"}` or `{"status": "error", "message": "Details..."}`).
-2. Immediately following the `function_call_output` item, a `developer` message containing a base64-encoded image (screenshot) of the 3D viewer's current state will be automatically added to the conversation.
-3. The image message is tagged with the *developer* role and represents feedback from the tool. You may analyze it and, if needed, call another tool before composing your textual response for the user."""
+2. Immediately following the `function_call_output` item, a `user` message containing a base64-encoded image (screenshot) of the 3D viewer's current state will be automatically added to the conversation.
+3. The image message is tagged with the *user* role and represents feedback from the tool. You may analyze it and, if needed, call another tool before composing your textual response for the user."""
         
         # Initialize with system message
         system_msg: SystemMessage = {
@@ -82,6 +83,7 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
         }
         self.conversation_history: List[Message] = [system_msg]
         self.use_web_search_tool = use_web_search_tool
+        self.image_received_event = threading.Event()
         
 
     def _get_tools_definition(self):
@@ -89,7 +91,7 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
         tools = [{
             "type": "function",
             "name": "load_pdb",
-            "description": "Load a protein structure by PDB ID into the 3D viewer. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+            "description": "Load a protein structure by PDB ID into the 3D viewer. Returns status message and triggers an automatic user-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
             "strict": True,
             "parameters": {
                 "type": "object",
@@ -107,7 +109,7 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
         }, {
             "type": "function",
             "name": "highlight_hetero",
-            "description": "Highlight hetero atoms (non-protein components like ligands, water, etc.) in the current structure. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+            "description": "Highlight hetero atoms (non-protein components like ligands, water, etc.) in the current structure. Returns status message and triggers an automatic user-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
             "strict": True,
             "parameters": {
                 "type": "object",
@@ -127,7 +129,7 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
                     "selection": {
                         "type": ["object", "null"],
                         "description":
-                        "Optional selection criteria to show surface only for specific parts of the structure. If null, applies to the whole structure. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+                        "Optional selection criteria to show surface only for specific parts of the structure. If null, applies to the whole structure. Returns status message and triggers an automatic user-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
                         "properties": {
                             "chain": {
                                 "type": ["string", "null"],
@@ -149,7 +151,7 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
         }, {
             "type": "function",
             "name": "rotate",
-            "description": "Rotate the molecule view around specified axes. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+            "description": "Rotate the molecule view around specified axes. Returns status message and triggers an automatic user-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
             "strict": True,
             "parameters": {
                 "type": "object",
@@ -176,7 +178,7 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
         }, {
             "type": "function",
             "name": "zoom",
-            "description": "Zoom the view in or out. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+            "description": "Zoom the view in or out. Returns status message and triggers an automatic user-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
             "strict": True,
             "parameters": {
                 "type": "object",
@@ -194,7 +196,7 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
         }, {
             "type": "function",
             "name": "add_box",
-            "description": "Add a box around a specific region of the structure. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+            "description": "Add a box around a specific region of the structure. Returns status message and triggers an automatic user-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
             "strict": True,
             "parameters": {
                 "type": "object",
@@ -241,7 +243,7 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
             "type": "function",
             "name": "set_style",
             "description":
-            "Set the visualization style for specific parts of the structure. All parameters must follow 3Dmol.js syntax. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+            "Set the visualization style for specific parts of the structure. All parameters must follow 3Dmol.js syntax. Returns status message and triggers an automatic user-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
             "strict": True,
             "parameters": {
                 "type": "object",
@@ -290,7 +292,7 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
         }, {
             "type": "function",
             "name": "reset_view",
-            "description": "Reset the viewer to the default view. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+            "description": "Reset the viewer to the default view. Returns status message and triggers an automatic user-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
             "strict": True,
             "parameters": {
                 "type": "object",

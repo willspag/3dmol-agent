@@ -42,6 +42,15 @@ socketio = SocketIO(app,
 # Store assistants in memory with UUID keys
 assistants_store = {}
 
+# Define functions that modify the viewer state and expect an image back
+VIEWER_MODIFYING_FUNCTIONS = {
+    'load_pdb', 'highlight_hetero', 'show_surface', 'rotate', 'zoom',
+    'add_box', 'set_style', 'reset_view'
+}
+
+# Timeout for waiting for the developer image
+IMAGE_WAIT_TIMEOUT_SECONDS = int(os.environ.get("IMAGE_WAIT_TIMEOUT_SECONDS", "15"))
+
 # Get AI Assistant using UUID from flask session
 def get_ai_assistant():
     
@@ -425,17 +434,13 @@ def handle_chat_message_api():
             last_message_type = 'user_message'
             while last_message_type != 'text':
                 
-                # wait a bit if not a user_message to give the tools more time to render
-                if not last_message_type == 'user_message':
-                    try:
-                        ai_call_loop_sleep_time = int(os.environ.get("AI_LOOP_SLEEP_SECONDS", "5"))  
-                        time.sleep(ai_call_loop_sleep_time)
-                    except:
-                        logging.warning("Failed to parse AI_LOOP_SLEEP_SECONDS - defaulting to 5 second sleep")
-                        time.sleep(5)
-                            
+                # Removed the sleep here as event-based waiting is more robust
+                # if not last_message_type == 'user_message': ... time.sleep(...)
+
                 async for response_item in ai_assistant.get_model_response():
                     last_message_type = response_item['type']
+                    function_modified_viewer = False # Flag to track if we need to wait
+
                     if response_item['type'] == 'text':
                         # Add text chunk to response
                         chat_payload.append({
@@ -491,6 +496,10 @@ def handle_chat_message_api():
                                 'result': result
                             })
 
+                            # Check if this function modifies the viewer and requires waiting
+                            if response_item['name'] in VIEWER_MODIFYING_FUNCTIONS and result.get('success'):
+                                function_modified_viewer = True
+
                         except Exception as e:
                             logger.error(
                                 f"Error executing function {response_item['name']}: {str(e)}"
@@ -501,6 +510,19 @@ def handle_chat_message_api():
                                 'error': str(e),
                                 "raw_response_item": response_item['raw_response_item']
                             })
+
+                    # Wait for the image if a viewer-modifying function was called successfully
+                    if function_modified_viewer:
+                        logger.info(f"Function '{response_item['name']}' executed. Waiting for developer image event...")
+                        # Ensure the event is clear before waiting
+                        ai_assistant.image_received_event.clear()
+                        # Wait for the event to be set by handle_developer_image
+                        event_received = ai_assistant.image_received_event.wait(timeout=IMAGE_WAIT_TIMEOUT_SECONDS)
+                        if event_received:
+                            logger.info("Developer image event received.")
+                        else:
+                            logger.warning(f"Timeout waiting for developer image after '{response_item['name']}'. Proceeding without image.")
+                        # No need to clear again, wait does not consume the set state, but clearing before wait is good practice
 
         # Run the async function and wait for it to complete
         loop.run_until_complete(collect_ai_responses())
@@ -549,19 +571,13 @@ def handle_chat_message(message_text):
                 
                 last_message_type = 'user_message'
                 while last_message_type != 'text':
-                    # wait a bit if not a user_message to give the tools more time to render
-                    if not last_message_type == 'user_message':
-                        try:
-                            ai_call_loop_sleep_time = int(os.environ.get("AI_LOOP_SLEEP_SECONDS", "5"))  
-                            time.sleep(ai_call_loop_sleep_time)
-                        except:
-                            logging.warning("Failed to parse AI_LOOP_SLEEP_SECONDS - defaulting to 5 second sleep")
-                            time.sleep(5)
-                            
-                    async for response_item in ai_assistant.get_model_response( message_text):
-                        logger.debug(f"Processing response_item.type: {response_item.type}")
+                    # Removed sleep here as well
+
+                    async for response_item in ai_assistant.get_model_response():
+                        logger.debug(f"SocketIO: Processing response_item.type: {response_item.get('type')}") # Use .get for safety
                         last_message_type = response_item['type']
-                        
+                        function_modified_viewer = False # Flag to track if we need to wait
+
                         if response_item['type'] == 'text':
                             # Send text response_item to the client
                             socketio.emit('ai_response', {
@@ -579,6 +595,12 @@ def handle_chat_message(message_text):
                                 'content': response_item['content']
                             })
                         
+
+                        elif response_item['type'] == 'web_search_call':
+                             socketio.emit('ai_response', {
+                                'type': 'web_search_call',
+                                'status': response_item['status']
+                            })
 
                         elif response_item['type'] == 'function_call':
                             # Send function call notification to the client
@@ -608,6 +630,10 @@ def handle_chat_message(message_text):
                                         'result': result
                                     })
 
+                                # Check if this function modifies the viewer and requires waiting
+                                if response_item['name'] in VIEWER_MODIFYING_FUNCTIONS and result.get('success'):
+                                    function_modified_viewer = True
+
                             except Exception as e:
                                 logger.error(
                                     f"Error executing function {response_item['name']}: {str(e)}"
@@ -618,6 +644,20 @@ def handle_chat_message(message_text):
                                         'name': response_item['name'],
                                         'error': str(e)
                                     })
+
+                        # Wait for the image if a viewer-modifying function was called successfully
+                        # This blocking wait is acceptable here because this entire function runs in a separate thread.
+                        if function_modified_viewer:
+                            logger.info(f"SocketIO: Function '{response_item['name']}' executed. Waiting for developer image event...")
+                            # Ensure the event is clear before waiting
+                            ai_assistant.image_received_event.clear()
+                            # Wait for the event to be set by handle_developer_image
+                            event_received = ai_assistant.image_received_event.wait(timeout=IMAGE_WAIT_TIMEOUT_SECONDS)
+                            if event_received:
+                                logger.info("SocketIO: Developer image event received.")
+                            else:
+                                logger.warning(f"SocketIO: Timeout waiting for developer image after '{response_item['name']}'. Proceeding without image.")
+                            # No need to clear again
 
             # Run the async function that processes chunks
             loop.run_until_complete(process_chunks())
@@ -687,7 +727,7 @@ def execute_function_call(function_name, arguments):
         image_data = _call_viewer(function_name, **arguments)
         image_base64 = base64.b64encode(image_data).decode(
             'utf-8') if image_data else None
-        success_messagee = success_messages[function_name] + "\n\nNotice: Due to asynchronous function execution, there may be a delay in the automated 'developer' message providing the screenshot of the updated 3dmol.js viewer."
+        success_messagee = success_messages[function_name] + "\n\nNotice: Due to asynchronous function execution, there may be a delay in the automated 'user' message providing the screenshot of the updated 3dmol.js viewer."
         # Return the result
         return {
             'success': True,#image_base64 is not None,
@@ -703,37 +743,53 @@ def execute_function_call(function_name, arguments):
 # ────────────────────────────────  Dev server  ──────────────────────────────────
 @app.route('/api/developer_image', methods=['POST'])
 def handle_developer_image():
-    """Handle developer image messages from the frontend."""
+    """Handle developer image messages from the frontend and signal the waiting chat thread."""
     if not request.is_json:
         return jsonify({"error": "Expected JSON data"}), 400
 
     data = request.json
     image_b64 = data.get('image_b64')
-    tool_name = data.get('tool_name')
+    tool_name = data.get('tool_name') # Keep tool_name for logging/context
 
     if not image_b64 or not tool_name:
         return jsonify({"error": "Missing required parameters"}), 400
 
-    
-    logging.info(f"\n\n\nimage_b64 is available! adding developer_image_msg to conversation history after executing the {tool_name} command!\n\n\n")
-    developer_image_msg = {
-        "role": "user",
-        "content": [
-            {"type": 'input_text',"text": f"Here's a screenshot of the 3dmol.js viewer after executing the {tool_name} command:"},
-            {"type": "input_image", "image_url": f"data:image/png;base64,{image_b64}"}
+    try:
+        # Get the current AI assistant
+        ai_assistant = get_ai_assistant()
+
+        logging.info(f"Received developer image for tool '{tool_name}'. Adding to history.")
+        developer_image_msg = {
+            "role": "user", # Use 'user' role as per revised prompt strategy
+            "content": [
+                {"type": 'input_text', "text": f"Here's a screenshot of the 3Dmol.js viewer after executing the {tool_name} command:"},
+                {"type": "input_image", "image_url": f"data:image/png;base64,{image_b64}"}
             ]
         }
 
-    # Get the current AI assistant
-    ai_assistant = get_ai_assistant()
-    
-    # Add the developer message to conversation history
-    ai_assistant.conversation_history.append(developer_image_msg)
-    
-    # Save the updated AI Assistant
-    save_ai_assistant(ai_assistant)
+        # Add the developer message to conversation history
+        ai_assistant.conversation_history.append(developer_image_msg)
 
-    return jsonify({"status": "success"})
+        # Save the updated AI Assistant state
+        save_ai_assistant(ai_assistant)
+
+        # Signal the waiting chat thread that the image has been received and processed
+        logger.info(f"Setting image_received_event for assistant {session.get('assistant_uuid')}")
+        ai_assistant.image_received_event.set()
+
+        return jsonify({"status": "success"})
+
+    except Exception as e:
+        logger.error(f"Error handling developer image: {str(e)}", exc_info=True)
+        # Attempt to signal anyway, but log the error clearly
+        try:
+            ai_assistant = get_ai_assistant()
+            if ai_assistant:
+                logger.warning("Signaling image event despite error during processing.")
+                ai_assistant.image_received_event.set()
+        except Exception as signal_err:
+             logger.error(f"Failed to signal image event after error: {signal_err}", exc_info=True)
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 
 if __name__ == "__main__":
