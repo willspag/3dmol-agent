@@ -317,6 +317,18 @@ class ChatAssistant {
                 
                 // Add image if available
                 if (result.image) {
+                    // Send the image to the backend to create a developer message
+                    fetch('/api/developer_image', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            image_b64: result.image,
+                            tool_name: name
+                        })
+                    }).catch(error => console.error('Error sending developer image:', error));
+
                     const imageContainer = document.createElement('div');
                     imageContainer.className = 'tool-image-container';
                     

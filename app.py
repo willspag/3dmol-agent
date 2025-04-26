@@ -406,7 +406,7 @@ def handle_chat_message_api():
     ai_assistant = get_ai_assistant()
     
     # Add user message to conversation history
-    user_msg = {"role": "user", "content": message_text}
+    user_msg = {"role": "user", "content": [{"type": 'input_text',"text": message_text}]}
     ai_assistant.conversation_history.append(user_msg)
     
 
@@ -523,7 +523,7 @@ def handle_chat_message(message_text):
     ai_assistant = get_ai_assistant()
     
     # Add user message to conversation history
-    user_msg = {"role": "user", "content": message_text}
+    user_msg = {"role": "user", "content": [{"type": 'input_text',"text": message_text}]}
     ai_assistant.conversation_history.append(user_msg)
 
     # Create a thread to process the message to avoid blocking
@@ -661,19 +661,18 @@ def execute_function_call(function_name, arguments):
 
         # For this implementation, we'll execute the commands directly rather than via Socket.IO
         # Prepare the API call parameters based on the function
-        call_params = {'command': function_name}
-        call_params.update(arguments)
+        #call_params = {'command': function_name}
+        #call_params.update(arguments)
 
         # Directly execute the viewer command
         image_data = _call_viewer(function_name, **arguments)
         image_base64 = base64.b64encode(image_data).decode(
             'utf-8') if image_data else None
-
+        success_messagee = success_messages[function_name] + "\n\nNotice: Due to asynchronous function execution, there may be a delay in the automated 'developer' message providing the screenshot of the updated 3dmol.js viewer."
         # Return the result
         return {
-            'success': image_base64 is not None,
-            'message': success_messages[function_name] if image_base64 else
-            "Operation completed but no image was returned",
+            'success': True,#image_base64 is not None,
+            'message': success_messagee,
             'image': image_base64
         }
 
@@ -683,6 +682,41 @@ def execute_function_call(function_name, arguments):
 
 
 # ────────────────────────────────  Dev server  ──────────────────────────────────
+@app.route('/api/developer_image', methods=['POST'])
+def handle_developer_image():
+    """Handle developer image messages from the frontend."""
+    if not request.is_json:
+        return jsonify({"error": "Expected JSON data"}), 400
+
+    data = request.json
+    image_b64 = data.get('image_b64')
+    tool_name = data.get('tool_name')
+
+    if not image_b64 or not tool_name:
+        return jsonify({"error": "Missing required parameters"}), 400
+
+    
+    logging.info(f"\n\n\nimage_b64 is available! adding developer_image_msg to conversation history after executing the {tool_name} command!\n\n\n")
+    developer_image_msg = {
+        "role": "user",
+        "content": [
+            {"type": 'input_text',"text": f"Here's a screenshot of the 3dmol.js viewer after executing the {tool_name} command:"},
+            {"type": "input_image", "image_url": f"data:image/png;base64,{image_b64}"}
+            ]
+        }
+
+    # Get the current AI assistant
+    ai_assistant = get_ai_assistant()
+    
+    # Add the developer message to conversation history
+    ai_assistant.conversation_history.append(developer_image_msg)
+    
+    # Save the updated AI Assistant
+    save_ai_assistant(ai_assistant)
+
+    return jsonify({"status": "success"})
+
+
 if __name__ == "__main__":
     print("Open http://0.0.0.0:5000 in a browser")
     socketio.run(app,

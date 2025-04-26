@@ -340,7 +340,7 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
                 
                 for response_item in response.output:
                     print(f"\n\nProcessing response_item of type {response_item.type}!")
-                    print(f"response_item: {response_item}\n\n\n")
+                    #print(f"response_item: {response_item}\n\n\n")
                     
                     # Go ahead and add the response_item to history to make sure nothing gets missed
                     self.conversation_history.append(response_item)
@@ -434,6 +434,8 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
                 "output": result_str,
             })
 
+            # Going to handle developer_image_msg updates through new route called by frontend instead
+            '''
             # If there is an image, add it as a developer message (OpenAI input_image format)
             if image_b64:
                 logging.info(f"\n\n\nimage_b64 is available! adding developer_image_msg to conversation history!\n\n\n")
@@ -447,7 +449,7 @@ IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
                 self.conversation_history.append(developer_image_msg)
             else:
                 logging.error(f"\n\n\nNo image available. Full results dict received: {result}\n\n\n")
-
+            '''
             logger.info(
                 f"Added function result for {function_name} to conversation history"
             )
