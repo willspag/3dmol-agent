@@ -140,24 +140,24 @@ class MolecularViewer {
                     // Store the PDB ID for reset functionality
                     this.currentPDB = p.pdb_id;
                     
-                    // Directly load PDB from RCSB using fetch
-                    const url = `https://files.rcsb.org/download/${p.pdb_id}.pdb`;
-                    console.log("Fetching PDB from:", url);
+                    // Directly load PDBx/mmCIF from RCSB using fetch
+                    const url = `https://files.rcsb.org/download/${p.pdb_id}.cif`;
+                    console.log("Fetching PDBx/mmCIF from:", url);
                     
                     const response = await fetch(url);
                     if (!response.ok) {
-                        throw new Error(`Failed to fetch PDB ${p.pdb_id}: ${response.statusText}`);
+                        throw new Error(`Failed to fetch PDBx/mmCIF ${p.pdb_id}: ${response.statusText}`);
                     }
                     
-                    const pdbData = await response.text();
-                    if (!pdbData || pdbData.length < 100) {
-                        throw new Error(`Invalid PDB data received for ${p.pdb_id}`);
+                    const cifData = await response.text();
+                    if (!cifData || cifData.length < 100) {
+                        throw new Error(`Invalid PDBx/mmCIF data received for ${p.pdb_id}`);
                     }
                     
-                    console.log(`Successfully loaded PDB ${p.pdb_id}, data length: ${pdbData.length}`);
+                    console.log(`Successfully loaded PDBx/mmCIF ${p.pdb_id}, data length: ${cifData.length}`);
                     
-                    // Add the model to the viewer
-                    this.viewer.addModel(pdbData, "pdb");
+                    // Add the model to the viewer, specifying 'cif' format
+                    this.viewer.addModel(cifData, "cif");
                     
                     // Set default style
                     this.viewer.setStyle({}, { cartoon: { color: "spectrum" } });
@@ -179,7 +179,7 @@ class MolecularViewer {
                     this.viewerState.rotationChanged = false;
                     this.viewerState.hasActiveBox = false;
                 } catch (error) {
-                    console.error("Error loading PDB:", error);
+                    console.error("Error loading PDBx/mmCIF:", error);
                     throw error;
                 }
                 break;

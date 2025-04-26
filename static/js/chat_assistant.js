@@ -29,11 +29,26 @@ class ChatAssistant {
         this.chatForm.addEventListener('submit', (e) => {
             e.preventDefault();
             this.sendMessage();
+            this.resetTextareaHeight(); // Reset height after sending
         });
         
         // Handle clearing chat
         this.clearChatBtn.addEventListener('click', () => {
             this.clearChat();
+        });
+        
+        // Add auto-expanding textarea logic
+        this.chatInput.addEventListener('input', () => {
+            this.adjustTextareaHeight();
+        });
+
+        // Handle Enter key press for sending, Shift+Enter for newline
+        this.chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault(); // Prevent default newline insertion
+                this.sendMessage();
+                this.resetTextareaHeight(); // Reset height after sending
+            }
         });
         
         // For backward compatibility - still listen for Socket.IO responses
@@ -43,6 +58,30 @@ class ChatAssistant {
         });
     }
     
+    adjustTextareaHeight() {
+        // Temporarily reset height to auto to get the correct scrollHeight
+        this.chatInput.style.height = 'auto';
+        
+        // Calculate the max height based on the CSS variable or default
+        const maxHeight = parseInt(getComputedStyle(this.chatInput).maxHeight) || 150;
+        const scrollHeight = this.chatInput.scrollHeight;
+        
+        // Set the height to the scroll height, but not exceeding max height
+        if (scrollHeight <= maxHeight) {
+            this.chatInput.style.height = scrollHeight + 'px';
+            this.chatInput.style.overflowY = 'hidden'; // Hide scrollbar if below max
+        } else {
+            this.chatInput.style.height = maxHeight + 'px';
+            this.chatInput.style.overflowY = 'scroll'; // Show scrollbar if exceeding max
+        }
+    }
+
+    resetTextareaHeight() {
+        this.chatInput.style.height = 'auto'; // Reset to default defined by CSS
+        this.chatInput.style.overflowY = 'hidden';
+        this.adjustTextareaHeight(); // Recalculate in case there's placeholder text styling
+    }
+
     async sendMessage() {
         const message = this.chatInput.value.trim();
         if (!message || this.isProcessing) return;
@@ -398,7 +437,7 @@ class ChatAssistant {
         
         const messageContent = document.createElement('div');
         messageContent.className = 'message-content';
-        messageContent.textContent = message;
+        messageContent.innerHTML = this.formatMarkdown(message);
         
         messageElement.appendChild(messageContent);
         this.chatMessages.appendChild(messageElement);

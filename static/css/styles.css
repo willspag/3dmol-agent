@@ -333,3 +333,13 @@
     text-decoration: underline; /* Underline on hover */
     color: var(--bs-primary);
 }
+
+/* Style the chat input textarea */
+#chat-input {
+    resize: none; /* Disable manual resizing */
+    overflow-y: hidden; /* Hide scrollbar initially */
+    min-height: calc(1.5em + 0.75rem + 2px); /* Match default Bootstrap input height */
+    max-height: 150px; /* Set a max height, e.g., 150px */
+    line-height: 1.5;
+    transition: height 0.1s ease-out; /* Smooth transition for height changes */
+}
