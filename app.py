@@ -5,6 +5,7 @@ import json
 import logging
 import threading
 import time
+import uuid
 import asyncio
 from pathlib import Path
 from typing import Dict, Any, Optional, List
@@ -38,29 +39,55 @@ socketio = SocketIO(app,
                     transports=['polling'],
                     logger=False)
 
-# Get AI Assistant using conversation_history from flask session if it exists
+# Store assistants in memory with UUID keys
+assistants_store = {}
+
+# Get AI Assistant using UUID from flask session
 def get_ai_assistant():
     
     use_web_search = os.environ.get('USE_WEB_SEARCH_TOOL', 'TRUE').upper() == 'TRUE'
+    
+    # Check if we have a session UUID
+    assistant_uuid = session.get('assistant_uuid')
+    
+    # If we have a UUID and it exists in our store, use that assistant
+    if assistant_uuid and assistant_uuid in assistants_store:
+        return assistants_store[assistant_uuid]
+    
+    # Otherwise create a new assistant
     assistant = MolecularAIAssistant(use_web_search_tool=use_web_search)
     
-    if 'conversation_history' in session:
-        try:
-            assistant.conversation_history = pickle.loads(session['conversation_history'])
-        except Exception:
-            assistant.conversation_history = assistant.conversation_history[:1]  # just system message
+    # Generate a new UUID for this assistant and store it
+    assistant_uuid = str(uuid.uuid4())
+    session['assistant_uuid'] = assistant_uuid
+    assistants_store[assistant_uuid] = assistant
+    
     return assistant
 
-# Save AI Assistant conversation_history to flask session
+# Save AI Assistant to the assistant store
 def save_ai_assistant(assistant):
-    session['conversation_history'] = pickle.dumps(assistant.conversation_history)
+    assistant_uuid = session.get('assistant_uuid')
+    if assistant_uuid:
+        assistants_store[assistant_uuid] = assistant
 
-# Clear AI Assistant conversation history from flask session
+# Clear AI Assistant conversation history
 def clear_conversation_history():
-    """Clear the conversation history from the flask session."""
-    if 'conversation_history' in session:
-        del session['conversation_history']
-        logger.info("Cleared conversation history from session")
+    """Clear the conversation history and create a new assistant."""
+    assistant_uuid = session.get('assistant_uuid')
+    
+    # Remove the old assistant from the store if it exists
+    if assistant_uuid and assistant_uuid in assistants_store:
+        del assistants_store[assistant_uuid]
+    
+    # Generate a new UUID for a fresh assistant
+    new_uuid = str(uuid.uuid4())
+    session['assistant_uuid'] = new_uuid
+    
+    # Create a new assistant and store it
+    use_web_search = os.environ.get('USE_WEB_SEARCH_TOOL', 'TRUE').upper() == 'TRUE'
+    assistants_store[new_uuid] = MolecularAIAssistant(use_web_search_tool=use_web_search)
+    
+    logger.info(f"Cleared conversation history and created new assistant with UUID: {new_uuid}")
 
 # Keep track of connections
 _connected_sids = []
@@ -394,81 +421,76 @@ def handle_chat_message_api():
 
         # Process the message with the AI assistant
         async def collect_ai_responses():
-            async for response_item in ai_assistant.get_model_response():
-                #logger.debug(f"Response chunk: {response_chunk}")
-                if response_item['type'] == 'text':
-                    # Add text chunk to response
-                    chat_payload.append({
-                        'type': 'text',
-                        'content': response_item['content'],
-                        'annotations': response_item['annotations']
+            
+            last_message_type = 'user_message'
+            while last_message_type != 'text':
+                async for response_item in ai_assistant.get_model_response():
+                    last_message_type = response_item['type']
+                    if response_item['type'] == 'text':
+                        # Add text chunk to response
+                        chat_payload.append({
+                            'type': 'text',
+                            'content': response_item['content'],
+                            'annotations': response_item['annotations']
+                            
+                        })
                         
-                    })
-                    
-                    # Add response_item to ai_assistant chat history
-                    ai_assistant.conversation_history.append(response_item['raw_response_item'])
-                    
-                elif response_item['type'] == 'reasoning':
-                    # Add reasoning summary to response
-                    chat_payload.append({
-                        'type': 'reasoning',
-                        'content': response_item['content']
-                    })
-                    
-                    # Add response_item to ai_assistant chat history
-                    ai_assistant.conversation_history.append(response_item['raw_response_item'])
-                
-                
-                elif response_item['type'] == 'web_search_call':
-                    
-                    chat_payload.append({
-                        'type': 'web_search_call',
-                        'status': response_item['status']
-                    })
-                    
-                    # Add response_item to ai_assistant chat history
-                    ai_assistant.conversation_history.append(response_item['raw_response_item'])
-
-                elif response_item['type'] == 'function_call':
-                    # Add function call notification to response
-                    chat_payload.append({
-                        'type': 'tool_start',
-                        'name': response_item['name'],
-                        'arguments': response_item['arguments']
-                    })
-
-                    # Add tool_call response_item to ai_assistant chat history
-                    ai_assistant.conversation_history.append(response_item['raw_response_item'])
-                    
-                    # Execute the function
-                    try:
-                        result = execute_function_call(
-                            response_item['name'],
-                            response_item['arguments'])
-
-                        # Add function result to conversation
-                        ai_assistant.add_function_result(
-                            response_item['call_id'], response_item['name'],
-                            result
-                        )
-
-                        # Add function result to response
+                        
+                    elif response_item['type'] == 'reasoning':
+                        # Add reasoning summary to response
                         chat_payload.append({
-                            'type': 'tool_result',
+                            'type': 'reasoning',
+                            'content': response_item['content']
+                        })
+                        
+                    
+                    
+                    elif response_item['type'] == 'web_search_call':
+                        
+                        chat_payload.append({
+                            'type': 'web_search_call',
+                            'status': response_item['status']
+                        })
+                        
+
+                    elif response_item['type'] == 'function_call':
+                        # Add function call notification to response
+                        chat_payload.append({
+                            'type': 'tool_start',
                             'name': response_item['name'],
-                            'result': result
+                            'arguments': response_item['arguments']
                         })
 
-                    except Exception as e:
-                        logger.error(
-                            f"Error executing function {response_item['name']}: {str(e)}"
-                        )
-                        chat_payload.append({
-                            'type': 'tool_error',
-                            'name': response_item['name'],
-                            'error': str(e),
-                            "raw_response_item": response_item['raw_response_item']
-                        })
+                        
+                        # Execute the function
+                        try:
+                            result = execute_function_call(
+                                response_item['name'],
+                                response_item['arguments'])
+
+                            # Add function result to conversation
+                            ai_assistant.add_function_result(
+                                response_item['call_id'], response_item['name'],
+                                result
+                            )
+
+                            # Add function result to response
+                            chat_payload.append({
+                                'type': 'tool_result',
+                                'name': response_item['name'],
+                                'result': result
+                            })
+
+                        except Exception as e:
+                            logger.error(
+                                f"Error executing function {response_item['name']}: {str(e)}"
+                            )
+                            chat_payload.append({
+                                'type': 'tool_error',
+                                'name': response_item['name'],
+                                'error': str(e),
+                                "raw_response_item": response_item['raw_response_item']
+                            })
 
         # Run the async function and wait for it to complete
         loop.run_until_complete(collect_ai_responses())
@@ -499,6 +521,10 @@ def handle_chat_message(message_text):
     logger.info(f"Received chat message via Socket.IO: {message_text}")
     
     ai_assistant = get_ai_assistant()
+    
+    # Add user message to conversation history
+    user_msg = {"role": "user", "content": message_text}
+    ai_assistant.conversation_history.append(user_msg)
 
     # Create a thread to process the message to avoid blocking
     def process_message_thread():
@@ -510,69 +536,69 @@ def handle_chat_message(message_text):
         try:
             # Process the message with the AI assistant
             async def process_chunks():
-                async for response_item in ai_assistant.get_model_response( message_text):
-                    logger.debug(f"Processing response_item.type: {response_item.type}")
-
-                    if response_item['type'] == 'text':
-                        # Send text response_item to the client
-                        socketio.emit('ai_response', {
-                            'type': 'text',
-                            'content': response_item['content'],
-                            'annotations': response_item['annotations']
-                            
-                        })
+                
+                last_message_type = 'user_message'
+                while last_message_type != 'text':
+                    async for response_item in ai_assistant.get_model_response( message_text):
+                        logger.debug(f"Processing response_item.type: {response_item.type}")
+                        last_message_type = response_item['type']
                         
-                        # Add text response_item to ai_assistant chat history
-                        ai_assistant.conversation_history.append(response_item['raw_response_item'])
-                    
-                    elif response_item['type'] == 'reasoning':
-                        # Send reasoning response_item to the client
-                        socketio.emit('ai_response', {
-                            'type': 'reasoning',
-                            'content': response_item['content']
-                        })
-                    
-                        # Add response_item to ai_assistant chat history
-                        ai_assistant.conversation_history.append(response_item['raw_response_item'])
-
-                    elif response_item['type'] == 'function_call':
-                        # Send function call notification to the client
-                        socketio.emit(
-                            'ai_response', {
-                                'type': 'tool_start',
-                                'name': response_item['name'],
-                                'arguments': response_item['arguments']
+                        if response_item['type'] == 'text':
+                            # Send text response_item to the client
+                            socketio.emit('ai_response', {
+                                'type': 'text',
+                                'content': response_item['content'],
+                                'annotations': response_item['annotations']
+                                
                             })
+                            
+                        
+                        elif response_item['type'] == 'reasoning':
+                            # Send reasoning response_item to the client
+                            socketio.emit('ai_response', {
+                                'type': 'reasoning',
+                                'content': response_item['content']
+                            })
+                        
 
-                        # Execute the function
-                        try:
-                            result = execute_function_call(
-                                response_item['name'],
-                                response_item['arguments'])
-
-                            # Add function result to conversation
-                            ai_assistant.add_function_result(
-                                response_item['call_id'],
-                                response_item['name'], result)
-
-                            # Send function result to the client
+                        elif response_item['type'] == 'function_call':
+                            # Send function call notification to the client
                             socketio.emit(
                                 'ai_response', {
-                                    'type': 'tool_result',
+                                    'type': 'tool_start',
                                     'name': response_item['name'],
-                                    'result': result
+                                    'arguments': response_item['arguments']
                                 })
 
-                        except Exception as e:
-                            logger.error(
-                                f"Error executing function {response_item['name']}: {str(e)}"
-                            )
-                            socketio.emit(
-                                'ai_response', {
-                                    'type': 'tool_error',
-                                    'name': response_item['name'],
-                                    'error': str(e)
-                                })
+                            # Execute the function
+                            try:
+                                result = execute_function_call(
+                                    response_item['name'],
+                                    response_item['arguments'])
+
+                                # Add function result to conversation
+                                ai_assistant.add_function_result(
+                                    response_item['call_id'],
+                                    response_item['name'], result)
+
+                                # Send function result to the client
+                                socketio.emit(
+                                    'ai_response', {
+                                        'type': 'tool_result',
+                                        'name': response_item['name'],
+                                        'result': result
+                                    })
+
+                            except Exception as e:
+                                logger.error(
+                                    f"Error executing function {response_item['name']}: {str(e)}"
+                                )
+                                socketio.emit(
+                                    'ai_response', {
+                                        'type': 'tool_error',
+                                        'name': response_item['name'],
+                                        'error': str(e)
+                                    })
 
             # Run the async function that processes chunks
             loop.run_until_complete(process_chunks())
