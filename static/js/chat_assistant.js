@@ -106,6 +106,8 @@ class ChatAssistant {
             this.handleToolResult(data.name, data.result);
         } else if (data.type === 'tool_error') {
             this.handleToolError(data.name, data.error);
+        } else if (data.type === 'reasoning') {
+            this.addReasoningSummary(data.content);
         } else if (data.type === 'error') {
             this.handleError(data.content);
         }
@@ -189,30 +191,34 @@ class ChatAssistant {
         // Actually execute the viewer function directly in the browser
         // This is crucial - we're bypassing the backend for viewer manipulations
         try {
+            console.log(`Attempting to handleToolStart with args: ${args}`);
+            // Parse the incoming JSON arguments string into an object
+            const parsedArgs = JSON.parse(args);
             let imageData = null;
             console.log(`Directly executing viewer function: ${name}`);
             
             switch (name) {
                 case 'load_pdb':
-                    imageData = await molecularViewer.loadPdb(args.pdb_id);
+                    console.log(`Calling moleculeViewer.loadPdb with parsedArgs.pdb_id=${parsedArgs.pdb_id}`)
+                    imageData = await molecularViewer.loadPdb(parsedArgs.pdb_id);
                     break;
                 case 'highlight_hetero':
                     imageData = await molecularViewer.highlightHetero();
                     break;
                 case 'show_surface':
-                    imageData = await molecularViewer.showSurface(args.selection || {});
+                    imageData = await molecularViewer.showSurface(parsedArgs.selection || {});
                     break;
                 case 'rotate':
-                    imageData = await molecularViewer.rotate(args.x, args.y, args.z);
+                    imageData = await molecularViewer.rotate(parsedArgs.x, parsedArgs.y, parsedArgs.z);
                     break;
                 case 'zoom':
-                    imageData = await molecularViewer.zoom(args.factor);
+                    imageData = await molecularViewer.zoom(parsedArgs.factor);
                     break;
                 case 'add_box':
-                    imageData = await molecularViewer.addBox(args.center, args.size);
+                    imageData = await molecularViewer.addBox(parsedArgs.center, parsedArgs.size);
                     break;
                 case 'set_style':
-                    imageData = await molecularViewer.setStyle(args.selection, args.style);
+                    imageData = await molecularViewer.setStyle(parsedArgs.selection, parsedArgs.style);
                     break;
                 case 'reset_view':
                     imageData = await molecularViewer.resetView();
@@ -469,6 +475,14 @@ class ChatAssistant {
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
+    }
+    addReasoningSummary(summaryText) {
+        if (summaryText && summaryText.length > 0) {
+            const summaryEl = document.createElement('div');
+            summaryEl.className = 'reasoning-summary';
+            summaryEl.textContent = summaryText;
+            this.chatMessages.appendChild(summaryEl);
+        }
     }
 }
 

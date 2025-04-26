@@ -51,9 +51,8 @@ class ToolResultMessage(TypedDict):
 Message = Union[SystemMessage, UserMessage, AssistantMessage,
                 ToolResultMessage]
 
-# the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
-# do not change this unless explicitly requested by the user
-MODEL = "gpt-4o"
+
+MODEL = os.environ.get("OPENAI_MODEL", "o4-mini")
 
 logger = logging.getLogger(__name__)
 
@@ -61,13 +60,21 @@ logger = logging.getLogger(__name__)
 class MolecularAIAssistant:
 
     def __init__(self, api_key=None):
-        self.api_key = api_key or os.environ.get("OPENAI_API_KEY")
+        if api_key:
+            self.api_key = api_key
+        else:
+            self.api_key = os.environ.get("OPENAI_API_KEY")
         self.client = OpenAI(api_key=self.api_key)
         self.system_message = """You are a helpful molecular biology assistant specializing in protein structure visualization.
 You have access to a 3D molecular viewer and can help users visualize and manipulate protein structures.
 You can load PDB files, highlight specific parts of molecules, show surfaces, rotate the view, zoom, and more.
-Always be helpful, concise, and provide scientific explanations when appropriate."""
+Always be helpful, concise, and provide scientific explanations when appropriate.
 
+IMPORTANT: When you call a function (tool) to interact with the 3D viewer:
+1. You will first receive a `function_call_output` item indicating whether the action succeeded or failed (e.g., `{"status": "success"}` or `{"status": "error", "message": "Details..."}`).
+2. Immediately following the `function_call_output` item, a `developer` message containing a base64-encoded image (screenshot) of the 3D viewer's current state will be automatically added to the conversation.
+3. The image message is tagged with the *developer* role and represents feedback from the tool. You may analyze it and, if needed, call another tool before composing your textual response for the user."""
+        
         # Initialize with system message
         system_msg: SystemMessage = {
             "role": "system",
@@ -79,230 +86,215 @@ Always be helpful, concise, and provide scientific explanations when appropriate
         """Define the tools that the model can use to control the 3D viewer."""
         return [{
             "type": "function",
-            "function": {
-                "name": "load_pdb",
-                "description":
-                "Load a protein structure by PDB ID into the 3D viewer.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "pdb_id": {
-                            "type":
-                            "string",
-                            "description":
-                            "The 4-character PDB ID of the structure to load (e.g., '1HSG', '4FNT')."
-                        }
-                    },
-                    "required": ["pdb_id"]
-                }
+            "name": "load_pdb",
+            "description": "Load a protein structure by PDB ID into the 3D viewer. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+            "strict": True,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "pdb_id": {
+                        "type":
+                        "string",
+                        "description":
+                        "The 4-character PDB ID of the structure to load (e.g., '1HSG', '4FNT')."
+                    }
+                },
+                "required": ["pdb_id"],
+                "additionalProperties": False
             }
         }, {
             "type": "function",
-            "function": {
-                "name": "highlight_hetero",
-                "description":
-                "Highlight hetero atoms (non-protein components like ligands, water, etc.) in the current structure.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {}
-                }
+            "name": "highlight_hetero",
+            "description": "Highlight hetero atoms (non-protein components like ligands, water, etc.) in the current structure. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+            "strict": True,
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": False
             }
         }, {
             "type": "function",
-            "function": {
-                "name": "show_surface",
-                "description":
-                "Add a surface representation to the current structure.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "selection": {
-                            "type": "object",
-                            "description":
-                            "Optional selection criteria to show surface only for specific parts of the structure.",
-                            "properties": {
-                                "chain": {
-                                    "type":
-                                    "string",
-                                    "description":
-                                    "Chain identifier (e.g., 'A', 'B')."
-                                },
-                                "resi": {
-                                    "type":
-                                    "string",
-                                    "description":
-                                    "Residue number range (e.g., '1-100')."
-                                }
+            "name": "show_surface",
+            "description":
+            "Add a surface representation to the current structure.",
+            "strict": True,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "selection": {
+                        "type": ["object", "null"],
+                        "description":
+                        "Optional selection criteria to show surface only for specific parts of the structure. If null, applies to the whole structure. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+                        "properties": {
+                            "chain": {
+                                "type": ["string", "null"],
+                                "description": "Chain identifier (e.g., 'A', 'B')."
+                            },
+                            "resi": {
+                                "type": ["string", "null"],
+                                "description":
+                                "Residue number or range (e.g., '101', '1-100')."
                             }
-                        }
+                        },
+                        "required": ["chain", "resi"],
+                        "additionalProperties": False
                     }
-                }
+                },
+                "required": ["selection"],
+                "additionalProperties": False
             }
         }, {
             "type": "function",
-            "function": {
-                "name": "rotate",
-                "description":
-                "Rotate the molecule view around specified axes.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "x": {
-                            "type": "number",
-                            "description": "Degrees to rotate around X-axis."
-                        },
-                        "y": {
-                            "type": "number",
-                            "description": "Degrees to rotate around Y-axis."
-                        },
-                        "z": {
-                            "type": "number",
-                            "description": "Degrees to rotate around Z-axis."
-                        }
+            "name": "rotate",
+            "description": "Rotate the molecule view around specified axes. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+            "strict": True,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "x": {
+                        "type": ["number", "null"],
+                        "description":
+                        "Degrees to rotate around X-axis. Null if no rotation on this axis."
+                    },
+                    "y": {
+                        "type": ["number", "null"],
+                        "description":
+                        "Degrees to rotate around Y-axis. Null if no rotation on this axis."
+                    },
+                    "z": {
+                        "type": ["number", "null"],
+                        "description":
+                        "Degrees to rotate around Z-axis. Null if no rotation on this axis."
                     }
-                }
+                },
+                "required": ["x", "y", "z"],
+                "additionalProperties": False
             }
         }, {
             "type": "function",
-            "function": {
-                "name": "zoom",
-                "description": "Zoom the view in or out.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "factor": {
-                            "type":
-                            "number",
-                            "description":
-                            "Zoom factor. Values > 1 zoom in, values < 1 zoom out (e.g., 1.2 to zoom in 20%, 0.8 to zoom out 20%)."
-                        }
-                    },
-                    "required": ["factor"]
-                }
+            "name": "zoom",
+            "description": "Zoom the view in or out. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+            "strict": True,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "factor": {
+                        "type":
+                        "number",
+                        "description":
+                        "Zoom factor. Values > 1 zoom in, values < 1 zoom out (e.g., 1.2 to zoom in 20%, 0.8 to zoom out 20%)."
+                    }
+                },
+                "required": ["factor"],
+                "additionalProperties": False
             }
         }, {
             "type": "function",
-            "function": {
-                "name": "add_box",
-                "description":
-                "Add a box around a specific region of the structure.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "center": {
-                            "type": "object",
-                            "properties": {
-                                "x": {
-                                    "type": "number"
-                                },
-                                "y": {
-                                    "type": "number"
-                                },
-                                "z": {
-                                    "type": "number"
-                                }
+            "name": "add_box",
+            "description": "Add a box around a specific region of the structure. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+            "strict": True,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "center": {
+                        "type": "object",
+                        "properties": {
+                            "x": {
+                                "type": "number"
                             },
-                            "required": ["x", "y", "z"],
-                            "description": "Center coordinates of the box."
+                            "y": {
+                                "type": "number"
+                            },
+                            "z": {
+                                "type": "number"
+                            }
                         },
-                        "size": {
-                            "type": "object",
-                            "properties": {
-                                "x": {
-                                    "type": "number"
-                                },
-                                "y": {
-                                    "type": "number"
-                                },
-                                "z": {
-                                    "type": "number"
-                                }
-                            },
-                            "required": ["x", "y", "z"],
-                            "description": "Dimensions of the box."
-                        }
+                        "required": ["x", "y", "z"],
+                        "additionalProperties": False,
+                        "description": "Center coordinates of the box."
                     },
-                    "required": ["center", "size"]
-                }
-            }
-        }, {
-            "type": "function",
-            "function": {
-                "name": "set_style",
-                "description":
-                "Set the visualization style for specific parts of the structure.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "selection": {
-                            "type":
-                            "object",
-                            "properties": {
-                                "chain": {
-                                    "type":
-                                    "string",
-                                    "description":
-                                    "Chain identifier (e.g., 'A', 'B')."
-                                },
-                                "resi": {
-                                    "type":
-                                    "string",
-                                    "description":
-                                    "Residue number range (e.g., '1-100')."
-                                },
-                                "elem": {
-                                    "type":
-                                    "string",
-                                    "description":
-                                    "Element symbol (e.g., 'C' for carbon, 'N' for nitrogen)."
-                                }
+                    "size": {
+                        "type": "object",
+                        "properties": {
+                            "x": {
+                                "type": "number"
                             },
-                            "description":
-                            "Selection criteria to apply the style to."
+                            "y": {
+                                "type": "number"
+                            },
+                            "z": {
+                                "type": "number"
+                            }
                         },
-                        "style": {
-                            "type": "object",
-                            "properties": {
-                                "stick": {
-                                    "type":
-                                    "object",
-                                    "description":
-                                    "Stick representation parameters."
-                                },
-                                "cartoon": {
-                                    "type":
-                                    "object",
-                                    "description":
-                                    "Cartoon representation parameters."
-                                },
-                                "sphere": {
-                                    "type":
-                                    "object",
-                                    "description":
-                                    "Sphere representation parameters."
-                                },
-                                "line": {
-                                    "type":
-                                    "object",
-                                    "description":
-                                    "Line representation parameters."
-                                }
-                            },
-                            "description": "Style configuration to apply."
-                        }
-                    },
-                    "required": ["selection", "style"]
-                }
+                        "required": ["x", "y", "z"],
+                        "additionalProperties": False,
+                        "description": "Dimensions of the box (width, height, depth)."
+                    }
+                },
+                "required": ["center", "size"],
+                "additionalProperties": False
             }
         }, {
             "type": "function",
-            "function": {
-                "name": "reset_view",
-                "description": "Reset the viewer to the default view.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {}
-                }
+            "name": "set_style",
+            "description":
+            "Set the visualization style for specific parts of the structure. All parameters must follow 3Dmol.js syntax. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+            "strict": True,
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "selection": {
+                        "type": "object",
+                        "properties": {
+                            "chain": {
+                                "type": ["string", "null"],
+                                "description": "Chain identifier (e.g., 'A', 'B')."
+                            },
+                            "resi": {
+                                "type": ["string", "null"],
+                                "description":
+                                "Residue number or range (e.g., '101', '1-100')."
+                            },
+                            "elem": {
+                                "type": ["string", "null"],
+                                "description":
+                                "Element symbol (e.g., 'C' for carbon, 'N' for nitrogen)."
+                            }
+                        },
+                        "required": ["chain", "resi", "elem"],
+                        "additionalProperties": False,
+                        "description":
+                        "Selection criteria to apply the style to. Use null for fields not needed for selection (e.g., select whole chain 'A': {'chain': 'A', 'resi': null, 'elem': null})."
+                    },
+                    "style_type": {
+                        "type": "string",
+                        "enum": ["stick", "cartoon", "sphere", "line"],
+                        "description":
+                        "The type of visualization style to apply."
+                    },
+                    "style_params": {
+                        "type": ["object", "null"],
+                        "description":
+                        "Optional parameters for the chosen style (e.g., color, radius). Pass null if no specific parameters are needed.",
+                        "properties": {}, # Define specific params here if needed later
+                        "required": [],
+                        "additionalProperties": False
+                    }
+                },
+                "required": ["selection", "style_type", "style_params"],
+                "additionalProperties": False
+            }
+        }, {
+            "type": "function",
+            "name": "reset_view",
+            "description": "Reset the viewer to the default view. Returns status message and triggers an automatic developer-message containing a screenshot image of the updated 3dmol.js viewer after the function is applied.",
+            "strict": True,
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": False
             }
         }]
 
@@ -321,121 +313,54 @@ Always be helpful, concise, and provide scientific explanations when appropriate
 
         try:
             # Create the API request
-            response = self.client.chat.completions.create(
+            response = self.client.responses.create(
                 model=MODEL,
-                messages=self.conversation_history,
+                input=self.conversation_history,
                 tools=self._get_tools_definition(),
-                stream=True  # Enable streaming
+                reasoning={"effort": "medium", "summary": "auto"}
             )
 
-            # Initialize variables to collect streamed content
-            collected_content = ""
-            current_tool_calls = {}  # Map tool call IDs to their data
-
-            # Stream the response
-            for chunk in response:
-                if not chunk.choices:
-                    continue
-
-                delta = chunk.choices[0].delta
-
-                # Handle content chunk (regular text response)
-                if hasattr(delta, "content") and delta.content is not None:
-                    content_chunk = delta.content
-                    collected_content += content_chunk
-
-                    # Yield the text chunk
-                    yield {"type": "text", "content": content_chunk}
-
-                # Handle tool calls
-                if hasattr(delta, "tool_calls") and delta.tool_calls:
-                    for tool_call in delta.tool_calls:
-                        # Get ID of this tool call
-                        tool_id = tool_call.index
-
-                        # Initialize tool call data if not existing
-                        if tool_id not in current_tool_calls:
-                            current_tool_calls[tool_id] = {
-                                "id":
-                                tool_call.id if hasattr(tool_call, "id") else
-                                f"call_{tool_id}",
-                                "name":
-                                tool_call.function.name if hasattr(
-                                    tool_call.function, "name") else "",
-                                "arguments":
-                                ""
-                            }
-
-                        # Update tool call data
-                        if hasattr(tool_call.function,
-                                   "name") and tool_call.function.name:
-                            current_tool_calls[tool_id][
-                                "name"] = tool_call.function.name
-
-                        if hasattr(
-                                tool_call.function,
-                                "arguments") and tool_call.function.arguments:
-                            current_tool_calls[tool_id][
-                                "arguments"] += tool_call.function.arguments
-
-                        if hasattr(tool_call, "id") and tool_call.id:
-                            current_tool_calls[tool_id]["id"] = tool_call.id
-
-                # Check for finish reason
-                if chunk.choices[0].finish_reason == "tool_calls":
-                    # Process all complete tool calls
-                    for tool_id, tool_call in current_tool_calls.items():
-                        try:
-                            # Skip incomplete tool calls
-                            if not tool_call["name"] or not tool_call[
-                                    "arguments"]:
-                                logger.warning(
-                                    f"Incomplete tool call: {tool_call}")
-                                continue
-
-                            # Parse the arguments JSON
-                            arguments = json.loads(tool_call["arguments"])
-
-                            # Add to conversation history
-                            assistant_msg: AssistantMessage = {
-                                "role":
-                                "assistant",
-                                "content":
-                                None,
-                                "tool_calls": [{
-                                    "id": tool_call["id"],
-                                    "type": "function",
-                                    "function": {
-                                        "name": tool_call["name"],
-                                        "arguments": tool_call["arguments"]
-                                    }
-                                }]
-                            }
-                            self.conversation_history.append(assistant_msg)
-
-                            # Yield the tool call
-                            logger.info(
-                                f"Function call: {tool_call['name']} with args: {arguments}"
-                            )
-                            yield {
+            if response.output:
+                print(f"\n\n\nresponse.output exists! len(response.output) - {len(response.output)}\n\n\n")
+                
+                for response_item in response.output:
+                    print(f"\n\nProcessing response_item of type {response_item.type}!\n\n")
+                    if response_item.type == "reasoning":
+                        reasoning_summary = response_item.summary
+                        print(f"\n\n\nresponse_item: {response_item}\n\n\n")
+                        yield {'type': 'reasoning', 'content': reasoning_summary, 'raw_response_item': response_item}
+                        
+                        
+                    elif response_item.type == 'function_call':
+                        
+                        # Yield the tool call
+                        yield {
                                 "type": "function_call",
-                                "call_id": tool_call["id"],
-                                "name": tool_call["name"],
-                                "arguments": arguments
+                                "call_id": response_item.call_id,
+                                "name": response_item.name,
+                                "arguments": response_item.arguments,
+                                'raw_response_item': response_item
                             }
-                        except json.JSONDecodeError as e:
-                            logger.error(
-                                f"Failed to parse tool call arguments: {tool_call['arguments']}, error: {e}"
-                            )
-
-            # After all chunks processed, if we've collected text, add it to history
-            if collected_content and not current_tool_calls:
-                assistant_text_msg: AssistantMessage = {
-                    "role": "assistant",
-                    "content": collected_content
-                }
-                self.conversation_history.append(assistant_text_msg)
-
+                        
+                    elif response_item.type == 'message':
+                        for response_message_content_object in response_item.content:
+                            text_content = None
+                            # If it's a refusal, content type, log that it happened.
+                            # Either way, send the message content and append response_item to conversation history
+                            if response_message_content_object.type == "refusal":
+                                logging.warning(f"Model refusal received: {json.dumps(response_message_content_object)}")
+                                text_content = response_message_content_object.refusal
+                                annotations = None
+                            elif response_message_content_object.type == "output_text":
+                                text_content = response_message_content_object.text
+                                if hasattr(response_message_content_object, "annotations"):
+                                    annotations = response_message_content_object.annotations
+                                else:
+                                    annotations = None
+                            
+                            # Yield the text_content
+                            yield {"type": "text", "content": text_content, 'raw_response_item': response_item}
+            
         except Exception as e:
             logger.error(f"Error in AI processing: {str(e)}")
             error_response = {
@@ -447,21 +372,33 @@ Always be helpful, concise, and provide scientific explanations when appropriate
     def add_function_result(self, call_id, function_name, result):
         """Add a function call result to the conversation history."""
         try:
-            # Format function result for the conversation history
-            result_str = json.dumps(result)
+            # Remove image from result for tool message, if present
+            result_no_image = dict(result)
+            image_b64 = result_no_image.pop('image', None)
+            result_str = json.dumps(result_no_image)
 
-            # Use the updated OpenAI API format for tool responses
-            tool_result_msg: ToolResultMessage = {
-                "role": "tool",
-                "tool_call_id": call_id,
-                "content": result_str
-            }
-            self.conversation_history.append(tool_result_msg)
+            # Append according to Responses API: function_call_output item (no role)
+            self.conversation_history.append({
+                "type": "function_call_output",
+                "call_id": call_id,
+                "output": result_str,
+            })
+
+            # If there is an image, add it as a developer message (OpenAI input_image format)
+            if image_b64:
+                developer_image_msg = {
+                    "role": "developer",
+                    "content": [
+                        {"type": "input_text", "text": "Screenshot of the 3D viewer after the last action was executed."},
+                        {"type": "input_image", "image_url": f"data:image/png;base64,{image_b64}"}
+                    ]
+                }
+                self.conversation_history.append(developer_image_msg)
 
             logger.info(
                 f"Added function result for {function_name} to conversation history"
             )
             return True
         except Exception as e:
-            logger.error(f"Error adding function result: {str(e)}")
+            logger.error(f"\n\n\nError adding function result: {str(e)}\n\n\n")
             return False

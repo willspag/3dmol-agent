@@ -1,4 +1,4 @@
-from app import app, socketio
+from app_responses import app, socketio
 
 # Load environment variables
 from dotenv import load_dotenv
