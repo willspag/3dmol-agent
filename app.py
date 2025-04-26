@@ -424,6 +424,16 @@ def handle_chat_message_api():
             
             last_message_type = 'user_message'
             while last_message_type != 'text':
+                
+                # wait a bit if not a user_message to give the tools more time to render
+                if not last_message_type == 'user_message':
+                    try:
+                        ai_call_loop_sleep_time = int(os.environ.get("AI_LOOP_SLEEP_SECONDS", "5"))  
+                        time.sleep(ai_call_loop_sleep_time)
+                    except:
+                        logging.warning("Failed to parse AI_LOOP_SLEEP_SECONDS - defaulting to 5 second sleep")
+                        time.sleep(5)
+                            
                 async for response_item in ai_assistant.get_model_response():
                     last_message_type = response_item['type']
                     if response_item['type'] == 'text':
@@ -539,6 +549,15 @@ def handle_chat_message(message_text):
                 
                 last_message_type = 'user_message'
                 while last_message_type != 'text':
+                    # wait a bit if not a user_message to give the tools more time to render
+                    if not last_message_type == 'user_message':
+                        try:
+                            ai_call_loop_sleep_time = int(os.environ.get("AI_LOOP_SLEEP_SECONDS", "5"))  
+                            time.sleep(ai_call_loop_sleep_time)
+                        except:
+                            logging.warning("Failed to parse AI_LOOP_SLEEP_SECONDS - defaulting to 5 second sleep")
+                            time.sleep(5)
+                            
                     async for response_item in ai_assistant.get_model_response( message_text):
                         logger.debug(f"Processing response_item.type: {response_item.type}")
                         last_message_type = response_item['type']
